@@ -1,0 +1,39 @@
+一、url说明
+    1、一共有以下几种url：
+        1、首页
+        2、登陆返回的页面
+        3、忘记密码的页面
+        4、注册成功返回的页面
+        5、注册处理
+        6、登陆处理
+        7、语音请求
+        8、各个城市天气请求
+
+    2、url对应的名称：
+        1、首页               /index.html
+        2、登陆返回的页面       /index1.html
+        3、忘记密码的页面       /index2.html
+        4、注册成功返回的页面    /index3.html
+        5、注册处理            /Register
+        6、登陆处理            /Login
+        7、语音请求            /Voice
+        8、各个城市天气请求     /Request
+
+    3、后端路由分发：
+        path=[
+            ("/",mainPage)                 #返回首页index.html
+            ("/Login",login)               #登陆返回的页面index1.html
+            ("/forget_pwd",forget)         #返回首页index2.html
+            ("/Register",request)          #注册成功返回的页面index3.html
+            ("/Voice",voice)               #ajax实现异步数据交互  以单词"startVoice"开启语音接口（post方式），返回json文档给前端解析
+            ("/Request",requestHandler)    #ajax实现异步数据交互  以post方式{cityName:c_name}发送，返回尽可能多的信息给前端解析
+        ]
+
+    4、json文档:
+        {"temperature":[12,23,34,45,5,45,12,67],"humidity":[12,23,34,45,5,45,12,67],"air":[12,23,34,45,5,45,12,67],...}
+
+
+    5、关于登陆成功返回的登陆页面要替换现有界面的用户名
+        render("/index1.html",{username:who})
+
+
