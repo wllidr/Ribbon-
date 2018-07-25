@@ -1,0 +1,1 @@
+2018-07-23 13:01:19,485 WARNING HTTPSConnectionPool(host='login.sina.com.cn', port=443): Max retries exceeded with url: /sso/login.php?client=ssologin.js(v1.4.18) (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x07C47830>: Failed to establish a new connection: [Errno 11004] getaddrinfo failed',))
