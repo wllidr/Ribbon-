@@ -1,7 +1,8 @@
 from sina.util.sqlUtil import DBUtil
+from sina.settings import MYSQL_DB_IP
 
 ips = []
-dbUtil = DBUtil(db='pool')
+dbUtil = DBUtil(db=MYSQL_DB_IP)
 sql = 'SELECT * FROM useip WHERE isuse=1'
 datas = dbUtil.fetchAll(sql)
 for data in datas:

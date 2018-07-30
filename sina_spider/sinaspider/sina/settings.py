@@ -78,6 +78,7 @@ MYSQL_PORT = 3306
 MYSQL_DB = 'sina'
 MYSQL_USER = 'root'
 MYSQL_PASSWORD = '12321hjz'
+MYSQL_DB_IP = 'pool'
 
 # 爬虫日志设置
 LOG_FILE = 'SinaSpider.log'
@@ -85,15 +86,10 @@ LOG_LEVEL = 'INFO'
 
 # 用户的信息
 ACCOUNT_POOL = [
-    # {'user': '13113121202', 'pwd': '12321hjz'},
-    {'user': '0066970202729', 'pwd': 'bingo520'},
-    {'user': '0013203357052', 'pwd': 'fa331595'},
-    {'user': '0013203357079', 'pwd': 'fa237181'},
-    {'user': '0013203357201', 'pwd': 'fa652193'},
-    {'user': '0013203357286', 'pwd': 'fa848138'},
+   
 ]
 
 # 云打码平台账号密码
-YUN_USERNAME = 'Hjz59'
-YUN_PASSWORD = '12321HJZ'
+YUN_USERNAME = ''
+YUN_PASSWORD = ''
 
