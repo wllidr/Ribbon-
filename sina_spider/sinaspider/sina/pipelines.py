@@ -3,7 +3,6 @@
 from sina.util import sqlUtil
 from sina.items import *
 
-
 class SinaPipeline(object):
     def open_spider(self, spider):
         self.db = sqlUtil.DBUtil()
@@ -33,8 +32,7 @@ class SinaPipeline(object):
             print(item, 'weibo')
             sql = 'INSERT INTO weibo(blogger, content, comeFrom, goodNumber, transmitNumber, commentNumber) ' \
                   'VALUES (%s, %s, %s, %s ,%s, %s)'
-            params = (item['blogger'], item['content'], item['comeFrom'], item['goodNumber'], item['transmitNumber'],
-                      item['commentNumber'])
+            params = (item['blogger'], item['content'], item['comeFrom'], item['goodNumber'], item['transmitNumber'], item['commentNumber'])
             self.db.otherOprate(sql, params=params)
 
         return item

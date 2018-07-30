@@ -9,7 +9,7 @@ NEWSPIDER_MODULE = 'sina.spiders'
 # ROBOTSTXT_OBEY = True
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-# CONCURRENT_REQUESTS = 32
+CONCURRENT_REQUESTS = 32
 
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
@@ -32,6 +32,7 @@ SPIDER_MIDDLEWARES = {
 }
 
 DOWNLOADER_MIDDLEWARES = {
+    'sina.middlewares.AgencyIp' : 302,
     'sina.middlewares.SinaUseAgentChange' : 300,
     'sina.middlewares.SinaCookieChange' : 301,
     'sina.middlewares.SinaDownloaderMiddleware': 543,
@@ -84,10 +85,15 @@ LOG_LEVEL = 'INFO'
 
 # 用户的信息
 ACCOUNT_POOL = [
-   微博账号密码
+    # {'user': '13113121202', 'pwd': '12321hjz'},
+    {'user': '0066970202729', 'pwd': 'bingo520'},
+    {'user': '0013203357052', 'pwd': 'fa331595'},
+    {'user': '0013203357079', 'pwd': 'fa237181'},
+    {'user': '0013203357201', 'pwd': 'fa652193'},
+    {'user': '0013203357286', 'pwd': 'fa848138'},
 ]
 
 # 云打码平台账号密码
-YUN_USERNAME = ''
-YUN_PASSWORD = ''
+YUN_USERNAME = 'Hjz59'
+YUN_PASSWORD = '12321HJZ'
 

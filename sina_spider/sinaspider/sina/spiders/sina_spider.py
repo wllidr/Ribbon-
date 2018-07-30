@@ -58,7 +58,7 @@ class SinaSpiderSpider(scrapy.Spider):
             _id = i[1].split('/')[-1]
             if _id not in self.overList and _id not in self.startList:
                 self.startList.add(_id)
-            # print(attentionItem)
+            print(attentionItem)
             yield attentionItem
 
         nextpage = re.findall('<div><a href="([\s\S]*?)">下页</a>', response.text)
@@ -83,6 +83,7 @@ class SinaSpiderSpider(scrapy.Spider):
             _id = fan[1].split('/')[-1]
             if _id not in self.overList and _id not in self.startList:
                 self.startList.add(_id)
+            print(fansItem)
             yield fansItem
         # print(item)
         nextpage = re.findall('<div><a href="([\s\S]*?)">下页</a>', response.text)
@@ -106,6 +107,7 @@ class SinaSpiderSpider(scrapy.Spider):
             groupsItem = SinaGroupInfo()
             groupsItem['blogger'] = response.meta['blogger']
             groupsItem['group'] = group[0]
+            print(groupsItem)
             if groupsItem['group'] == '':
                 continue
             yield groupsItem
@@ -126,6 +128,7 @@ class SinaSpiderSpider(scrapy.Spider):
             weiBoItem['goodNumber'] = weibo[1]
             weiBoItem['transmitNumber'] = weibo[2]
             weiBoItem['commentNumber'] = weibo[3]
+            print(weiBoItem)
             yield weiBoItem
         # print(item)
         nextpage = re.findall('<div><a href="([\s\S]*?)">下页</a>', response.text)
@@ -135,7 +138,7 @@ class SinaSpiderSpider(scrapy.Spider):
             nextpage = re.sub('amp;', '', nextpage)
             # 'https://weibo.cn/5235640836/profile?filter=1&amp;page=2'
             # 'https://weibo.cn/5235640836/profile?filter=1&page=2'
-        # print(item)
+        # print(weibos)
         if nextpage:
             yield scrapy.Request(url=nextpage, callback=self.parseWeiBo, meta={'blogger': response.meta['blogger']})
 

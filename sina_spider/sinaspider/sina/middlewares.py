@@ -9,6 +9,7 @@ import random
 from scrapy import signals
 from sina.util.cookies import cookies
 from sina.user_agent import AGENTS
+from sina.util.ips import PROXIES
 
 
 class SinaSpiderMiddleware(object):
@@ -70,6 +71,11 @@ class SinaCookieChange(object):
         #           'SUHB': '0M2FVHYTGBqPIo', 'SSOLoginState': '1532411799', '_T_WM': '871856d32a8bf5e4c509aa321bfe0304'}
         request.cookies = cookie
         # print(cookie)
+
+class AgencyIp(object):
+    def process_request(self, request, spider):
+        proxy = random.choice(PROXIES)
+        request.meta["proxy"] = proxy['type'] + r'//' + proxy["ip_port"]
 
 class SinaDownloaderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,

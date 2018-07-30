@@ -15,11 +15,11 @@ logger.setLevel(logging.INFO)
 logger.addHandler(fileHandler)
 
 class DBUtil:
-    def __init__(self):
+    def __init__(self, db=MYSQL_DB):
         dbConfig = {
             'host' : MYSQL_HOST,
             'port' : MYSQL_PORT,
-            'database' : MYSQL_DB,
+            'database' : db,
             'user' : MYSQL_USER,
             'password' : MYSQL_PASSWORD,
             'charset' : 'utf8'

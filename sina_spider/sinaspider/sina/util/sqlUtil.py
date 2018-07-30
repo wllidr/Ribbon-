@@ -15,11 +15,11 @@ logger.setLevel(logging.INFO)
 logger.addHandler(fileHandler)
 
 class DBUtil:
-    def __init__(self):
+    def __init__(self, db=MYSQL_DB):
         dbConfig = {
             'host' : MYSQL_HOST,
             'port' : MYSQL_PORT,
-            'database' : MYSQL_DB,
+            'database' : db,
             'user' : MYSQL_USER,
             'password' : MYSQL_PASSWORD,
             'charset' : 'utf8'
@@ -56,19 +56,23 @@ class DBUtil:
         self.connect.close()
 
 if __name__ == '__main__':
-    item = {'blogger': '5235640836',
-             'comeFrom': '2016-03-07 23:54:51&nbsp;来自微博 weibo.com',
-             'commentNumber': '评论[0]',
-             'content': '告别单身，马上就加入到腾讯女性 ',
-             'goodNumber': '赞[3]',
-             'transmitNumber': '转发[1]'}
-    db = DBUtil()
-    sql = 'INSERT INTO weibo(blogger, content, comeFrom, goodNumber, transmitNumber, commentNumber) ' \
-                  'VALUES (%s, %s, %s, %s ,%s, %s)'
-    item['comeFrom'] = re.sub('&nbsp;','',item['comeFrom'])
-    params = (item['blogger'], item['content'], item['comeFrom'], item['goodNumber'], item['transmitNumber'], item['commentNumber'])
-    print(params)
-    db.otherOprate(sql, params=params)
-    print(2222)
+    # item = {'blogger': '5235640836',
+    #          'comeFrom': '2016-03-07 23:54:51&nbsp;来自微博 weibo.com',
+    #          'commentNumber': '评论[0]',
+    #          'content': '告别单身，马上就加入到腾讯女性 ',
+    #          'goodNumber': '赞[3]',
+    #          'transmitNumber': '转发[1]'}
+    # db = DBUtil()
+    # sql = 'INSERT INTO weibo(blogger, content, comeFrom, goodNumber, transmitNumber, commentNumber) ' \
+    #               'VALUES (%s, %s, %s, %s ,%s, %s)'
+    # item['comeFrom'] = re.sub('&nbsp;','',item['comeFrom'])
+    # params = (item['blogger'], item['content'], item['comeFrom'], item['goodNumber'], item['transmitNumber'], item['commentNumber'])
+    # print(params)
+    # db.otherOprate(sql, params=params)
+    # print(2222)
+    db = DBUtil(db='pool')
+    sql = 'select * from useip'
+    ips = db.fetchAll(sql)
+    print(ips)
 
 logger.removeHandler(fileHandler)

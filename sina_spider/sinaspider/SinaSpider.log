@@ -18457,3 +18457,17 @@ Traceback (most recent call last):
   File "E:\pyfile\爬虫\使用scrapy\sina\sina\spiders\sina_spider.py", line 65, in parseAttention
     nextpage = r'https://weibo.cn' + nextpage[0]
 IndexError: list index out of range
+2018-07-25 21:26:51 [scrapy.utils.log] INFO: Scrapy 1.5.0 started (bot: sina)
+2018-07-25 21:26:51 [scrapy.utils.log] INFO: Versions: lxml 4.2.1.0, libxml2 2.9.5, cssselect 1.0.3, parsel 1.4.0, w3lib 1.19.0, Twisted 17.9.0, Python 3.6.4 (v3.6.4:d48eceb, Dec 19 2017, 06:04:45) [MSC v.1900 32 bit (Intel)], pyOpenSSL 17.5.0 (OpenSSL 1.1.0h  27 Mar 2018), cryptography 2.2.2, Platform Windows-7-6.1.7601-SP1
+2018-07-25 21:26:51 [scrapy.crawler] INFO: Overridden settings: {'BOT_NAME': 'sina', 'DOWNLOAD_DELAY': 2, 'LOG_FILE': 'SinaSpider.log', 'LOG_LEVEL': 'INFO', 'NEWSPIDER_MODULE': 'sina.spiders', 'SPIDER_MODULES': ['sina.spiders']}
+2018-07-25 21:26:51 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.logstats.LogStats']
+2018-07-30 10:50:03 [scrapy.utils.log] INFO: Scrapy 1.5.0 started (bot: sina)
+2018-07-30 10:50:03 [scrapy.utils.log] INFO: Versions: lxml 4.2.1.0, libxml2 2.9.5, cssselect 1.0.3, parsel 1.4.0, w3lib 1.19.0, Twisted 17.9.0, Python 3.6.4 (v3.6.4:d48eceb, Dec 19 2017, 06:04:45) [MSC v.1900 32 bit (Intel)], pyOpenSSL 17.5.0 (OpenSSL 1.1.0h  27 Mar 2018), cryptography 2.2.2, Platform Windows-7-6.1.7601-SP1
+2018-07-30 10:50:03 [scrapy.crawler] INFO: Overridden settings: {'BOT_NAME': 'sina', 'CONCURRENT_REQUESTS': 32, 'DOWNLOAD_DELAY': 2, 'LOG_FILE': 'SinaSpider.log', 'LOG_LEVEL': 'INFO', 'NEWSPIDER_MODULE': 'sina.spiders', 'SPIDER_MODULES': ['sina.spiders']}
+2018-07-30 10:50:03 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.logstats.LogStats']

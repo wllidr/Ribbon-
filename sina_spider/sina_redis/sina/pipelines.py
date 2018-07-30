@@ -42,4 +42,3 @@ class SinaPipeline(object):
     def close_spider(self, spider):
         self.db.close()
 
-
