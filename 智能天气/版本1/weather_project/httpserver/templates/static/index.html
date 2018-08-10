@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <link rel="icon" href="image/icon_1.jpg">
+    <title>七仙女气象，最贴心的生活助手</title>
+    <link rel="stylesheet" href="css/username.css">
+    <link rel="stylesheet" href="css/regi.css">
+    <link rel="stylesheet" href="css/caidan_css.css">
+    <link rel="stylesheet" href="css/calendar.css">
+    <link rel="stylesheet" href="css/background_video.css">
+    <link rel="stylesheet" href="css/head_box.css">
+    <link rel="stylesheet" href="css/content_box.css">
+    <link rel="stylesheet" href="css/foot_box.css">
+    <link rel="stylesheet" href="css/motai_layout.css">
+    <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+    <script src="js/jquery-2.0.2.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            //触发注册按钮
+            $(".button1").click(function(){
+                $(".shadow-box").show();
+                $(".register-box").show();
+            });
+            //触发登陆按钮
+            $(".button2").click(function(){
+                $(".shadow-box").show();
+                $(".login-box").show();
+            });
+            //触发转换按钮
+            $(".lonin1").click(function(){
+                $(".shadow-box").show();
+                $(".register-box").hide();
+                $(".login-box").show();
+            });
+            //触发转换按钮
+            $(".register").click(function(){
+                $(".shadow-box").show();
+                $(".login-box").hide();
+                $(".register-box").show();
+            });
+            //关闭登陆注册模态页面按钮
+            $(".close-logo").click(function(){
+                $(".shadow-box").hide();
+                $(".register-box").hide();
+                $(".login-box").hide();
+            });
+
+            //触发菜单按钮
+            $(".meun-trrigger-box").mouseover(function(){
+                $(".right-meun-box").show();
+            });
+
+            $(".meun-trrigger-box").mouseout(function(){
+                $(".right-meun-box").hide();
+            });
+            //触发关闭菜单模态页面按钮
+            $(".close-right-meun-box").click(function(){
+                $(".right-meun-box").hide();
+            });
+
+            $(".right-meun-box").mouseover(function() {
+                $(".right-meun-box").show();
+
+            });
+
+            $(".right-meun-box").mouseout(function() {
+                $(".right-meun-box").hide();
+
+            });
+
+            //登陆简单验证
+            $(".lonin").click(function(){
+                var value = $(".login-box .neibiankuang .hengtiao").val();
+                var value1 = $(".login-box .neibiankuang .input4").val();
+                var value2 = $(".login-box .neibiankuang .input5").val();
+                var u_p_reg = /1[0-9]{10}/;
+                var reg1 = /[0-9]+[a-zA-Z]+/;
+                var AtIndex = value1.indexOf("@");
+                var DoIndex = value1.lastIndexOf(".");
+                if (value == null || value == ""){
+                    alert("用户名或密码不能为空");
+                    return false
+                }
+                else if(!u_p_reg.test(value1)){
+                    alert("用户名格式不对");
+                    return false
+                }
+                else if(AtIndex!=-1 && DoIndex>AtIndex){
+                    alert("用户名格式不对");
+                    return false
+                }
+                else if( value2.length != 6 || !reg1.test(value2)){
+                    alert("密码格式不对");
+                    return false
+                }
+            });
+            //注册简单验证
+            $(".register-box .register1").click(function(){
+                var value = $(".register-box .neibiankuang .hengtiao").val();
+                var value1 = $(".register-box .neibiankuang .input1").val();
+                var value2 = $(".register-box .neibiankuang .input2").val();
+                var value3 = $(".register-box .neibiankuang .input3").val();
+                var u_p_reg = /1[0-9]{10}/;
+                var reg1 = /[0-9]+[a-zA-Z]+/;
+                if (value == null || value == ""){
+                    alert("用户名或密码不能为空");
+                    return false
+                }
+                else if(!u_p_reg.test(value1)){
+                     alert("用户名格式不对");
+                    return false
+                }
+                else if( value2.length != 6 || !reg1.test(value2)){
+                    alert("密码格式不对");
+                    return false
+                }
+                else if( value2 != value3){
+                    alert("密码确认错误");
+                    return false
+                }
+            });
+            $(".bit01").click(function () {
+                // $(".show01").toggle()
+                $(".show01").show();
+                $(".show03").hide();
+                $(".show04").hide();
+                $(".show02").hide();
+                $("body div img").show();
+                $(".tutu").show()
+            });
+            $(".bit02").click(function () {
+                $(".show02").show();
+                $(".show03").hide();
+                $(".show04").hide();
+                $(".show01").hide();
+                $("body div img").show();
+                $(".tutu").show()
+            });
+            $(".bit03").click(function () {
+                $(".show01").hide();
+                $(".show03").show();
+                $(".show04").hide();
+                $(".show02").hide();
+                $("body div img").show();
+                $(".tutu").show()
+
+
+            });
+            $(".bit04").click(function () {
+                $(".show02").hide();
+                $(".show03").hide();
+                $(".show01").hide();
+                $('.show04').show();
+                $(".china").hide();
+                $("body div img").show();
+                $(".tutu").show()
+            });
+            $(".bit").click(function () {
+                $(".show02").show();
+                $(".show03").show();
+                $(".show01").show();
+                $('.show04').show();
+                $(".china").show();
+                $("body div>div>div>div>div>div img").hide();
+                $(".tutu").show()
+            });
+
+            // 轮播图
+            // 手动轮播图
+            var img_num = $(".img1-outer .lunbo-img li").length;
+            for (var i=0;i<img_num;i++){
+                $(".img1-outer .num").append("<li></li>");
+            }
+            $(".img1-outer .num li").eq(0).addClass("active");
+            $(".img1-outer .num li").mouseover(function () {
+                var index = $(this).index();
+                $(this).addClass("active").siblings().removeClass("active");
+                $(".img1-outer .lunbo-img li").eq(index).stop().fadeIn(200).siblings().fadeOut(200);
+            });
+
+            //自动轮播
+            var c = setInterval(f1,3000);
+            var i = 0;
+            function f1() {
+                if(i==img_num-1){
+                    i=-1
+                }
+                i++;
+                console.log(i)
+                $(".img1-outer .num li").eq(i).addClass("active").siblings().removeClass("active");
+                $(".img1-outer .lunbo-img li").eq(i).stop().fadeIn(1500).siblings().fadeOut(1500);
+            };
+            $(".img1-outer").hover(function () {
+                clearInterval(c)
+            },function () {
+                c = setInterval(f1,3000)
+            })
+        });
+    </script>
+</head>
+
+<body>
+    <!--视频作为背景-->
+    <div class="videocontainer">
+        <video class="fullscreenvideo"  autoplay="" muted="" loop="">
+            <source src="video/video_mian.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!--头部框，固定形式-->
+    <div class="head-big-box">
+        <div class="head-content-box">
+            <div class="tlogo"></div>
+            <div class="t_logo"></div>
+            <div class="user-logo"></div>
+            <div class="register-login-box">
+                <button class="btn button1">注册</button>
+                <button class="btn button2">登陆</button>
+            </div>
+        </div>
+    </div>
+
+    <!--文本部框 -->
+    <div class="content-background-box">
+        <div class="content-big-box">
+            <div class="content-box" style="overflow: hidden">
+                <div class="content-head-box">
+                    <!--<marquee>谢子冲</marquee>-->
+                </div>
+                <div class="content-left-box">
+                    <div class="img-outer">
+                        <ul class="lunbo">
+                             <li><img src="image/bijing.jpg"></li>
+                             <li><img src="image/chengdu.jpg"></li>
+                             <li><img src="image/chongqing.jpg"></li>
+                             <li><img src="image/haerbin.jpg"></li>
+                             <li><img src="image/changchun.jpg"></li>
+                             <li><img src="image/aomen.jpg"></li>
+                             <li><img src="image/hangzhou.jpg"></li>
+                             <li><img src="image/fuzhou.jpg"></li>
+                             <li><img src="image/kunming.jpg"></li>
+                             <li><img src="image/guiyang.jpg"></li>
+                             <li><img src="image/hefei.jpg"></li>
+                             <li><img src="image/lanzhou.jpg"></li>
+                             <li><img src="image/guiling.jpg"></li>
+                             <li><img src="image/jinan.jpg"></li>
+                             <li><img src="image/lasa.jpg"></li>
+                             <li><img src="image/shanghai.jpg"></li>
+                             <li><img src="image/shenzhen.jpg"></li>
+                             <li><img src="image/nanjing.jpg"></li>
+                             <li><img src="image/sanya.jpg"></li>
+                             <li><img src="image/qingdao.jpg"></li>
+                             <li><img src="image/nanning.jpg"></li>
+                             <li><img src="image/wuhan.jpg"></li>
+                             <li><img src="image/zhengzhou.jpg"></li>
+                             <li><img src="image/yinchuan.jpg"></li>
+                             <li><img src="image/taiyuan.jpg"></li>
+                             <li><img src="image/taiwan.jpg"></li>
+                             <li><img src="image/wulumuqi.jpg"></li>
+                             <li><img src="image/xihu.jpg"></li>
+                             <li><img src="image/xianggang.jpg"></li>
+                             <li><img src="image/guangzhou.jpg"></li>
+                             <div class="show_detail">
+                                 <div class="show_detail_content">
+                                     <div id="city_name" class="city_name"><h1>广州</h1></div>
+                                     <div class="show_type">
+                                         <div class="temperature box_hover">
+                                             <div class="box1"><h2>温度</h2></div>
+                                             <div class="box1">
+                                                 <div id="t_digit" class="digit">30</div>
+                                                 <div class="symbol">℃</div>
+                                             </div>
+                                             <div class="box1"></div>
+                                         </div>
+                                         <div class="humidity box_hover">
+                                             <div class="box1" ><h2>湿度</h2></div>
+                                             <div class="box1">
+                                                 <div id="h_digit" class="digit">60</div>
+                                                 <div class="symbol">%</div>
+                                             </div>
+                                             <div class="box1"></div>
+                                         </div>
+                                         <div class="life_index box_hover">
+                                             <div class="box1"><h2>空气质量</h2></div>
+                                             <div id="a_digit" class="box1"></div>
+                                             <!--<div class="box1"></div>-->
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                        </ul>
+                    </div>
+                    <div id="main"></div>
+                </div>
+                <div class="content-right-box">
+                    <div class="img1-outer">
+                        <ul class="lunbo-img">
+                            <li><a href="http://www.pixabay.com"><img src="image/lunbo1.jpg"></a></li>
+                            <li><a href="http://www.pixabay.com"><img src="image/lunbo2.jpg"></a></li>
+                            <li><a href="http://www.pixabay.com"><img src="image/lunbo3.jpg"></a></li>
+                            <li><a href="http://www.pixabay.com"><img src="image/lunbo4.jpg"></a></li>
+                            <li><a href="http://www.pixabay.com"><img src="image/lunbo5.jpg"></a></li>
+                            <li><a href="http://www.pixabay.com"><img src="image/lunbo6.jpg"></a></li>
+                        </ul>
+                        <ul class="num">
+                            <!--<li class="active"></li>-->
+                            <!--<li></li>-->
+                            <!--<li></li>-->
+                            <!--<li></li>-->
+                            <!--<li></li>-->
+                            <!--<li></li>-->
+                        </ul>
+                    </div>
+                    <div class="pic">
+                        <p><a href="http://www.pixabay.com">更多精彩图集>>></a></p>
+                    </div>
+                    <div class='calendar' id='calendar'>
+                    </div>
+                </div>
+                <div class="content-footer-box">
+                    <div class="foot-nav">
+                        <div class="foot-nav-line">
+                            <a href="#" class="a1" target="_blank">关于我们</a>
+                            <span>|</span>
+                            <a href="#" target="_blank">联系我们</a>
+                            <span>|</span>
+                            <a href="#" target="_blank">服务条款</a>
+                            <span>|</span>
+                            <a href="#" target="_blank">隐私政策</a>
+                            <span>|</span>
+                            <a href="#" target="_blank">下载客户端</a>
+                            <span>|</span>
+                            <a href="#" target="_blank">意见与反馈</a>
+                            <span>|</span>
+                            <a href="#" target="_blank">友情链接</a>
+                            <span>|</span>
+                            <a href="#" target="_blank">公告</a>
+                        </div>
+                        <div class="company">
+                            <span>版权所有：©七仙女科技有限公司</span>
+                        </div>
+                        <div class="beian">
+                            <div></div>
+                            <span>京ICP备00000000001号</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--侧边栏选择模态对话框-->
+    <div class="meun-trrigger-box">
+        <span>更多精彩</span>
+    </div>
+    <div class="right-meun-box hide1">
+        <div class="close-right-meun-box"></div>
+        <div class="type1">
+            <div class="type2">
+                <div style="padding: 15px 10px">
+                    <div style="text-align: center; padding-bottom: 5px;"><button class="bit" id="d1">ALL</button></div>
+                    <div id="d2">
+                        <span id="d3"></span>
+                        <div>按照拼音首字母查找</div>
+                    </div>
+                    <span><button class="bit01">A-E</button></span>
+                    <span><button class="bit02">F-L</button></span>
+                    <span><button class="bit03">M-S</button></span>
+                    <span><button class="bit04">T-Z</button></span>
+                </div>
+                <div class="all">
+                    <div class="show01">
+                        <div>
+                            <span class="type"><button type="submit" name="city01" class="city c1" value="北京" onclick="get('.c1',0)">北京</button></span>
+                            <span class="type"><button type="submit" name="city02" class="city c2" value="成都" onclick="get('.c2',1)">成都</button></span>
+                            <div class="type3">
+                                <a href="#"><img src="image/city/beijin.jpeg" style="padding-left: 10px"></a>
+                                <a href="#"><img src="image/city/chengdu.jpeg" style="height:160px;"></a>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="type"><button type="submit" name="city03" class="city c3" value="重庆" onclick="get('.c3',2)">重庆</button></span>
+                            <span class="type"><button type="submit" name="city04" class="city c4" value="哈尔滨" onclick="get('.c4',3)">哈尔滨</button></span>
+                            <div style="margin: 15px 0" class="type3">
+                                <a href="#"><img src="image/city/chongq.jpeg" style="width: 110px; padding:15px 0 10px 10px;"></a>
+                                <a href="#"><img src="image/city/haerb.jpeg" style="padding-bottom: 6px; width: 110px;"></a>
+                            </div>
+                        </div>
+
+                        <div>
+                            <span class="type"><button type="submit" name="city05" class="city c5" value="长春" onclick="get('.c5',4)">长春</button></span>
+                            <span class="type"><button type="submit" name="city06" class="city c6" value="澳门" onclick="get('.c6',5)">澳门</button></span>
+                            <div style="margin: 15px 0" class="type3">
+                                <a href="#"><img src="image/city/changchun.jpeg" style="width: 110px; padding-left: 8px;"></a>
+                                <a href="#"><img src="image/city/aomen.jpeg" style="width: 110px; padding-bottom: 30px;"></a>
+                            </div>
+                       </div>
+                    </div>
+                    <div class="show02">
+                        <div>
+                            <span class="type"><button type="submit" name="city07" class="city c7" value="广州" onclick="get('.c7',29)">广州</button></span>
+                            <span class="type"><button type="submit" name="city08" class="city c8" value="杭州" onclick="get('.c8',6)">杭州</button></span>
+                            <div style="margin: 15px 0" class="type3">
+                                <a href="#"><img src="image/city/11.jpeg" style="width: 110px; height:110px; padding-left: 8px;"></a>
+                                <a href="#"><img src="image/city/hangzhou.jpeg" style="width: 110px;"></a>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="type"><button type="submit" name="city09" class="city c9" value="福州" onclick="get('.c9',7)">福州</button></span>
+                            <span class="type"><button type="submit" name="city10" class="city c10" value="昆明" onclick="get('.c10',8)">昆明</button></span>
+                            <div style="margin: 15px 0" class="type3">
+                                <a href="#"><img src="image/city/fujian.jpeg" style="width: 110px; height:110px; padding:0 0 10px 8px;"></a>
+                                <a href="#"><img src="image/city/kunming.jpeg" style="width: 110px;"></a>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="type"><button type="submit" name="city11" class="city c11" value="贵阳" onclick="get('.c11',9)">贵阳</button></span>
+                            <span class="type"><button type="submit" name="city12" class="city c12" value="合肥" onclick="get('.c12',10)">合肥</button></span>
+                            <div style="margin: 15px 0" class="type3">
+                                <a href="#"><img src="image/city/guiyang.jpeg" style="width: 110px; height:110px; padding:0 0 10px 8px;"></a>
+                                <a href="#"><img src="image/city/hefei.jpeg" style="width: 110px; padding-bottom: 10px"></a>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="type"><button type="submit" name="city11" class="city c13" value="兰州" onclick="get('.c13',11)">兰州</button></span>
+                            <span class="type"><button type="submit" name="city12" class="city c14" value="桂林" onclick="get('.c14',12)">桂林</button></span>
+                            <div style="margin: 15px 0" class="type3">
+                                <a href="#"><img src="image/city/lanzhou.jpeg" style="width: 110px; height:110px; padding:0 0 10px 8px;"></a>
+                                <a href="#"><img src="image/city/guilin.jpeg" style="width: 110px; height: 115px; padding-bottom: 10px"></a>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="type"><button type="submit" name="city11" class="city c15" value="济南" onclick="get('.c15',13)">济南</button></span>
+                            <span class="type"><button type="submit" name="city12" class="city c16" value="拉萨" onclick="get('.c16',14)">拉萨</button></span>
+                            <div style="margin: 15px 0" class="type3">
+                                <a href="#"><img src="image/city/jinan.jpeg" style="width: 110px; height:110px; padding:0 0 10px 8px;"></a>
+                                <a href="#"><img src="image/city/lasa.jpeg" style="width: 110px; height: 115px; padding-bottom: 10px"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="show03">
+                        <div>
+                            <span class="type"><button type="submit" name="city13" class="city c17" value="上海" onclick="get('.c17',15)">上海</button></span>
+                            <span class="type"><button type="submit" name="city14" class="city c18" value="深圳" onclick="get('.c18',16)">深圳</button></span>
+                            <div style="margin: 15px 0" class="type3">
+                                <a href="#"><img src="image/city/shanghai.jpeg" style="width: 110px; height:110px; padding:0 0 10px 8px;"></a>
+                                <a href="#"><img src="image/city/shenzhen.jpeg" style="width: 110px; height: 115px; padding-bottom: 10px"></a>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="type"><button type="submit" name="city17" class="city c19" value="南京" onclick="get('.c19',17)">南京</button></span>
+                            <span class="type"><button type="submit" name="city18" class="city c20" value="三亚" onclick="get('.c20',18)">三亚</button></span>
+                            <div style="margin: 15px 0" class="type3">
+                                <a href="#"><img src="image/city/nanjin.jpeg" style="width: 110px; height:110px; padding:0 0 10px 8px;"></a>
+                                <a href="#"><img src="image/city/sanya.jpeg" style="width: 110px; height: 115px; padding-bottom: 10px"></a>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="type"><button type="submit" name="city19" class="city c21" value="青岛" onclick="get('.c21',19)">青岛</button></span>
+                            <span class="type"><button type="submit" name="city20" class="city c22" value="南宁" onclick="get('.c22',20)">南宁</button></span>
+                            <div style="margin: 15px 0" class="type3">
+                                <a href="#"><img src="image/city/qindao.jpeg" style="width: 110px; height:110px; padding:0 0 10px 8px;"></a>
+                                <a href="#"><img src="image/city/nanning%20.jpeg" style="width: 110px; height: 115px; padding-bottom: 10px"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="show04">
+                        <div>
+                            <span class="type"><button type="submit" name="city23" class="city c23" value="武汉" onclick="get('.c23',21)">武汉</button></span>
+                            <span class="type"><button type="submit" name="city24" class="city c24" value="郑州" onclick="get('.c24',22)">郑州</button></span>
+                            <div style="margin: 15px 0" class="type3">
+                                <a href="#"><img src="image/city/wuhan.jpeg" style="width: 110px; height:110px; padding:0 0 10px 8px;"></a>
+                                <a href="#"><img src="image/city/zhengzhou.jpeg" style="width: 110px; height: 115px; padding-bottom: 10px"></a>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="type"><button type="submit" name="city25" class="city c25" value="银川" onclick="get('.c25',23)">银川</button></span>
+                            <span class="type"><button type="submit" name="city26" class="city c26" value="太原" onclick="get('.c26',24)">太原</button></span>
+                            <div style="margin: 15px 0" class="type3">
+                                <a href="#"><img src="image/city/yinchan.jpeg" style="width: 110px; height:110px; padding:0 0 10px 8px;"></a>
+                                <a href="#"><img src="image/city/taiyuan.jpeg" style="width: 110px; height: 115px; padding-bottom: 10px"></a>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="type"><button type="submit" name="city27" class="city c27" value="台湾" onclick="get('.c27',25)">台湾</button></span>
+                            <span class="type"><button type="submit" name="city28" class="city c28" value="乌鲁木齐" onclick="get('.c28',26)">乌鲁木齐</button></span>
+                            <div style="margin: 15px 0" class="type3">
+                                <a href="#"><img src="image/city/taiwan.jpeg" style="width: 110px; height:110px; padding:0 0 10px 8px;"></a>
+                                <a href="#"><img src="image/city/wulu.jpeg" style="width: 110px; height: 115px; padding-bottom: 10px"></a>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="type"><button type="submit" name="city29" class="city c29" value="西湖" onclick="get('.c29',27)">西湖</button></span>
+                            <span class="type"><button type="submit" name="city30" class="city c30" value="香港" onclick="get('.c30',28)">香港</button></span>
+                            <div style="margin: 15px 0" class="type3">
+                                <a href="#"><img src="image/city/xihu.jpeg" style="width: 110px; height:110px; padding:0 0 10px 8px;"></a>
+                                <a href="#"><img src="image/city/xianggang.jpeg" style="width: 110px; height: 115px; padding-bottom: 10px"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tutu">
+                            <img src="image/qixinnv.jpeg" style="width: 200px; padding-left: 20px">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--模态对话框，登陆以及注册框-->
+    <div class="shadow-box hide">
+    </div>
+    <div class="register-box biankuang1 hide">
+        <div class="register-meun">
+                <div class="register-meun-logo close-logo">
+                </div>
+            </div>
+        <div class="neibiankuang">
+            <form action="/Register" method="get" style="font-family: ">
+                <div class="user">
+                    <span class="clarfix" style="">用户</span>
+                    <input type="text" name="user"  placeholder="手机号/邮箱" class="hengtiao input1">
+                </div>
+                <div class="user">
+                    <span class="clarfix">密码</span>
+                    <input type="password" name="pwd" placeholder="数字字母组合的六位数" class="hengtiao input2">
+                </div>
+
+                <div class="user2">
+                    <span class="clarfix">确认密码</span>
+                    <input type="password" name="pwd" placeholder="数字字母组合的六位数" class="hengtiao input3">
+                </div>
+                <div class="text">
+                    <span><button type="submit" class="register1">注册</button></span>
+                </div>
+            </form>
+            <span class="text3"><button type="submit" class="lonin1">会员登录</button></span>
+        </div>
+    </div>
+    <div class="login-box biankuang hide">
+        <div class="login-meun">
+            <div class="login-meun-logo close-logo">
+            </div>
+        </div>
+        <div class="neibiankuang">
+            <form action="/Login" method="get">
+                <div class="user">
+                    <span class="clarfix">用户</span>
+                    <input type="text" name="user"  placeholder="手机号/邮箱" class="hengtiao input4">
+                </div>
+                <div class="user">
+                    <span class="clarfix">密码</span>
+                    <input type="password" name="pwd" placeholder="数字字母组合的六位数" class="hengtiao input5">
+                </div>
+
+                <div class="user2">
+                    <span style="padding-left: 82px;margin-right: 50px"><input type="checkbox" name="rem" value="0">记住密码</span>
+                    <a href="/forget_pwd" class="wjpwd">忘记密码?</a> <a href="#" class="wjpwd">快捷登录</a>
+                </div>
+                <div class="text">
+                    <span><button type="submit" class="lonin">登录</button></span>
+                </div>
+            </form>
+            <span class="text1"><button type="submit" class="register">注册会员</button></span>
+        </div>
+    </div>
+</body>
+    <!--ajax提交数据更新数据-->
+    <script>
+        //温度
+        var temperature = [20, 18, 17, 20, 22, 28, 30, 35];
+        //湿度
+        var humidity = [78, 80, 82, 88, 84, 70, 56, 50];
+        //空气质量
+        var air = [50, 78, 56, 45, 34, 65, 78, 43];
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: 'http://echarts.baidu.com/build/dist'
+            }
+        });
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+            ],function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('main'));
+
+                var option = {
+                    toolbox: {
+                        show: true,
+                        x: "right",
+                        y: "center",
+                        orient: "vertical",
+                        feature: {
+                            mark: {show: true},
+                            dataView: {show: true}
+                        }
+                    },
+                    grid:{
+                        show:false
+                    },
+                    tooltip: {
+                        show: true
+                    },
+                    legend: {
+                        data: ["温度", "湿度","空气质量"],
+                        x:"center",
+                        y:10,
+                        textStyle:{
+                            color:"#b4b4b4"
+                        },
+                        selected: {"温度": true, "湿度": true, "空气质量": true}
+                    },
+                    xAxis:[{
+                        type:"category",
+
+                        splitLine:{
+                            show:false
+                        },
+                        // axisLine:{
+                        //   show:false
+                        // },
+                        axisLabel : {
+                                    textStyle: {
+                                        color: '#b4b4b4'
+                                    }
+                        },
+                        data:["0时","3时","6时","9时","12时","15时","18时","21时"]
+                        }
+                    ],
+                    yAxis:[{
+                        type:"value",
+                        // boundaryGap: false,
+                        splitLine:{
+                            show:false
+                        },
+                        axisLabel : {
+                                    textStyle: {
+                                        color: '#b4b4b4'
+                                    }
+                        },
+                        }
+                    ],
+                    series : [
+                        {
+                            "name":"温度",
+                            "type":"bar",
+                            "data":temperature //要修改的内容
+                        },
+                        {
+                            "name": "湿度",
+                            "type": "bar",
+                            "data": humidity //要修改的内容
+                        },
+                        {
+                            "name": "空气质量",
+                            "type": "bar",
+                            "data": air //要修改的内容
+                        }
+                    ]
+                };
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+        function ajax_interface(elem_class,index) {
+            $(".img-outer .lunbo li").eq(index).stop().fadeIn(1000).siblings().fadeOut(1000);
+            $(".img-outer .lunbo .show_detail").fadeIn(1);
+            var c_name = $(elem_class).val();
+            $("#city_name h1").text(c_name);
+            $.ajax({
+                url:"/Request",
+                type:"POST",
+                data:{cityName:c_name},
+                error: function(arg){
+                    console.log('error')
+                },
+                success:function(arg) {
+                    console.log(11111);
+                    console.log(arg);
+                    temperature = arg["temperature"];
+                    humidity = arg["humidity"];
+                    air = arg["air"];
+                    console.log(temperature,humidity);
+                    $("#t_digit").text(temperature[4]); //获取中午12点的数据作为显示（图片上的显示）
+                    $("#h_digit").text(humidity[4]);
+                    $("#a_digit").text(air[4]);
+                }
+            })
+        }
+        function get(elem_class,index) {
+            ajax_interface(elem_class,index)
+        }
+    </script>
+    <!--日历-->
+    <script>
+        (function(){
+            /*
+            * 用于记录日期，显示的时候，根据dateObj中的日期的年月显示
+            */
+            var dateObj = (function(){
+            var _date = new Date();    // 默认为当前系统时间
+            return {
+                getDate : function(){
+                return _date;
+                },
+                  setDate : function(date) {
+                    _date = date;
+                }
+            };
+        })();
+
+        // 设置calendar div中的html部分
+        renderHtml();
+        // 表格中显示日期
+        showCalendarData();
+        // 绑定事件
+        bindEvent();
+        /*
+        * 渲染html结构
+        */
+        function renderHtml() {
+            var calendar = document.getElementById("calendar");
+            var titleBox = document.createElement("div");  // 标题盒子 设置上一月 下一月 标题
+            var bodyBox = document.createElement("div");  // 表格区 显示数据
+
+            // 设置标题盒子中的html
+            titleBox.className = 'calendar-title-box';
+            titleBox.innerHTML = "<span class='prev-month' id='prevMonth'></span>" +
+              "<span class='calendar-title' id='calendarTitle'></span>" +
+              "<span id='nextMonth' class='next-month'></span>";
+            calendar.appendChild(titleBox);    // 添加到calendar div中
+
+            // 设置表格区的html结构
+            bodyBox.className = 'calendar-body-box';
+            var _headHtml = "<tr>" +
+                      "<th>日</th>" +
+                      "<th>一</th>" +
+                      "<th>二</th>" +
+                      "<th>三</th>" +
+                      "<th>四</th>" +
+                      "<th>五</th>" +
+                      "<th>六</th>" +
+                    "</tr>";
+            var _bodyHtml = "";
+
+            // 一个月最多31天，所以一个月最多占6行表格
+            for(var i = 0; i < 6; i++) {
+            _bodyHtml += "<tr>" +
+                  "<td></td>" +
+                  "<td></td>" +
+                  "<td></td>" +
+                  "<td></td>" +
+                  "<td></td>" +
+                  "<td></td>" +
+                  "<td></td>" +
+                "</tr>";
+            }
+            bodyBox.innerHTML = "<table id='calendarTable' class='calendar-table'>" +
+                      _headHtml + _bodyHtml +
+                      "</table>";
+            // 添加到calendar div中
+            calendar.appendChild(bodyBox);
+        }
+
+        /*
+        * 表格中显示数据，并设置类名
+        */
+        function showCalendarData() {
+            var _year = dateObj.getDate().getFullYear();
+            var _month = dateObj.getDate().getMonth() + 1;
+            var _dateStr = getDateStr(dateObj.getDate());
+
+            // 设置顶部标题栏中的 年、月信息
+            var calendarTitle = document.getElementById("calendarTitle");
+            var titleStr = _dateStr.substr(0, 4) + "年" + _dateStr.substr(4,2) + "月";
+            calendarTitle.innerText = titleStr;
+
+            // 设置表格中的日期数据
+            var _table = document.getElementById("calendarTable");
+            var _tds = _table.getElementsByTagName("td");
+            var _firstDay = new Date(_year, _month - 1, 1);  // 当前月第一天
+            for(var i = 0; i < _tds.length; i++) {
+                var _thisDay = new Date(_year, _month - 1, i + 1 - _firstDay.getDay());
+                var _thisDayStr = getDateStr(_thisDay);
+                _tds[i].innerText = _thisDay.getDate();
+                //_tds[i].data = _thisDayStr;
+                _tds[i].setAttribute('data', _thisDayStr);
+                if(_thisDayStr == getDateStr(new Date())) {    // 当前天
+                    _tds[i].className = 'currentDay';
+                }else if(_thisDayStr.substr(0, 6) == getDateStr(_firstDay).substr(0, 6)) {
+                    _tds[i].className = 'currentMonth';  // 当前月
+                }else {    // 其他月
+                    _tds[i].className = 'otherMonth';
+                }
+            }
+        }
+
+        // /**
+        //  * 绑定上个月下个月事件
+        //  // */
+        function bindEvent() {
+            var prevMonth = document.getElementById("prevMonth");
+            var nextMonth = document.getElementById("nextMonth");
+            addEvent(prevMonth, 'click', toPrevMonth);
+            addEvent(nextMonth, 'click', toNextMonth);
+        }
+
+        // /**
+        //  * 绑定事件
+        //  */
+        function addEvent(dom, eType, func) {
+            if(dom.addEventListener) {  // DOM 2.0
+                dom.addEventListener(eType, function(e){
+                    func(e);
+                });
+            } else if(dom.attachEvent){  // IE5+
+                dom.attachEvent('on' + eType, function(e){
+                    func(e);
+                });
+            } else {  // DOM 0
+                dom['on' + eType] = function(e) {
+                    func(e);
+                }
+            }
+        }
+
+        /*
+        * 点击上个月图标触发
+        */
+        function toPrevMonth() {
+            var date = dateObj.getDate();
+            dateObj.setDate(new Date(date.getFullYear(), date.getMonth() - 1, 1));
+            showCalendarData();
+        }
+
+        /*
+        * 点击下个月图标触发
+        */
+        function toNextMonth() {
+            var date = dateObj.getDate();
+            dateObj.setDate(new Date(date.getFullYear(), date.getMonth() + 1, 1));
+            showCalendarData();
+        }
+
+        /*
+        * 日期转化为字符串， 4位年+2位月+2位日
+        */
+        function getDateStr(date) {
+            var _year = date.getFullYear();
+            var _month = date.getMonth() + 1;    // 月从0开始计数
+            var _d = date.getDate();
+
+            _month = (_month > 9) ? ("" + _month) : ("0" + _month);
+            _d = (_d > 9) ? ("" + _d) : ("0" + _d);
+            return _year + _month + _d;
+        }
+        })();
+    </script>
+</html>

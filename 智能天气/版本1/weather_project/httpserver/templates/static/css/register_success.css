@@ -1,0 +1,39 @@
+/*注册成功返回的提示页面布局*/
+.shadow-box1{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #b4b4b4;
+    opacity: 0.7;
+}
+
+.register-successful-box{
+    position: fixed;
+    top:30%;
+    left:30%;
+    width: 500px;
+    height: 300px;
+    padding-top: 7px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    /*background-color: #2b99ff;*/
+    background-color: white;
+}
+
+.register-successful-box .div1{
+    display: inline-block;
+    margin-left: 70px;
+    margin-top: 60px;
+    width: 350px;
+    height: 50px;
+    /*margin: auto;*/
+    text-align: center;
+    color: gold;
+    word-spacing: 10px;
+}
+
+.register-successful-box .div2{
+    margin-top: 0;
+}
