@@ -1,0 +1,12 @@
+NE Index,Device Role,Sysname,Location,MgntIPV4,MgntIPV6,VTEP IPV4,VTEP IPV6,ZTP Level,ESN,Stack,Loopback1 IPV4,Priority,Member Id,As Num,xFTP Server IP,xFTP Server Port,xFTP Server User,xFTP Server Passwd,Backup xFTP Server IP,Backup xFTP Server Port,Backup xFTP Server User,Backup xFTP Server Passwd,isReplace,bandMgntMode,Dhcp Server Ip,MgntVPN
+CE6850HI_39.3,Leaf,CE6850HI_39.3,location,12.12.39.3/16,,192.168.1.6,,2,,stack1,12.12.37.3/16,190,1,100,193.193.242.147,21,huawei,Huawei@123,,,,,NO,OUT_OF_BAND_METH,,
+L2link------,,,,,,,,,,,,,,,,,,,,,,,,,,
+A NEIndex,A Port Index,A Eth-trunk No.,B NEIndex,B Port Index,B Eth-Trunk No,ZTP GrpNO.,Status,StackMember,,,,,,,,,,,,,,,,,,
+CE6850HI_39.3,10GE1/0/3,,CE6850HI_39.4,10GE1/0/3,,,,TRUE,,,,,,,,,,,,,,,,,,
+CE6850HI_39.3,10GE1/0/2,,CE6850HI_39.4,10GE1/0/2,,,,TRUE,,,,,,,,,,,,,,,,,,
+CE6850HI_39.2,10GE1/0/1,,CE6850HI_39.3,10GE1/0/1,,GRP_CE6850HI_39.3,,FALSE,,,,,,,,,,,,,,,,,,
+L3link------,,,,,,,,,,,,,,,,,,,,,,,,,,
+A NEIndex,A IF Index,A ConnIPv4,A ConnIPv6,B NE Index,B IF Index,B ConnIPv4,B ConnIPv6,Peer Device MgntIPV4,,,,,,,,,,,,,,,,,,
+CE6850HI_39.3,10GE1/0/3,192.168.10.8/24,,CE6850HI_39.4,10GE1/0/3,192.168.10.9/24,,12.12.39.4/16,,,,,,,,,,,,,,,,,,
+CE6850HI_39.2,10GE1/0/1,192.168.10.2/24,,CE6850HI_39.3,10GE1/0/1,192.168.10.1/24,,12.12.39.2/16,,,,,,,,,,,,,,,,,,
+CE6850HI_39.3,10GE1/0/2,192.168.10.6/24,,CE6850HI_39.4,10GE1/0/2,192.168.10.7/24,,12.12.39.4/16,,,,,,,,,,,,,,,,,,

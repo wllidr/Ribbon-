@@ -52,9 +52,9 @@ ERR         = 1
 #   2) If file name is not specified, indicate the procedure can be skipped.
 # File paths of system software on file server, filename extension is '.cc'.
 REMOTE_PATH_IMAGE = {
-    'CE5850EI'    :   '',
-    'CE6875EI'    :   '',
-    'CE12800'     :   '',
+    'CE6856HI'    :   'CE6856HI-V200R005C00SPC800.cc',
+    'CE7855EI'    :   'CE7855EI-V200R005C00SPC800.cc',
+    'CE12800'     :   'CE12800-V200R005C00SPC800.cc',
 }
 # File path of configuration file on file server, filename extension is '.cfg', '.zip' or '.dat'.
 REMOTE_PATH_CONFIG = ''
@@ -62,12 +62,12 @@ REMOTE_PATH_CONFIG = ''
 REMOTE_PATH_PATCH = {
     'CE5850EI'    :   '',
     'CE6875EI'    :   '',
-    'CE12800'     :   '',
+    'CE12800'     :   'CE12800-V200R005HP0001.PAT',
 }
 # File path of stack member ID file on file server, filename extension is '.txt'
 REMOTE_PATH_MEMID = ''
 # File path of license list file, filename extension is '.xml'
-REMOTE_PATH_LICLIST = ''
+REMOTE_PATH_LICLIST = 'Index.xml'
 # File path of md5 file, contains md5 value of image / patch / memid / license file, file extension is '.txt'
 REMOTE_PATH_MD5 = ''
 # File path of python file on file server, filename extension is '.py'
@@ -1445,7 +1445,7 @@ def get_sys_information(rows1, isContain_DFSGroup):
     oldLoopback1Description = "<ztp:Loopback1-description>"
     oldMgntInterface = "<ztp:Mgnt-Interface>"
     if "OUT_OF_BAND" in bandMode:
-        newMethDescription = "AC-Mgnt"
+        newMethDescription = "Out-Of-OOB"
         if isContain_DFSGroup == True:
             newLoopback1Description = "Router-ID/BGP-Peer-IP/DFS-Group"
         else:
@@ -1784,19 +1784,23 @@ def replace_description_conf(interface_description_map,bgp_info_map,writeline):
     stopTag = '-Description>'
     bgp_start_tag = '<ztp:Bgp-Description-'
     if writeline.find(interface_star_tag)!=-1 and writeline.find(stopTag)!=-1:
+        # print('interface_description_map before',writeline)
         port = writeline[writeline.find(interface_star_tag)+len(interface_star_tag):writeline.find(stopTag)]
         value = interface_description_map.get(port)
         if value!=None:
             # writeline = ' %s %s\n'%(writeline.split()[0],value)
             writeline = writeline.replace(interface_star_tag+port+stopTag,value)
+            # print('interface_description_map after',writeline)
         else:
             writeline = ''
     elif writeline.find(bgp_start_tag)!=-1 and writeline.find(stopTag)!=-1:
+        # print('bgp_info_map before',writeline)
         port = writeline[writeline.find(bgp_start_tag)+len(bgp_start_tag):writeline.find(stopTag)]
         value = bgp_info_map.get(port)
         if value!=None:
             # writeline = ' %s %s\n'%(writeline.split()[0],value)
             writeline = writeline.replace(bgp_start_tag+port+stopTag,value)
+            # print('bgp_info_map after',writeline)
         else:
             writeline=''
     return writeline
@@ -1866,6 +1870,7 @@ def change_lower(dict1):
     return dict2
 
 def set_layer_interface_description(ops_conn,local_port,description):
+    # print('local_port = %s , description = %s'%(local_port,description))
     logging.info('local_port = %s , description = %s'%(local_port,description))
 
     _ops = ops.ops()
@@ -1914,6 +1919,30 @@ def delete_logfile(ops_conn):
     handle,_ = _ops.cli.open()
     choice = {"Continue": "y", "continue": "y"}
     _ops.cli.execute(handle,"del /u " + LOG_FILE_EXECUTE,choice)
+    _ops.cli.close(handle)
+
+    return OK
+
+def check_cfg(file_path):
+    with open(file_path,"r") as f:
+        lines = f.readlines()
+        for line in lines:
+            if "systemresourcelarge-route" in line.replace(' ','').lower():
+                f.close()
+                return True
+    f.close()
+    return False
+
+def pre_config(ops_conn):
+
+    _ops = ops.ops()
+    handle,_ = _ops.cli.open()
+    choice = {"Continue": "y", "continue": "y"}
+    _ops.cli.execute(handle,"system")
+    _ops.cli.execute(handle,"system resource large-route")
+    _ops.cli.execute(handle,"commit")
+    _ops.cli.execute(handle,"quit")
+    _ops.cli.execute(handle,"save",choice)
     _ops.cli.close(handle)
 
     return OK
@@ -2312,6 +2341,10 @@ def main_proc(ops_conn):
         else:
             memberid = rows1['member id']
 
+    #pre-configure large specification commands to prevent multiple reboots
+    if check_cfg(REMOTE_PATH_CONFIG):
+        pre_config(ops_conn)
+
     # set startup info
     startup.set_startup_info(local_path_image, local_path_config, local_path_patch,
                              memberid, slave, sys_info['esn'])
@@ -2319,6 +2352,8 @@ def main_proc(ops_conn):
     # delete stack member ID file and license list file after used
     del_file_all(ops_conn, local_path_memid, None)
     del_file_all(ops_conn, local_path_liclist, None)
+    if file_exist(ops_conn, "vrpcfg.zip"):
+        del_file_all(ops_conn, "vrpcfg.zip", None)
     del_file_all(ops_conn, "Agile-Controller-DCN.csv", None)
 
 
