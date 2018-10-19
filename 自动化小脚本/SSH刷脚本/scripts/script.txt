@@ -1,0 +1,16 @@
+ftp 12.255.3.48
+admin
+Huawei23#$
+#
+get CE6856HI-V200R005C00SPC800ERSPAN.mod
+quit
+#
+copy CE6856HI-V200R005C00SPC800ERSPAN.mod $_install_mod/
+y
+delete CE6856HI-V200R005C00SPC800ERSPAN.mod
+y
+install-module CE6856HI-V200R005C00SPC800ERSPAN.mod
+install-module CE6856HI-V200R005C00SPC800ERSPAN.mod next-startup
+#
+display  module-information verbose
+#
