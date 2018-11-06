@@ -1,0 +1,24 @@
+script.txt 上传到 ~ 成功
+~/script.txt 下载到 . 成功
+-------------
+ls -l
+总用量 80
+drwxrwxr-x  2 tarena tarena 4096 11月  6 15:00 a
+drwxrwxr-x 20 tarena tarena 4096 7月  17  2017 anaconda3
+drwxrwxr-x  4 tarena tarena 4096 10月  8 14:37 app
+-rw-r--r--  1 tarena tarena 8980 7月  17  2017 examples.desktop
+drwxr-xr-x  6 tarena tarena 4096 11月  2 11:59 Fabric3-1.14.post1
+drwxrwxr-x  3 tarena tarena 4096 4月  16  2018 my_env
+drwxrwxr-x 10 tarena tarena 4096 10月 27  2017 pycharm-2017.1.5
+drwxrwxr-x  3 tarena tarena 4096 10月 27  2017 PycharmProjects
+-rw-rw-r--  1 tarena tarena    5 11月  6 18:11 script.txt
+drwxrwxr-x  4 tarena tarena 4096 4月  17  2018 software
+drwxr-xr-x  2 tarena tarena 4096 7月  17  2017 公共的
+drwxr-xr-x  2 tarena tarena 4096 7月  17  2017 模板
+drwxr-xr-x  2 tarena tarena 4096 7月  17  2017 视频
+drwxr-xr-x  2 tarena tarena 4096 7月  17  2017 图片
+drwxr-xr-x  2 tarena tarena 4096 7月  17  2017 文档
+drwxr-xr-x  2 tarena tarena 4096 7月  17  2017 下载
+drwxr-xr-x  2 tarena tarena 4096 7月  17  2017 音乐
+drwxr-xr-x  2 tarena tarena 4096 11月  2 11:59 桌面
+-------------
