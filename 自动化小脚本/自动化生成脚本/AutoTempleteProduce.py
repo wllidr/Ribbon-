@@ -112,10 +112,7 @@ def config(filePath):
     configVariables = pd.read_excel(filePath, sheet_name = sheet_config).T
     index = configVariables.ix[0, :].tolist()
     index = [s.lower() for s in index]
-    # print(index, '------')
-    configVariables = configVariables.ix[1:, :].T
-    configVariables.index = index
-    configVariables = configVariables.T
+    configVariables = configVariables.ix[:, :].T
     return index, configVariables
 
 def templete(filePath, templeteRow):
@@ -139,13 +136,14 @@ def saveConfig(templete, templeteVariables, configVariables, savePath):
     '''
     if not os.path.exists(savePath):
         os.makedirs(savePath)
-
+    # print(configVariables.shape[0])
     for i in range(configVariables.shape[0]):
-        filePath = savePath + '\\' + str(configVariables.iloc[i, :][templeteVariables[0]]) + '.txt'
+        filePath = savePath + '\\' + str(configVariables.iloc[i, :].iloc[0]) + '.txt'
         f = open(filePath, 'w')
         for j in range(templete.shape[0]):
             line = templete.iloc[j]
             groups = re.findall('<.*?>', line)
+            # print(groups)
             if groups:
                 try:
                     for g in groups:
@@ -155,13 +153,14 @@ def saveConfig(templete, templeteVariables, configVariables, savePath):
                     f.write(line + '\n')
             else:
                 f.write(line + '\n')
-        f.close()
+        # f.close()
 
 if __name__ == '__main__':
     app = wx.App()
     frame = MyFrame('自动化生成配置，初始参数')
     app.MainLoop()
     filePath, templeteRow, savePath = arr
+    # filePath, templeteRow, savePath = [r'D:\shengkai\3.6\AutoTempleteProduce\配置基线.xlsx', 'A', 'sc']
     if filePath == '':
         filePath = '配置基线.xlsx'
     if templeteRow == '':
@@ -174,6 +173,7 @@ if __name__ == '__main__':
     templete1 = templete(filePath, templeteRow)
     templete1 = templete1.dropna(axis=0, how='all')
     templete1.index = [x for x in range(templete1.shape[0])]
+    configVariables.columns = [i.lower() for i in configVariables.columns.tolist()]
     try:
         saveConfig(templete1, templeteVariables, configVariables, savePath)
     except:
