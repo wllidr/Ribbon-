@@ -1,0 +1,907 @@
+scr 0 t 
+Info: The configuration takes effect on the current user terminal interface only.
+<SZ-LJ-0202-D09-CE7855Q-XGWW-01>dis device 
+Device status:
+--------------------------------------------------------------------------------
+Slot  Card   Type                     Online   Power Register     Alarm     Primary        
+--------------------------------------------------------------------------------
+1     -      CE7855-32Q-EI            Present  On    Registered   Normal    Master         
+      FAN1   FAN-40HA-B               Present  On    Registered   Normal    NA             
+      FAN2   FAN-40HA-B               Present  On    Registered   Normal    NA             
+      PWR1   PAC-600WA-B              Present  On    Registered   Normal    NA             
+      PWR2   PAC-600WA-B              Present  On    Registered   Normal    NA             
+--------------------------------------------------------------------------------
+<SZ-LJ-0202-D09-CE7855Q-XGWW-01>dis dev ma 
+----------------------------------------------------------------------------
+Slot       Card   Type               Serial-number            Manu-date     
+----------------------------------------------------------------------------
+1          --     CE7855-32Q-EI      2102350SQX10HC000007     2017-12-02    
+           FAN1   FAN-40HA-B         21023590976THB000809     2017-12-01    
+           FAN2   FAN-40HA-B         21023590976THB000242     2017-12-01    
+           PWR1   PAC-600WA-B        2102310PMHHVHB005955     2017-11-30    
+           PWR2   PAC-600WA-B        2102310PMHHVHB005893     2017-11-30    
+----------------------------------------------------------------------------
+<SZ-LJ-0202-D09-CE7855Q-XGWW-01>display alarm active 
+--------------------------------------------------------------------------------
+Sequence   AlarmId    Severity Date Time  Description                           
+--------------------------------------------------------------------------------
+52         0x9360001  Major    2018-04-27 Link bandwidth lost totally. (TrunkInd
+                                18:32:01+ ex=2, TrunkIfIndex=52, TrunkId=3, Trun
+                               08:00      kName=Eth-Trunk3, Reason=No link is se
+                                          lected.)                              
+51         0x9360001  Major    2018-04-27 Link bandwidth lost totally. (TrunkInd
+                                18:32:00+ ex=1, TrunkIfIndex=51, TrunkId=2, Trun
+                               08:00      kName=Eth-Trunk2, Reason=No link is se
+                                          lected.)                              
+50         0x9360001  Major    2018-04-27 Link bandwidth lost totally. (TrunkInd
+                                18:31:59+ ex=0, TrunkIfIndex=50, TrunkId=1, Trun
+                               08:00      kName=Eth-Trunk1, Reason=No link is se
+                                          lected.)                              
+33         0x8520003  Major    2018-04-28 The interface status changes. (ifName=
+                                02:22:05+ 40GE1/0/23, AdminStatus=UP, OperStatus
+                               08:00      =DOWN, Reason=Interface physical link 
+                                          is down, mainIfname=40GE1/0/23)       
+31         0x8520003  Major    2018-04-28 The interface status changes. (ifName=
+                                02:22:05+ 40GE1/0/21, AdminStatus=UP, OperStatus
+                               08:00      =DOWN, Reason=Interface physical link 
+                                          is down, mainIfname=40GE1/0/21)       
+--------------------------------------------------------------------------------
+<SZ-LJ-0202-D09-CE7855Q-XGWW-01>dis startup 
+MainBoard:
+  Configured startup system software:        flash:/CE7855EI-V200R002C50SPC800.cc
+  Startup system software:                   flash:/CE7855EI-V200R002C50SPC800.cc
+  Next startup system software:              flash:/CE7855EI-V200R002C50SPC800.cc
+  Startup saved-configuration file:          NULL
+  Next startup saved-configuration file:     flash:/vrpcfg.zip
+  Startup paf file:                          default
+  Next startup paf file:                     default
+  Startup patch package:                     flash:/CE7855EI-V200R002SPH011.PAT
+  Next startup patch package:                flash:/CE7855EI-V200R002SPH011.PAT
+<SZ-LJ-0202-D09-CE7855Q-XGWW-01>dis patch-information 
+Patch Package Name    :flash:/CE7855EI-V200R002SPH011.PAT
+Patch Package Version :V200R002SPH011
+Patch Package State   :Running   
+Patch Package Run Time:2018-04-20 23:58:05+08:00
+<SZ-LJ-0202-D09-CE7855Q-XGWW-01>dis sn all 
+Slot 1:
+Equipment SN(ESN): 2102350SQX10HC000007
+License ESN: 2102350SQX10HC000007
+----------------------------------------------------------------------------
+Slot       Sub    Type               SN                       P/N           
+----------------------------------------------------------------------------
+1          -      CE7855-32Q-EI      2102350SQX10HC000007     02350SQX      
+           FAN1   FAN-40HA-B         21023590976THB000809     02359097      
+           FAN2   FAN-40HA-B         21023590976THB000242     02359097      
+           PWR1   PAC-600WA-B        2102310PMHHVHB005955     02310PMH      
+           PWR2   PAC-600WA-B        2102310PMHHVHB005893     02310PMH      
+----------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Port                 Type                 SN                   Description                                                                                                                                                                                                                                                     
+--------------------------------------------------------------------------------
+40GE1/0/1            02310RMB             R3373012101          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/2            02310RMB             R3373011996          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/3            02310RMB             R3373007774          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/4            02310RMB             R3373012847          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/5            02310RMB             R3373009355          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/6            02310RMB             R3373011688          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/7            02310RMB             R3373008181          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/8            02310RMB             R3373011042          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/9            02310RMB             BP171101930592       40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/10           02310RMB             R3373012577          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/11           02310RMB             R3373013730          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/12           02310RMB             R3373014176          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/13           02310RMB             BP171101930506       40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/14           02310RMB             R3373009976          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/15           02310RMB             BP171101800144       40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/16           02310RMB             R3373011035          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/17           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/18           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/19           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/20           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/21           02310RMB             R337B004010          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/22           02310RMB             R337B004036          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/23           02310RMB             R337B005260          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/24           02310RMB             R337B006907          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/25           02310RMB             R337B004070          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/26           02310RMB             R337B006708          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/27           02310RMB             R337B004147          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/28           02310RMB             R337B005120          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/29           02310RMB             BP173803070790       40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/30           02310RMB             BP174300780037       40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/31           02310RMB             R337B006486          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/32           02310RMB             R337B006429          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+--------------------------------------------------------------------------------
+<SZ-LJ-0202-D09-CE7855Q-XGWW-01>display clock 
+2018-04-27 18:34:01+08:00
+Friday
+Time Zone(BeiJing) : UTC+08:00
+<SZ-LJ-0202-D09-CE7855Q-XGWW-01>dis cu 
+!Software Version V200R002C50SPC800
+!Last configuration was updated at 2018-04-27 18:33:21+08:00
+!Last configuration was saved at 2018-04-20 23:58:18+08:00
+#
+clock timezone BeiJing add 08:00:00
+#
+sysname SZ-LJ-0202-D09-CE7855Q-XGWW-01
+#
+command-privilege level rearrange
+#
+info-center source default channel 2 trap level informational
+info-center source cli channel 4 log state off
+info-center loghost source MEth0/0/0
+info-center loghost 10.203.26.231 vpn-instance mgt_vrf facility local2 local-time
+info-center loghost 10.203.26.232 vpn-instance mgt_vrf facility local2 local-time
+info-center loghost 10.203.26.233 vpn-instance mgt_vrf facility local2 local-time
+info-center loghost 172.16.0.203 vpn-instance mgt_vrf facility local2 local-time
+info-center logbuffer size 1024
+#
+port split mode mode1 slot 1
+#
+system resource standard
+#
+device board 1 board-type CE7855-32Q-EI
+#
+drop-profile default
+#
+dcb pfc
+#
+dcb ets-profile default
+#
+ntp server disable
+ntp ipv6 server disable
+ntp source-interface MEth0/0/0 vpn-instance mgt_vrf
+ntp unicast-server 172.16.0.203 vpn-instance mgt_vrf
+#
+load-balance ecmp
+ ipv4 src-ip dst-ip
+#
+vlan reserved for main-interface 4000 to 4063
+#
+vlan batch 200 to 203 1001 1101 1201 1301 1501 1601 1701 1801
+#
+stp bpdu-protection
+#
+dhcp enable
+#
+arp timeout 300
+#
+set flow-stat interval 30
+#
+telnet ipv6 server disable
+telnet server acl 2000
+#
+hwtacacs enable
+#
+sflow agent ip 10.203.26.129
+#
+sflow source ip 9.21.250.31
+#
+sflow collector 1 ip 10.203.26.232 udp-port 12342
+#
+diffserv domain default
+#
+ip vpn-instance CAP
+ ipv4-family
+  route-distinguisher 203:0
+#
+ip vpn-instance CM
+ ipv4-family
+  route-distinguisher 202:0
+#
+ip vpn-instance CT
+ ipv4-family
+  route-distinguisher 200:0
+#
+ip vpn-instance CU
+ ipv4-family
+  route-distinguisher 201:0
+#
+ip vpn-instance mgt_vrf
+ ipv4-family
+  route-distinguisher 2:1
+#
+hwtacacs server template tencent_scheme
+ hwtacacs server authentication 10.12.220.198 vpn-instance mgt_vrf shared-key cipher %^%#"<d$/tZXrRp*xi217fsG`)b2G</@RK}0Jk1f`28M%^%#
+ hwtacacs server authentication 172.16.0.196 vpn-instance mgt_vrf shared-key cipher %^%#pd+X=Y6Z_R&"x/L5LB;7@X%[>7>Ha$Iq*4US2,\=%^%# secondary
+ hwtacacs server authorization 10.12.220.198 vpn-instance mgt_vrf shared-key cipher %^%#fw%)W^^f_/IlfZLv@FnLYP"S&rKI1'e-qwI|,^HB%^%#
+ hwtacacs server authorization 172.16.0.196 vpn-instance mgt_vrf shared-key cipher %^%#*u)e4)*DKRMOJt&w&G7K0O4&<q0[}QMkMCEM\En8%^%# secondary
+ hwtacacs server accounting 10.12.220.198 vpn-instance mgt_vrf shared-key cipher %^%#)`WuYPL\56>3Ht-/Kl\'KA3m+5)NT0&N)XJ("WF>%^%#
+ hwtacacs server accounting 172.16.0.196 vpn-instance mgt_vrf shared-key cipher %^%#R2,ZJP)q}#R',zV|=J7SY<_x()N*F#ya032v.e)!%^%# secondary
+ hwtacacs server user-name domain-excluded
+#
+vlan 200
+ description XGW-LD-CT-Access
+#
+vlan 201
+ description XGW-LD-CU-Access
+#
+vlan 202
+ description XGW-LD-CM-Access
+#
+vlan 203
+ description XGW-LD-CAP-Access
+#
+vlan 1001
+ description SZ-LJ-0202-D07-HW12816-WC-01_CT
+#
+vlan 1101
+ description SZ-LJ-0202-D07-HW12816-WC-01_CU
+#
+vlan 1201
+ description SZ-LJ-0202-D07-HW12816-WC-01_CM
+#
+vlan 1301
+ description SZ-LJ-0202-D07-HW12816-WC-01_CAP
+#
+vlan 1501
+ description SZ-LJ-0202-M17-HW12816-WC-01_CT
+#
+vlan 1601
+ description SZ-LJ-0202-M17-HW12816-WC-01_CU
+#
+vlan 1701
+ description SZ-LJ-0202-M17-HW12816-WC-01_CM
+#
+vlan 1801
+ description SZ-LJ-0202-M17-HW12816-WC-01_CAP
+#
+stp region-configuration
+ region-name LAN-XGW
+ revision-level 1
+#
+acl number 2000
+ description Telnet-Filter
+ rule 5 permit source 172.16.0.192 0.0.0.63
+ rule 10 permit source 172.17.73.0 0.0.0.31
+ rule 15 permit source 172.18.62.0 0.0.0.31
+ rule 20 permit source 10.12.212.224 0.0.0.31
+ rule 25 permit source 10.12.220.0 0.0.0.255
+ rule 30 permit vpn-instance mgt_vrf source 172.16.0.192 0.0.0.63
+ rule 35 permit vpn-instance mgt_vrf source 172.17.73.0 0.0.0.31
+ rule 40 permit vpn-instance mgt_vrf source 172.18.62.0 0.0.0.31
+ rule 45 permit vpn-instance mgt_vrf source 10.12.212.224 0.0.0.31
+ rule 50 permit vpn-instance mgt_vrf source 10.12.220.0 0.0.0.255
+ rule 55 permit vpn-instance mgt_vrf source 10.203.24.0 0.0.1.255
+ rule 60 permit vpn-instance mgt_vrf source 10.203.26.231 0
+ rule 65 permit vpn-instance mgt_vrf source 10.203.26.232 0
+ rule 70 permit vpn-instance mgt_vrf source 10.203.26.233 0
+ rule 75 permit vpn-instance mgt_vrf source 10.203.26.0 0.0.0.255
+#
+acl number 2001
+ description SNMP-Filter
+ rule 5 permit source 172.16.0.192 0.0.0.63
+ rule 10 permit source 172.17.73.0 0.0.0.31
+ rule 15 permit source 172.18.62.0 0.0.0.31
+ rule 20 permit source 10.12.212.224 0.0.0.31
+ rule 25 permit source 10.12.220.0 0.0.0.255
+ rule 30 permit vpn-instance mgt_vrf source 172.16.0.192 0.0.0.63
+ rule 35 permit vpn-instance mgt_vrf source 172.17.73.0 0.0.0.31
+ rule 40 permit vpn-instance mgt_vrf source 172.18.62.0 0.0.0.31
+ rule 45 permit vpn-instance mgt_vrf source 10.12.212.224 0.0.0.31
+ rule 50 permit vpn-instance mgt_vrf source 10.12.220.0 0.0.0.255
+ rule 55 permit vpn-instance mgt_vrf source 10.203.24.0 0.0.1.255
+ rule 60 permit vpn-instance mgt_vrf source 10.203.26.231 0
+ rule 65 permit vpn-instance mgt_vrf source 10.203.26.232 0
+ rule 70 permit vpn-instance mgt_vrf source 10.203.26.233 0
+ rule 75 permit vpn-instance mgt_vrf source 10.203.26.0 0.0.0.255
+#
+acl number 2100
+ description Match-Odd-Even
+ rule 5 permit source 0.0.1.0 255.255.254.0
+#
+aaa
+ undo local-user policy security-enhance
+ local-user tencent password irreversible-cipher $1c$"~FgVe|EC-$1;';&://;Phy'&(s`Z"Jf~.R0v(M44,1wRVy*H./$
+ local-user tencent service-type ftp terminal telnet ssh
+ local-user tencent level 15
+ #
+ authentication-scheme default
+ #
+ authentication-scheme tencent_scheme
+  authentication-mode hwtacacs local
+ #
+ authorization-scheme default
+ #
+ authorization-scheme tencent_scheme
+  authorization-mode hwtacacs local
+  authorization-cmd 3 hwtacacs local
+ #
+ accounting-scheme default
+ #
+ accounting-scheme tencent_scheme
+  accounting-mode hwtacacs
+ #
+ domain default
+  authentication-scheme tencent_scheme
+  authorization-scheme tencent_scheme
+  accounting-scheme tencent_scheme
+  hwtacacs server tencent_scheme
+ #
+ domain default_admin
+  authentication-scheme tencent_scheme
+  authorization-scheme tencent_scheme
+  accounting-scheme tencent_scheme
+  hwtacacs server tencent_scheme
+ #
+ domain tencent_domain
+  authentication-scheme tencent_scheme
+  authorization-scheme tencent_scheme
+  accounting-scheme tencent_scheme
+  hwtacacs server tencent_scheme
+ #
+ recording-scheme tencent_scheme
+  recording-mode hwtacacs tencent_scheme
+ #
+ cmd recording-scheme tencent_scheme
+#
+stack
+#
+interface Vlanif200
+ description XGW-LD-CT-Access
+ ip binding vpn-instance CT
+ ip address 9.21.224.1 255.255.255.192
+ ospf authentication-mode md5 1 cipher %^%#H0EsUm8Pf-}%&B@=Vuh#&{D>QQ=X)O>yC`~\}RC%%^%#
+ ospf dr-priority 255
+ ospf timer hello 1
+ ospf timer dead 10
+#
+interface Vlanif201
+ description XGW-LD-CU-Access
+ ip binding vpn-instance CU
+ ip address 9.21.226.1 255.255.255.192
+ ospf authentication-mode md5 1 cipher %^%#`oER&:&AK<E(TPBhJf:!*ry.0!7oNK}n^3E>S'"S%^%#
+ ospf dr-priority 255
+ ospf timer hello 1
+ ospf timer dead 10
+#
+interface Vlanif202
+ description XGW-LD-CM-Access
+ ip binding vpn-instance CM
+ ip address 9.21.228.1 255.255.255.192
+ ospf authentication-mode md5 1 cipher %^%#B[)-YAS:v*<I{'C*jBuXi\;8Bk2kR-zciD+zezWN%^%#
+ ospf dr-priority 255
+ ospf timer hello 1
+ ospf timer dead 10
+#
+interface Vlanif203
+ description XGW-LD-CAP-Access
+ ip binding vpn-instance CAP
+ ip address 9.21.230.1 255.255.255.192
+ ospf authentication-mode md5 1 cipher %^%#3e)y@lWB#PsLS]O$^a!8L^@[J7[I{,hVmVNo19EC%^%#
+ ospf dr-priority 255
+ ospf timer hello 1
+ ospf timer dead 10
+#
+interface Vlanif1001
+ description SZ-LJ-0202-D07-HW12816-WC-01_CT
+ ip binding vpn-instance CT
+ ip address 9.21.245.129 255.255.255.254
+#
+interface Vlanif1101
+ description SZ-LJ-0202-D07-HW12816-WC-01_CU
+ ip binding vpn-instance CU
+ ip address 9.21.245.193 255.255.255.254
+#
+interface Vlanif1201
+ description SZ-LJ-0202-D07-HW12816-WC-01_CM
+ ip binding vpn-instance CM
+ ip address 9.21.246.1 255.255.255.254
+#
+interface Vlanif1301
+ description SZ-LJ-0202-D07-HW12816-WC-01_CAP
+ ip binding vpn-instance CAP
+ ip address 9.21.246.65 255.255.255.254
+#
+interface Vlanif1501
+ description SZ-LJ-0202-M17-HW12816-WC-01_CT
+ ip binding vpn-instance CT
+ ip address 9.21.246.129 255.255.255.254
+#
+interface Vlanif1601
+ description SZ-LJ-0202-M17-HW12816-WC-01_CU
+ ip binding vpn-instance CU
+ ip address 9.21.246.193 255.255.255.254
+#
+interface Vlanif1701
+ description SZ-LJ-0202-M17-HW12816-WC-01_CM
+ ip binding vpn-instance CM
+ ip address 9.21.247.1 255.255.255.254
+#
+interface Vlanif1801
+ description SZ-LJ-0202-M17-HW12816-WC-01_CAP
+ ip binding vpn-instance CAP
+ ip address 9.21.247.65 255.255.255.254
+#
+interface MEth0/0/0
+ description Out-Of-Band-Management
+ ip binding vpn-instance mgt_vrf
+ ip address 10.203.26.129 255.255.255.0
+#
+interface Eth-Trunk1
+ description SZ-LJ-0202-D07-HW12816-WC-01-40GE1/0/6
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 1001 1101 1201 1301
+ stp disable
+ mode lacp-static
+ lacp timeout fast
+#
+interface Eth-Trunk2
+ description SZ-LJ-0202-D07-HW12816-WC-01-40GE2/0/6
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 1501 1601 1701 1801
+ stp disable
+ mode lacp-static
+ lacp timeout fast
+#
+interface Eth-Trunk3
+ description SZ-LJ-0202-D09-CE5855-M-01_Eth-trunk1
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 401
+ mode lacp-static
+ lacp timeout fast
+#
+interface Eth-Trunk127
+ description SZ-LJ-0202-M16-CE7855Q-XGWW-01_Eth-Trunk127
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 200 to 203
+ mode lacp-static
+ lacp timeout fast
+#
+interface 40GE1/0/1
+ description SE1
+ shutdown
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/2
+ description SE2
+ shutdown
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/3
+ description SE3
+ shutdown
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/4
+ description SE4
+ shutdown
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/5
+ description SE5
+ shutdown
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/6
+ description SE6
+ shutdown
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/7
+ description SE7
+ shutdown
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/8
+ description SE8
+ shutdown
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/9
+ description SE9
+ shutdown
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/10
+ description SE10
+ shutdown
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/11
+ description SE11
+ shutdown
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/12
+ description SE12
+ shutdown
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/13
+ description SE13
+ shutdown
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/14
+ description SE14
+ shutdown
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/15
+ description SE15
+ shutdown
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/16
+ description SE16
+ shutdown
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/17
+ description SZ-LJ-0202-D09-CE5855-M-01-40GE1/0/1
+ eth-trunk 3
+#
+interface 40GE1/0/18
+ description SZ-LJ-0202-D09-CE5855-M-01-40GE1/0/2
+ eth-trunk 3
+#
+interface 40GE1/0/19
+ description SE19
+ shutdown
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+#
+interface 40GE1/0/20
+ description SE20
+ shutdown
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+#
+interface 40GE1/0/21
+ description SZ-LJ-0202-D07-HW12816-WC-01
+ eth-trunk 1
+ sflow sampling collector 1 
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/22
+ description SZ-LJ-0202-D07-HW12816-WC-01
+ eth-trunk 1
+ sflow sampling collector 1 
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/23
+ description SZ-LJ-0202-D07-HW12816-WC-01
+ eth-trunk 1
+ sflow sampling collector 1 
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/24
+ description SZ-LJ-0202-D07-HW12816-WC-01
+ eth-trunk 1
+ sflow sampling collector 1 
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/25
+ description SZ-LJ-0202-M17-HW12816-WC-01
+ eth-trunk 2
+ sflow sampling collector 1 
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/26
+ description SZ-LJ-0202-M17-HW12816-WC-01
+ eth-trunk 2
+ sflow sampling collector 1 
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/27
+ description SZ-LJ-0202-M17-HW12816-WC-01
+ eth-trunk 2
+ sflow sampling collector 1 
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/28
+ description SZ-LJ-0202-M17-HW12816-WC-01
+ eth-trunk 2
+ sflow sampling collector 1 
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/29
+ description SZ-LJ-0202-M16-CE7855Q-XGWW-01-40GE1/0/29
+ eth-trunk 127
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/30
+ description SZ-LJ-0202-M16-CE7855Q-XGWW-01-40GE1/0/29
+ eth-trunk 127
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/31
+ description SZ-LJ-0202-M16-CE7855Q-XGWW-01-40GE1/0/29
+ eth-trunk 127
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/32
+ description SZ-LJ-0202-M16-CE7855Q-XGWW-01-40GE1/0/29
+ eth-trunk 127
+ device transceiver 40GBASE-FIBER
+#
+interface LoopBack0
+ ip address 9.21.250.31 255.255.255.255
+#
+interface NULL0
+#
+bgp 65001
+ router-id 10.203.26.129
+ #
+ ipv4-family unicast
+  compare-different-as-med
+  preference 10 100 100
+  network 9.21.250.31 255.255.255.255 route-policy 1:4
+  maximum load-balancing 32  
+ #
+ ipv4-family vpn-instance CAP
+  compare-different-as-med
+  preference 10 100 100
+  maximum load-balancing 32  
+  group Core external
+  peer Core as-number 64756
+  peer Core password simple hellotencent
+  peer 9.21.246.64 as-number 64756
+  peer 9.21.246.64 group Core
+  peer 9.21.246.64 description SZ-LJ-0202-D07-HW12816-WC-01_CAP
+  peer 9.21.247.64 as-number 64756
+  peer 9.21.247.64 group Core
+  peer 9.21.247.64 description SZ-LJ-0202-M17-HW12816-WC-01_CAP
+  peer Core route-policy From-Core import
+  peer Core route-policy To-Core export
+  peer Core advertise-community
+ #
+ ipv4-family vpn-instance CM
+  compare-different-as-med
+  preference 10 100 100
+  maximum load-balancing 32  
+  group Core external
+  peer Core as-number 64756
+  peer Core password simple hellotencent
+  peer 9.21.246.0 as-number 64756
+  peer 9.21.246.0 group Core
+  peer 9.21.246.0 description SZ-LJ-0202-D07-HW12816-WC-01_CM
+  peer 9.21.247.0 as-number 64756
+  peer 9.21.247.0 group Core
+  peer 9.21.247.0 description SZ-LJ-0202-M17-HW12816-WC-01_CM
+  peer Core route-policy From-Core import
+  peer Core route-policy To-Core export
+  peer Core advertise-community
+ #
+ ipv4-family vpn-instance CT
+  compare-different-as-med
+  preference 10 100 100
+  maximum load-balancing 32  
+  group Core external
+  peer Core as-number 64756
+  peer Core password simple hellotencent
+  peer 9.21.245.128 as-number 64756
+  peer 9.21.245.128 group Core
+  peer 9.21.245.128 description SZ-LJ-0202-D07-HW12816-WC-01_CT
+  peer 9.21.246.128 as-number 64756
+  peer 9.21.246.128 group Core
+  peer 9.21.246.128 description SZ-LJ-0202-M17-HW12816-WC-01_CT
+  peer Core route-policy From-Core import
+  peer Core route-policy To-Core export
+  peer Core advertise-community
+ #
+ ipv4-family vpn-instance CU
+  compare-different-as-med
+  preference 10 100 100
+  maximum load-balancing 32  
+  group Core external
+  peer Core as-number 64756
+  peer Core password simple hellotencent
+  peer 9.21.245.192 as-number 64756
+  peer 9.21.245.192 group Core
+  peer 9.21.245.192 description SZ-LJ-0202-D07-HW12816-WC-01_CU
+  peer 9.21.246.192 as-number 64756
+  peer 9.21.246.192 group Core
+  peer 9.21.246.192 description SZ-LJ-0202-M17-HW12816-WC-01_CU
+  peer Core route-policy From-Core import
+  peer Core route-policy To-Core export
+  peer Core advertise-community
+#
+ospf 1 router-id 10.203.26.129 vpn-instance CT
+ default-route-advertise cost 1000
+ preference 30
+ preference ase 35
+ spf-schedule-interval intelligent-timer 5000 1000 5000
+ lsa-originate-interval intelligent-timer 5000 1000 5000
+ bandwidth-reference 100000
+ area 0.0.0.200
+  authentication-mode md5
+  network 9.21.224.0 0.0.0.63
+#
+ospf 2 router-id 10.203.26.129 vpn-instance CU
+ default-route-advertise cost 1000
+ preference 30
+ preference ase 35
+ spf-schedule-interval intelligent-timer 5000 1000 5000
+ lsa-originate-interval intelligent-timer 5000 1000 5000
+ bandwidth-reference 100000
+ area 0.0.0.200
+  authentication-mode md5
+  network 9.21.226.0 0.0.0.63
+#
+ospf 3 router-id 10.203.26.129 vpn-instance CM
+ default-route-advertise cost 1000
+ preference 30
+ preference ase 35
+ spf-schedule-interval intelligent-timer 5000 1000 5000
+ lsa-originate-interval intelligent-timer 5000 1000 5000
+ bandwidth-reference 100000
+ area 0.0.0.200
+  authentication-mode md5
+  network 9.21.228.0 0.0.0.63
+#
+ospf 4 router-id 10.203.26.129 vpn-instance CAP
+ default-route-advertise cost 1000
+ preference 30
+ preference ase 35
+ spf-schedule-interval intelligent-timer 5000 1000 5000
+ lsa-originate-interval intelligent-timer 5000 1000 5000
+ bandwidth-reference 100000
+ area 0.0.0.200
+  authentication-mode md5
+  network 9.21.230.0 0.0.0.63
+#
+route-policy 1:4 permit node 10
+ apply community 1:4
+#
+route-policy From-Core permit node 5
+#
+route-policy Match-Odd-Even permit node 10
+ if-match acl 2100
+ apply cost 1000
+ apply community 3:1
+#
+route-policy Match-Odd-Even permit node 15
+ apply cost 2000
+ apply community 3:1
+#
+route-policy To-Core permit node 10
+ if-match community-filter 10
+#
+ip community-filter 10 index 10 permit 3:1
+#
+ip route-static vpn-instance mgt_vrf 0.0.0.0 0.0.0.0 MEth0/0/0 10.203.26.1 preference 5 tag 2002 description OUT-OF-BAND-MANAGEMENT
+#
+snmp-agent
+snmp-agent local-engineid 800007DB03002EC7993F61
+snmp-agent community read cipher %^%#!.B4!DfCd="[D|=7hLXNZj@+GReejJ'+%g)/DtAY*Er,Wiw(T6.O{T4{/J:*KkVH@'2f=-]z2QQ.y[RU%^%# mib-view iso-view acl 2001
+#
+snmp-agent sys-info version v2c
+snmp-agent sys-info version v3 disable
+snmp-agent community complexity-check disable
+snmp-agent target-host trap address udp-domain 172.16.0.202 vpn-instance mgt_vrf params securityname cipher %^%#rmai*vh1_QY:shD7;,6-TUD9UE][}>V3gTM*=5.@%^%# v2c
+snmp-agent target-host trap address udp-domain 10.203.26.231 vpn-instance mgt_vrf params securityname cipher %^%#nECLNVg4H-MpLf"Y#_$$O:ho~P}P|+$~]2H69T%)%^%# v2c
+snmp-agent target-host trap address udp-domain 10.203.26.232 vpn-instance mgt_vrf params securityname cipher %^%#MbYn>cHfd,tiM8KD=s&Lr[Z5&o"u:#k6aC-`ZXh5%^%# v2c
+snmp-agent target-host trap address udp-domain 10.203.26.233 vpn-instance mgt_vrf params securityname cipher %^%#>-_8,EPoK'+cGqHo"s/S5'jP8l-`'77\[9F<{t+-%^%# v2c
+#
+snmp-agent mib-view included iso-view iso
+#
+snmp-agent blacklist ip-block disable
+#
+lldp enable
+#
+lldp management-address 10.203.26.129
+#
+stelnet ipv4 server enable
+stelnet ipv6 server enable
+ssh user tencent
+ssh user tencent authentication-type password
+ssh user tencent service-type all
+ssh server acl 2000
+ssh authorization-type default aaa
+#
+ssh server cipher aes256_ctr aes128_ctr
+ssh server hmac sha2_256_96 sha2_256 sha1_96
+ssh server key-exchange dh_group_exchange_sha256 dh_group_exchange_sha1 ecdh_sha2_nistp256 ecdh_sha2_nistp384 ecdh_sha2_nistp521 sm2_kep
+#
+header login information "*********************************************************Authorized Access Only!Disconnect IMMEDIATELY as you are not an authorized user!*********************************************************"
+#
+user-interface maximum-vty 21
+#
+user-interface con 0
+ authentication-mode aaa
+#
+user-interface vty 0 20
+ acl 2000 inbound
+ authentication-mode aaa
+ user privilege level 15
+#
+vm-manager
+#
+return
+<SZ-LJ-0202-D09-CE7855Q-XGWW-01>save 
+Warning: The current configuration will be written to the device. Continue? [Y/N]:y
+Now saving the current configuration to the slot 1 .
+Info: Save the configuration successfully.
+<SZ-LJ-0202-D09-CE7855Q-XGWW-01>
+<SZ-LJ-0202-D09-CE7855Q-XGWW-01>

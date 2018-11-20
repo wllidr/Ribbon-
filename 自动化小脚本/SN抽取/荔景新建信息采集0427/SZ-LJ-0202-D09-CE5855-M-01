@@ -1,0 +1,653 @@
+scr 0 t 
+Info: The configuration takes effect on the current user terminal interface only.
+<SZ-LJ-0202-D09-CE5855-M-01>dis device 
+Device status:
+--------------------------------------------------------------------------------
+Slot  Card   Type                     Online   Power Register     Alarm     Primary        
+--------------------------------------------------------------------------------
+1     -      CE5855-48T4S2Q-EI        Present  On    Registered   Normal    Master         
+      FAN1   FAN-040A-B               Present  On    Registered   Normal    NA             
+      FAN2   FAN-040A-B               Present  On    Registered   Normal    NA             
+      PWR1   ES0W2PSA0150             Present  On    Registered   Normal    NA             
+      PWR2   ES0W2PSA0150             Present  On    Registered   Normal    NA             
+--------------------------------------------------------------------------------
+<SZ-LJ-0202-D09-CE5855-M-01>dis dev ma 
+----------------------------------------------------------------------------
+Slot       Card   Type               Serial-number            Manu-date     
+----------------------------------------------------------------------------
+1          --     CE5855-48T4S2Q-EI  2102350TJD6THB000076     2017-11-16    
+           FAN1   FAN-040A-B         2102350JFA6THB000802     2017-11-24    
+           FAN2   FAN-040A-B         2102350JFA6THB000795     2017-11-24    
+           PWR1   ES0W2PSA0150       2102310JFA6THB928824     2017-11-15    
+           PWR2   ES0W2PSA0150       2102310JFA6THB928818     2017-11-15    
+----------------------------------------------------------------------------
+<SZ-LJ-0202-D09-CE5855-M-01>display alarm active 
+--------------------------------------------------------------------------------
+Sequence   AlarmId    Severity Date Time  Description                           
+--------------------------------------------------------------------------------
+26         0x9360001  Major    2018-04-28 Link bandwidth lost totally. (TrunkInd
+                                02:30:34+ ex=0, TrunkIfIndex=61, TrunkId=1, Trun
+                               08:00      kName=Eth-Trunk1, Reason=No link is se
+                                          lected.)                              
+1          0x10085    Major    2018-04-20 The storage usage exceeded the pre-set
+                                23:37:51+  overload threshold.(TrapSeverity=4, P
+                               08:00      robableCause=75265, EventType=3, Physi
+                                          calIndex=16842753, PhysicalName=MPU sl
+                                          ot 1, RelativeResource=flash, UsageTyp
+                                          e=5, SubIndex=1, UsageValue=88, Unit=1
+                                          , UsageThreshold=85)                  
+--------------------------------------------------------------------------------
+<SZ-LJ-0202-D09-CE5855-M-01>dis startup 
+MainBoard:
+  Configured startup system software:        flash:/CE5855EI-V200R002C50SPC800.cc
+  Startup system software:                   flash:/CE5855EI-V200R002C50SPC800.cc
+  Next startup system software:              flash:/CE5855EI-V200R002C50SPC800.cc
+  Startup saved-configuration file:          flash:/vrpcfg.zip
+  Next startup saved-configuration file:     flash:/vrpcfg.zip
+  Startup paf file:                          default
+  Next startup paf file:                     default
+  Startup patch package:                     flash:/CE5855EI-V200R002SPH011.PAT
+  Next startup patch package:                flash:/CE5855EI-V200R002SPH011.PAT
+<SZ-LJ-0202-D09-CE5855-M-01>dis patch-information 
+Patch Package Name    :flash:/CE5855EI-V200R002SPH011.PAT
+Patch Package Version :V200R002SPH011
+Patch Package State   :Running   
+Patch Package Run Time:2018-04-20 23:35:05+08:00
+<SZ-LJ-0202-D09-CE5855-M-01>dis sn all 
+Slot 1:
+Equipment SN(ESN): 2102350TJD6THB000076
+License ESN: 2102350TJD6THB000076
+----------------------------------------------------------------------------
+Slot       Sub    Type               SN                       P/N           
+----------------------------------------------------------------------------
+1          -      CE5855-48T4S2Q-EI  2102350TJD6THB000076     02350TJD      
+           FAN1   FAN-040A-B         2102350JFA6THB000802     02350JFA      
+           FAN2   FAN-040A-B         2102350JFA6THB000795     02350JFA      
+           PWR1   ES0W2PSA0150       2102310JFA6THB928824     02310JFA      
+           PWR2   ES0W2PSA0150       2102310JFA6THB928818     02310JFA      
+----------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Port                 Type                 SN                   Description                                                                                                                                                                                                                                                     
+--------------------------------------------------------------------------------
+10GE1/0/1            --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/2            --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/3            --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/4            --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/1            02310RMB             R337B005275          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+40GE1/0/2            02310RMB             R337B005018          40GE-850nm-MPO-300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                                                                          
+--------------------------------------------------------------------------------
+<SZ-LJ-0202-D09-CE5855-M-01>display clock 
+2018-04-27 18:28:49+08:00
+Friday
+Time Zone(BeiJing) : UTC+08:00
+<SZ-LJ-0202-D09-CE5855-M-01>dis cu 
+!Software Version V200R002C50SPC800
+!Last configuration was updated at 2018-04-27 18:27:52+08:00
+!Last configuration was saved at 2018-04-20 23:31:03+08:00
+#
+clock timezone BeiJing add 08:00:00
+#
+sysname SZ-LJ-0202-D09-CE5855-M-01
+#
+command-privilege level rearrange
+#
+system resource standard
+#
+info-center source default channel 2 trap level informational
+info-center source cli channel 4 log state off
+info-center loghost source Vlanif184
+info-center loghost 10.203.26.231 vpn-instance mgt_vrf facility local2 local-time
+info-center loghost 10.203.26.232 vpn-instance mgt_vrf facility local2 local-time
+info-center loghost 10.203.26.233 vpn-instance mgt_vrf facility local2 local-time
+info-center loghost 172.16.0.203 vpn-instance mgt_vrf facility local2 local-time
+#
+device board 1 board-type CE5855-48T4S2Q-EI
+#
+drop-profile default
+#
+ntp server disable
+ntp ipv6 server disable
+ntp source-interface Vlanif184 vpn-instance mgt_vrf
+ntp unicast-server 172.16.0.203 vpn-instance mgt_vrf
+#
+vlan batch 184 401
+#
+stp bpdu-protection
+#
+dhcp enable
+#
+arp timeout 300
+#
+telnet ipv6 server disable
+telnet server acl 2000
+#
+hwtacacs enable
+#
+diffserv domain default
+#
+ip vpn-instance mgt_vrf
+ ipv4-family
+  route-distinguisher 2:1
+#
+hwtacacs server template tencent_scheme
+ hwtacacs server authentication 10.12.220.198 vpn-instance mgt_vrf shared-key cipher %^%#;qH=Oj&cB,%jaLB6y35L;`IP(i6DJV=[MJGR+veS%^%#
+ hwtacacs server authentication 172.16.0.196 vpn-instance mgt_vrf shared-key cipher %^%#Y1}oEu:P52b9)&!YiDAXC@F*~_`l7$+\z;$AdN&!%^%# secondary
+ hwtacacs server authorization 10.12.220.198 vpn-instance mgt_vrf shared-key cipher %^%#P<m;2G\qYEjcCw0uSh15TdYLD_F7*5_>e4K3CJ).%^%#
+ hwtacacs server authorization 172.16.0.196 vpn-instance mgt_vrf shared-key cipher %^%#{9Ju"dpLK9II-F~s35_H_=V_"c${kV6qEG$+5&2N%^%# secondary
+ hwtacacs server accounting 10.12.220.198 vpn-instance mgt_vrf shared-key cipher %^%#g^KVN7Vwz"1QD`,iaIxF'XN2)koK=VAkr:Lp{ipL%^%#
+ hwtacacs server accounting 172.16.0.196 vpn-instance mgt_vrf shared-key cipher %^%#u3Mg7>0pz-Rz^<*T,|b<C)>s'3Dg,L6=pwTS4^}W%^%# secondary
+ hwtacacs server user-name domain-excluded
+#
+vlan 184
+ description Out-Of-Band-Management
+#
+vlan 401
+ description ILO-Access
+#
+stp region-configuration
+ region-name LAN_A
+ revision-level 1
+#
+acl number 2000
+ description Telnet-Filter
+ rule 5 permit source 172.16.0.192 0.0.0.63
+ rule 10 permit source 172.17.73.0 0.0.0.31
+ rule 15 permit source 172.18.62.0 0.0.0.31
+ rule 20 permit source 10.12.212.224 0.0.0.31
+ rule 25 permit source 10.12.220.0 0.0.0.255
+ rule 30 permit vpn-instance mgt_vrf source 172.16.0.192 0.0.0.63
+ rule 35 permit vpn-instance mgt_vrf source 172.17.73.0 0.0.0.31
+ rule 40 permit vpn-instance mgt_vrf source 172.18.62.0 0.0.0.31
+ rule 45 permit vpn-instance mgt_vrf source 10.12.212.224 0.0.0.31
+ rule 50 permit vpn-instance mgt_vrf source 10.12.220.0 0.0.0.255
+ rule 55 permit vpn-instance mgt_vrf source 10.203.24.0 0.0.1.255
+ rule 60 permit vpn-instance mgt_vrf source 10.203.26.231 0
+ rule 65 permit vpn-instance mgt_vrf source 10.203.26.232 0
+ rule 70 permit vpn-instance mgt_vrf source 10.203.26.233 0
+#
+acl number 2001
+ description SNMP-Filter
+ rule 5 permit source 172.16.0.192 0.0.0.63
+ rule 10 permit source 172.17.73.0 0.0.0.31
+ rule 15 permit source 172.18.62.0 0.0.0.31
+ rule 20 permit source 10.12.212.224 0.0.0.31
+ rule 25 permit source 10.12.220.0 0.0.0.255
+ rule 30 permit vpn-instance mgt_vrf source 172.16.0.192 0.0.0.63
+ rule 35 permit vpn-instance mgt_vrf source 172.17.73.0 0.0.0.31
+ rule 40 permit vpn-instance mgt_vrf source 172.18.62.0 0.0.0.31
+ rule 45 permit vpn-instance mgt_vrf source 10.12.212.224 0.0.0.31
+ rule 50 permit vpn-instance mgt_vrf source 10.12.220.0 0.0.0.255
+ rule 55 permit vpn-instance mgt_vrf source 10.203.24.0 0.0.1.255
+ rule 60 permit vpn-instance mgt_vrf source 10.203.26.231 0
+ rule 65 permit vpn-instance mgt_vrf source 10.203.26.232 0
+ rule 70 permit vpn-instance mgt_vrf source 10.203.26.233 0
+#
+aaa
+ undo local-user policy security-enhance
+ local-user tencent password irreversible-cipher $1c$!/:@'.G|w8$bE-cPt4wQF&=/-IYkZv=TtCM8(IF7/!AbkAYGwVD$
+ local-user tencent service-type ftp terminal telnet ssh
+ local-user tencent level 15
+ #
+ authentication-scheme default
+ #
+ authentication-scheme tencent_scheme
+  authentication-mode hwtacacs local
+ #
+ authorization-scheme default
+ #
+ authorization-scheme tencent_scheme
+  authorization-mode hwtacacs local
+  authorization-cmd 3 hwtacacs local
+ #
+ accounting-scheme default
+ #
+ accounting-scheme tencent_scheme
+  accounting-mode hwtacacs
+ #
+ domain default
+  authentication-scheme tencent_scheme
+  authorization-scheme tencent_scheme
+  accounting-scheme tencent_scheme
+  hwtacacs server tencent_scheme
+ #
+ domain default_admin
+  authentication-scheme tencent_scheme
+  authorization-scheme tencent_scheme
+  accounting-scheme tencent_scheme
+  hwtacacs server tencent_scheme
+ #
+ domain tencent_domain
+  authentication-scheme tencent_scheme
+  authorization-scheme tencent_scheme
+  accounting-scheme tencent_scheme
+  hwtacacs server tencent_scheme
+ #
+ recording-scheme tencent_scheme
+  recording-mode hwtacacs tencent_scheme
+ #
+ cmd recording-scheme tencent_scheme
+#
+stack
+#
+interface Vlanif184
+ description Out-Of-Band-Management
+ ip binding vpn-instance mgt_vrf
+ ip address 10.203.25.155 255.255.254.0
+#
+interface MEth0/0/0
+#
+interface Eth-Trunk1
+ description SZ-LJ-0202-D09-CE5855-M-01_Eth-trunk1
+ port link-type trunk
+ port trunk pvid vlan 401
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 401
+ stp disable
+ mode lacp-static
+ lacp timeout fast
+#
+interface GE1/0/1
+ description SE1
+ port link-type trunk
+ port trunk pvid vlan 401
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 401
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+#
+interface GE1/0/2
+ description SE2
+ port link-type trunk
+ port trunk pvid vlan 401
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 401
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+#
+interface GE1/0/3
+ description SE3
+ port link-type trunk
+ port trunk pvid vlan 401
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 401
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+#
+interface GE1/0/4
+ description SE4
+ port link-type trunk
+ port trunk pvid vlan 401
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 401
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+#
+interface GE1/0/5
+ description SE5
+ port link-type trunk
+ port trunk pvid vlan 401
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 401
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+#
+interface GE1/0/6
+ description SE6
+ port link-type trunk
+ port trunk pvid vlan 401
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 401
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+#
+interface GE1/0/7
+ description SE7
+ port link-type trunk
+ port trunk pvid vlan 401
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 401
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+#
+interface GE1/0/8
+ description SE8
+ port link-type trunk
+ port trunk pvid vlan 401
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 401
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+#
+interface GE1/0/9
+ description SE9
+ port link-type trunk
+ port trunk pvid vlan 401
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 401
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+#
+interface GE1/0/10
+ description SE10
+ port link-type trunk
+ port trunk pvid vlan 401
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 401
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+#
+interface GE1/0/11
+ description SE11
+ port link-type trunk
+ port trunk pvid vlan 401
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 401
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+#
+interface GE1/0/12
+ description SE12
+ port link-type trunk
+ port trunk pvid vlan 401
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 401
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+#
+interface GE1/0/13
+ description SE13
+ port link-type trunk
+ port trunk pvid vlan 401
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 401
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+#
+interface GE1/0/14
+ description SE14
+ port link-type trunk
+ port trunk pvid vlan 401
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 401
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+#
+interface GE1/0/15
+ description SE15
+ port link-type trunk
+ port trunk pvid vlan 401
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 401
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+#
+interface GE1/0/16
+ description SE16
+ port link-type trunk
+ port trunk pvid vlan 401
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 401
+ stp edged-port enable
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ lldp admin-status rx
+#
+interface GE1/0/17
+ description admin-down
+ shutdown
+#
+interface GE1/0/18
+ description admin-down
+ shutdown
+#
+interface GE1/0/19
+ description admin-down
+ shutdown
+#
+interface GE1/0/20
+ description admin-down
+ shutdown
+#
+interface GE1/0/21
+ description admin-down
+ shutdown
+#
+interface GE1/0/22
+ description admin-down
+ shutdown
+#
+interface GE1/0/23
+ description admin-down
+ shutdown
+#
+interface GE1/0/24
+ description admin-down
+ shutdown
+#
+interface GE1/0/25
+ description admin-down
+ shutdown
+#
+interface GE1/0/26
+ description admin-down
+ shutdown
+#
+interface GE1/0/27
+ description admin-down
+ shutdown
+#
+interface GE1/0/28
+ description admin-down
+ shutdown
+#
+interface GE1/0/29
+ description admin-down
+ shutdown
+#
+interface GE1/0/30
+ description admin-down
+ shutdown
+#
+interface GE1/0/31
+ description admin-down
+ shutdown
+#
+interface GE1/0/32
+ description admin-down
+ shutdown
+#
+interface GE1/0/33
+ description admin-down
+ shutdown
+#
+interface GE1/0/34
+ description admin-down
+ shutdown
+#
+interface GE1/0/35
+ description admin-down
+ shutdown
+#
+interface GE1/0/36
+ description admin-down
+ shutdown
+#
+interface GE1/0/37
+ description admin-down
+ shutdown
+#
+interface GE1/0/38
+ description admin-down
+ shutdown
+#
+interface GE1/0/39
+ description admin-down
+ shutdown
+#
+interface GE1/0/40
+ description admin-down
+ shutdown
+#
+interface GE1/0/41
+ description admin-down
+ shutdown
+#
+interface GE1/0/42
+ description admin-down
+ shutdown
+#
+interface GE1/0/43
+ description admin-down
+ shutdown
+#
+interface GE1/0/44
+ description admin-down
+ shutdown
+#
+interface GE1/0/45
+ description admin-down
+ shutdown
+#
+interface GE1/0/46
+ description admin-down
+ shutdown
+#
+interface GE1/0/47
+ description admin-down
+ shutdown
+#
+interface GE1/0/48
+ description Out-Of-Band-Management
+ port default vlan 184
+ stp disable
+#
+interface 10GE1/0/1
+#
+interface 10GE1/0/2
+#
+interface 10GE1/0/3
+#
+interface 10GE1/0/4
+#
+interface 40GE1/0/1
+ description SZ-LJ-0202-D09-CE7855Q-XGWL-01-40GE1/0/17
+ eth-trunk 1
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-FIBER
+#
+interface 40GE1/0/2
+ description SZ-LJ-0202-D09-CE7855Q-XGWL-01-40GE1/0/18
+ eth-trunk 1
+ storm suppression unknown-unicast packets 100
+ storm suppression multicast packets 100
+ storm suppression broadcast packets 100
+ port crc-statistics trigger error-down
+ device transceiver 40GBASE-FIBER
+#
+interface LoopBack0
+ ip address 9.21.250.73 255.255.255.255
+#
+interface NULL0
+#
+ip route-static vpn-instance mgt_vrf 0.0.0.0 0.0.0.0 Vlanif184 10.203.24.1 preference 5 description Out-Of-Band-Management
+#
+snmp-agent
+snmp-agent local-engineid 800007DB033C784367BFC1
+snmp-agent community read cipher %^%#WNL:H]9N[&Xou"Ku@("C"5Q>'[Y`[Q!yy3&:R<+GokR.E!^DH/Vzco17Zvu4eJre:'a:W@&FjW$&~arK%^%# mib-view iso-view acl 2001
+#
+snmp-agent sys-info version v2c
+snmp-agent sys-info version v3 disable
+snmp-agent community complexity-check disable
+snmp-agent target-host trap address udp-domain 172.16.0.202 vpn-instance mgt_vrf params securityname cipher %^%#0lJ;O_.E~SC)G-I2Afg"pJ'x*>6}I+x`@iNHJK5N%^%# v2c
+snmp-agent target-host trap address udp-domain 10.203.26.231 vpn-instance mgt_vrf params securityname cipher %^%#L6hl+jki<&6#Ek1xD(G<d'H,')WD!Q'V5<K]|^91%^%# v2c
+snmp-agent target-host trap address udp-domain 10.203.26.232 vpn-instance mgt_vrf params securityname cipher %^%#v_&_Tn;~#SGhRs0*|Pg'E<)JTDAqYSk#a1MR,9iX%^%# v2c
+snmp-agent target-host trap address udp-domain 10.203.26.233 vpn-instance mgt_vrf params securityname cipher %^%#;4`zId;[@:Q$3;4\D&x'*Miy8<&>dBUB`8<G$t<M%^%# v2c
+#
+snmp-agent mib-view included iso-view iso
+#
+snmp-agent blacklist ip-block disable
+#
+lldp enable
+#
+lldp management-address 10.203.25.155
+#
+stelnet ipv4 server enable
+stelnet ipv6 server enable
+ssh user tencent
+ssh user tencent authentication-type password
+ssh user tencent service-type all
+ssh server acl 2000
+ssh authorization-type default aaa
+#
+ssh server cipher aes256_ctr aes128_ctr
+ssh server hmac sha2_256_96 sha2_256 sha1_96
+ssh server key-exchange dh_group_exchange_sha256 dh_group_exchange_sha1 ecdh_sha2_nistp256 ecdh_sha2_nistp384 ecdh_sha2_nistp521 sm2_kep
+#
+user-interface maximum-vty 21
+#
+user-interface con 0
+ authentication-mode aaa
+#
+user-interface vty 0 20
+ acl 2000 inbound
+ authentication-mode aaa
+ user privilege level 15
+#
+vm-manager
+#
+return
+<SZ-LJ-0202-D09-CE5855-M-01>save 
+Warning: The current configuration will be written to the device. Continue? [Y/N]:y
+Now saving the current configuration to the slot 1 ...
+Info: Save the configuration successfully.
+<SZ-LJ-0202-D09-CE5855-M-01>
+<SZ-LJ-0202-D09-CE5855-M-01>
