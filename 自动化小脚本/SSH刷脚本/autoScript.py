@@ -193,7 +193,9 @@ class MySSH:
             self.ssh_fd.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             self.ssh_fd.connect(self.host, port = self.port, username = self.username, password = self.password)
             self.channel = self.ssh_fd.invoke_shell()
+            # self.channel.settimeout(30)
             self.logger.info('Connect ' + self.device_name + ' device SSH Success...')
+            self.channel.send('scr 0 t\n')
         except Exception as ex:
             self.logger.info('ssh %s@%s: %s' % (self.username, self.host, ex))
 
@@ -211,16 +213,18 @@ class MySSH:
 
     def exe(self, cmd, checkIf):
         self.channel.send(cmd)
-        time.sleep(1)
+        time.sleep(0.5)
         info = ''
         if checkIf:
             while True:
-                # time.sleep(30)
-                info = info + self.channel.recv(65535).decode('utf8')
+                temp = self.channel.recv(65535)
+                try:
+                    info = info + temp.decode('utf8', 'ignore')
+                except:
+                    break
                 info = re.sub('\\x1b\[\d*\w?', '', info)
                 info = re.sub('\r\n', '\n', info)
                 self.logger.info(info)
-                cmd = cmd.strip()
                 if cmd.strip().replace(' ', '') in info.replace(' ', ''):
                     break
                 elif 'password' in info.lower() or re.search('\[\w.*?\]', info):
@@ -228,12 +232,12 @@ class MySSH:
                 else:
                     time.sleep(3)
         else:
-            info = info + self.channel.recv(65535).decode('utf8')
+            info = info + self.channel.recv(65535).decode('utf8', 'ignore')
             info = re.sub('\\x1b\[\d*\w?', '', info)
             info = re.sub('\r\n', '\n', info)
             self.logger.info(info)
 
-        if re.search('\^', info) and re.search('Error', info):
+        if re.search('\^', info) and re.search('Error', info) and re.search('Unrecognized', info) :
             with open('.\\Failed_log\\' + t + '\\' + self.host +'--' + self.device_name + '.txt', 'a') as f:
                 f.write('Error statement: ' + cmd.strip() + '\n')
 
@@ -281,6 +285,7 @@ def main_process(script_path, checkIf, csv_info, retry = 3):
             ssh = MySSH(host, port, username, passwd, script_file, device_name)
             for cmd in f:
                 ssh.exe(cmd, checkIf)
+            ssh.exe('#\n', checkIf)
         except Exception as e:
             flag = str(e)
             if retry == 1:
@@ -292,7 +297,7 @@ def main_process(script_path, checkIf, csv_info, retry = 3):
             if flag != '':
                 if retry != 1:
                     with open('.\\Logger\\' + t + '\\'+ host + '--' + device_name + '.txt', 'a') as f:
-                        f.write('The ' + str(4 - retry) + ' times SSH retried connect！！\n')
+                        f.write('The ' + str(4 - retry) + ' times SSH retried connect.....\n')
                     time.sleep(10)
                     main_process(script_path, checkIf, csv_info, retry = retry - 1)
 

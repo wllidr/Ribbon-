@@ -1,0 +1,183 @@
+Connect 12.255.3.25 DeviceQH1AF07U40-FB1-S68Z SSH ing.....
+Connect QH1AF07U40-FB1-S68Z device SSH Success...
+
+Info: The max number of VTY users is 21, the number of current VTY users online is 1, and total number of terminal users online is 1.
+      The current login time is 2018-11-21 15:08:24+08:00.
+      The last login time is 2018-11-21 10:55:49+08:00 from 12.255.8.254 through SSH.
+<QH1AF07U40-FB1-S68Z>scr 0 t
+Info: The configuration takes effect on the current user terminal interface only.
+<QH1AF07U40-FB1-S68Z>dis version
+Huawei Versatile Routing Platform Software
+VRP (R) software, Version 8.180 (CE6856HI V200R005C00SPC800)
+Copyright (C) 2012-2018 Huawei Technologies Co., Ltd.
+HUAWEI CE6856-48S6Q-HI uptime is 68 days, 22 hours, 24 minutes 
+
+CE6856-48S6Q-HI(Master) 1 : uptime is  68 days, 22 hours, 23 minutes
+        StartupTime 2018/09/14   00:47:55+08:00
+Memory    Size    : 4096 M bytes
+Flash     Size    : 1024 M bytes
+CE6856-48S6Q-HI version information                               
+1. PCB    Version : CEM48S6QP05    VER B
+2. MAB    Version : 1
+3. Board  Type    : CE6856-48S6Q-HI
+4. CPLD1  Version : 102
+5. BIOS   Version : 432
+<QH1AF07U40-FB1-S68Z>
+dis startup
+MainBoard:
+  Configured startup system software:        flash:/CE6856HI-V200R005C00SPC800.cc
+  Startup system software:                   flash:/CE6856HI-V200R005C00SPC800.cc
+  Next startup system software:              flash:/CE6856HI-V200R005C00SPC800.cc
+  Startup saved-configuration file:          flash:/basic_leaf_single_mlag.cfg
+  Next startup saved-configuration file:     flash:/basic_leaf_single_mlag.cfg
+  Startup paf file:                          default
+  Next startup paf file:                     default
+  Startup patch package:                     NULL
+  Next startup patch package:                NULL
+<QH1AF07U40-FB1-S68Z>
+dis patch-information
+Info: No patch exists.
+The current state is: Idle
+<QH1AF07U40-FB1-S68Z>
+dis sn all
+Slot 1:
+Equipment SN(ESN): 2102351YPN10J8000344
+License ESN: 2102351YPN10J8000344
+----------------------------------------------------------------------------
+Slot       Sub    Type               SN                       P/N           
+----------------------------------------------------------------------------
+1          -      CE6856-48S6Q-HI    2102351YPN10J8000344     02351YPN      
+           FAN1   FAN-40EA-F         21023554216TJ7004885     02355421      
+           FAN2   FAN-40EA-F         21023554216TJ7004920     02355421      
+           PWR1   PAC-600WA-F        2102310PMJHVJ6003071     02310PMJ      
+           PWR2   PAC-600WA-F        2102310PMJHVJ6002883     02310PMJ      
+
+----------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Port                 Type                 SN                   Description                                                                                                                                                                                                                                                     
+--------------------------------------------------------------------------------
+10GE1/0/1            02318169             U7M87N25675          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/2            02318169             U7M87N15375          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/3            02318169             U7M87N22381          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/4            02318169             U7M87N24454          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/5            02318169             U7M87N20463          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                      
+----------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Port                 Type                 SN                   Description                                                                                                                                                                                                                                                     
+--------------------------------------------------------------------------------
+10GE1/0/1            02318169             U7M87N25675          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/2            02318169             U7M87N15375          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/3            02318169             U7M87N22381          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/4            02318169             U7M87N24454          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/5            02318169             U7M87N20463          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/6            02318169             U7M87L26065          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/7            02318169             U7M87N28072          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/8            02318169             U7M87N23761          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/9            02318169             U7M87N28073          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/10           02318169             U7M87N28001          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/11           02318169             U7M87N22280          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/12           02318169             U7M87N13463          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/13           02318169             U7M87N27694          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/14           02318169             U7M87N20585          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/15           02318169             U7M87N28396          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/16           02318169             U7M87N27915          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/17           02318169             U7M87N23137          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/18           02318169             U7M87N21665          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/19           02318169             U7M87N22505          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/20           02318169             U7M87N21318          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/21           02318169             U7M87N17159          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/22           02318169             U7M87N27123          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/23           02318169             U7M87N27092          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/24           02318169             U7M87N21183          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+10GE1/0/25           --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/26           --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/27           --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/28           --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/29           --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/30           --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/31           --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/32           --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/33           --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/34           --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/35           --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/36           --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/37           --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/38           --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/39           --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/40           --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/41           --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/42           --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/43           --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/44           --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/45           --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/46           --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/47           --                   --                   --                                                                                                                                                                                                                                                              
+10GE1/0/48           02318169             U7M87N32246          10300Mb/sec-850nm-LC-30(62.5um/125um OM1),80(50um/125um OM2),300(50um/125um OM3),400(50um/125um OM4)                                                                                                                                                            
+40GE1/0/1            02311FPA             AM1825S2A52          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/2            02311FPA             AM1825S2A58          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/3            02311FPA             AM1825S2AN3          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/4            02311FPA             AM1825S2AD7          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/5            02311FPA             AM1819S231H          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/6            02311FPA             AM1819S22KP          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+--------------------------------------------------------------------------------
+<QH1AF07U40-FB1-S68Z>display ip interface brief
+*down: administratively down
+!down: FIB overload down
+^down: standby
+(l): loopback
+(s): spoofing
+(d): Dampening Suppressed
+The number of interface that is UP in Physical is 10
+The number of interface that is DOWN in Physical is 8
+The number of interface that is UP in Protocol is 10
+The number of interface that is DOWN in Protocol is 8
+Interface                   IP Address/Mask    Physical Protocol VPN           
+10GE1/0/48                  unassigned         down     down     --            
+10GE1/0/48.1                55.13.236.61/26    down     down     --            
+40GE1/0/1                   172.16.8.66/30     up       up       --            
+40GE1/0/2                   172.16.9.82/30     up       up       --            
+40GE1/0/3                   172.16.10.98/30    down     down     --            
+40GE1/0/4                   172.16.11.114/30   up       up       --            
+LoopBack0                   172.16.0.25/32     up       up(s)    --            
+LoopBack1                   55.13.254.25/32    up       up(s)    --            
+LoopBack2                   12.3.255.25/32     up       up(s)    --            
+MEth0/0/0                   12.255.3.25/24     up       up       OOB           
+NULL0                       unassigned         up       up(s)    --            
+Vbdif540                    55.14.254.253/24   up       up       QH_FB1_VPC    
+Vbdif541                    55.14.252.253/24   up       up       QH_FB1_VPC    
+Vbdif544                    55.14.15.253/24    down     down     QH_FB1_VPC    
+Vbdif545                    55.14.16.253/24    down     down     QH_FB1_VPC    
+Vbdif546                    55.14.17.253/24    down     down     QH_FB1_VPC    
+Vbdif548                    55.14.18.253/24    down     down     QH_FB1_VPC    
+Vbdif551                    55.14.19.253/24    down     down     QH_FB1_VPC    
+<QH1AF07U40-FB1-S68Z>
+display license
+MainBoard:
+ Active License    : 
+ License state     : Normal
+ Revoke ticket     : No ticket
+ 
+ йɷ޹˾
+
+ Product name      : CloudEngine 6800
+ Product version   : V200R003
+ License Serial No : LIC20180909LFCO60
+ Creator           : Huawei Technologies Co., Ltd.
+ Created Time      : 2018-09-09 14:56:51
+ Feature name      : CELIC
+ Authorize type    : comm
+ Expired date      : PERMANENT
+ Trial days        : --
+
+ Item name          Item type      Value      Description
+ ------------------------------------------------------------- 
+ CE-LIC-VXLAN       Function       YES        CE-LIC-VXLAN      
+ CE-LIC-FCF-ALL     Function       YES        CE-LIC-FCF-ALL    
+ CE-LIC-NPV         Function       YES        CE-LIC-NPV        
+ CE-LIC-TLM         Function       YES        CE-LIC-TLM        
+
+ License state: Normal.
+<QH1AF07U40-FB1-S68Z>
+#
+#
+<QH1AF07U40-FB1-S68Z>

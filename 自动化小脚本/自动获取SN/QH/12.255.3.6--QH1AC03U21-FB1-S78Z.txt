@@ -1,0 +1,147 @@
+Connect 12.255.3.6 DeviceQH1AC03U21-FB1-S78Z SSH ing.....
+Connect QH1AC03U21-FB1-S78Z device SSH Success...
+
+Info: The max number of VTY users is 21, the number of current VTY users online is 1, and total number of terminal users online is 1.
+      The current login time is 2018-11-21 15:08:18+08:00.
+      The last login time is 2018-11-21 10:55:42+08:00 from 12.255.8.254 through SSH.
+<QH1AC03U21-FB1-S78Z>scr 0 t
+Info: The configuration takes effect on the current user terminal interface only.
+<QH1AC03U21-FB1-S78Z>dis version
+Huawei Versatile Routing Platform Software
+VRP (R) software, Version 8.180 (CE7855EI V200R005C00SPC800)
+Copyright (C) 2012-2018 Huawei Technologies Co., Ltd.
+HUAWEI CE7855-32Q-EI uptime is 69 days, 1 hour, 44 minutes 
+
+CE7855-32Q-EI(Master) 1 : uptime is  69 days, 1 hour, 43 minutes
+        StartupTime 2018/09/13   13:25:06+08:00
+Memory    Size    : 4096 M bytes
+Flash     Size    : 1024 M bytes
+NVRAM     Size    : 512  K bytes
+CE7855-32Q-EI version information                               
+1. PCB    Version : CEM32QP02    VER B
+2. MAB    Version : 1
+3. Board  Type    : CE7855-32Q-EI
+4. CPLD1  Version : 101
+5. CPLD2  Version : 101
+6. BIOS   Version : 432
+<QH1AC03U21-FB1-S78Z>
+dis startup
+MainBoard:
+  Configured startup system software:        flash:/CE7855EI-V200R005C00SPC800.cc
+  Startup system software:                   flash:/CE7855EI-V200R005C00SPC800.cc
+  Next startup system software:              flash:/CE7855EI-V200R005C00SPC800.cc
+  Startup saved-configuration file:          NULL
+  Next startup saved-configuration file:     flash:/vrpcfg.zip
+  Startup paf file:                          default
+  Next startup paf file:                     default
+  Startup patch package:                     NULL
+  Next startup patch package:                NULL
+<QH1AC03U21-FB1-S78Z>
+dis patch-information
+Info: No patch exists.
+The current state is: Idle
+<QH1AC03U21-FB1-S78Z>
+dis sn all
+Slot 1:
+Equipment SN(ESN): 2102350SBH10J8000001
+License ESN: 2102350SBH10J8000001
+----------------------------------------------------------------------------
+Slot       Sub    Type               SN                       P/N           
+----------------------------------------------------------------------------
+1          -      CE7855-32Q-EI      2102350SBH10J8000001     02350SBH      
+           FAN1   FAN-40HA-B         21023590976TJ7000315     02359097      
+           FAN2   FAN-40HA-B         21023590976TJ7000318     02359097      
+           PWR1   PAC-600WA-B        2102310PMHHVJ6007261     02310PMH      
+           PWR2   PAC-600WA-B        2102310PMHHVJ6007286     02310PMH      
+
+----------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Port                 Type                 SN                   Description                                                                                                                                                                                                                                                     
+--------------------------------------------------------------------------------
+40GE1/0/1            02311FPA             AM1821S25EH          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/2            02311FPA             AM1819S22Y7          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/3            02311FPA             AM1819S22WD          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/4            02311FPA             AM1819S22WG          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/5            --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/6            --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/7            --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/8            --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/9            --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/10           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/11           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/12           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/13           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/14           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/15           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/16           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/17           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/18           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/19           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/20           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/21           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/22           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/23           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/24           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/25           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/26           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/27           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/28           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/29           02311FPA             AM1825S2B0G          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/30           02311FPA             AM1819S22WC          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/31           02311FPA             AM1819S227U          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/32           02311FPA             AM1819S227S          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+--------------------------------------------------------------------------------
+<QH1AC03U21-FB1-S78Z>display ip interface brief
+*down: administratively down
+!down: FIB overload down
+^down: standby
+(l): loopback
+(s): spoofing
+(d): Dampening Suppressed
+The number of interface that is UP in Physical is 11
+The number of interface that is DOWN in Physical is 0
+The number of interface that is UP in Protocol is 11
+The number of interface that is DOWN in Protocol is 0
+Interface                   IP Address/Mask    Physical Protocol VPN           
+40GE1/0/1                   172.16.9.14/30     up       up       --            
+40GE1/0/2                   172.16.10.30/30    up       up       --            
+40GE1/0/3                   172.16.11.46/30    up       up       --            
+40GE1/0/4                   172.16.12.62/30    up       up       --            
+LoopBack0                   172.16.0.5/32      up       up(s)    --            
+LoopBack1                   55.13.254.6/32     up       up(s)    --            
+LoopBack2                   12.3.255.6/32      up       up(s)    --            
+MEth0/0/0                   12.255.3.6/24      up       up       OOB           
+NULL0                       unassigned         up       up(s)    --            
+Vbdif4                      172.16.6.65/30     up       up       --            
+Vbdif5                      172.16.6.1/30      up       up       QH_FB1_VPC    
+<QH1AC03U21-FB1-S78Z>
+display license
+MainBoard:
+ Active License    : 
+ License state     : Normal
+ Revoke ticket     : No ticket
+ 
+ йɷ޹˾
+
+ Product name      : CloudEngine 7800
+ Product version   : V200R003
+ License Serial No : LIC20180909LFCF60
+ Creator           : Huawei Technologies Co., Ltd.
+ Created Time      : 2018-09-09 14:56:26
+ Feature name      : CELIC
+ Authorize type    : comm
+ Expired date      : PERMANENT
+ Trial days        : --
+
+ Item name          Item type      Value      Description
+ ------------------------------------------------------------- 
+ CE-LIC-VXLAN       Function       YES        CE-LIC-VXLAN      
+ CE-LIC-FCF-ALL     Function       YES        CE-LIC-FCF-ALL    
+ CE-LIC-NPV         Function       YES        CE-LIC-NPV        
+ CE-LIC-TLM         Function       YES        CE-LIC-TLM        
+
+ License state: Normal.
+<QH1AC03U21-FB1-S78Z>
+#
+#
+<QH1AC03U21-FB1-S78Z>

@@ -1,0 +1,479 @@
+Connect 12.255.5.2 DeviceQH2AD10U19-FB2-128B SSH ing.....
+Connect QH2AD10U19-FB2-128B device SSH Success...
+
+Info: The max number of VTY users is 21, the number of current VTY users online is 1, and total number of terminal users online is 1.
+      The current login time is 2018-11-21 15:08:18+08:00.
+      The last login time is 2018-11-21 10:55:41+08:00 from 12.255.8.254 through SSH.
+<QH2AD10U19-FB2-128B>scr 0 t
+Info: The configuration takes effect on the current user terminal interface only.
+<QH2AD10U19-FB2-128B>dis version
+Huawei Versatile Routing Platform Software
+VRP (R) software, Version 8.180 (CE12800 V200R005C00SPC800)
+Copyright (C) 2012-2018 Huawei Technologies Co., Ltd.
+HUAWEI CE12808 uptime is 12 days, 21 hours, 3 minutes 
+Patch Version: V200R005HP0001
+
+BKP  version information:
+1.PCB      Version  : DE01BAK08A VER B
+2.Board    Type     : CE-BAK08A  
+3.MPU Slot Quantity : 2
+4.LPU Slot Quantity : 8
+5.SFU Slot Quantity : 6
+
+MPU(Master) 9 : uptime is  12 days, 21 hours, 3 minutes
+        StartupTime 2018/11/08   18:05:19+08:00 
+Memory     Size     : 8192 M bytes
+Flash      Size     : 4096 M bytes
+NVRAM      Size     : 512 K bytes
+MPU version information:                              
+1.PCB      Version  : DE01MPUA VER C
+2.MAB      Version  : 1 
+3.Board    Type     : CE-MPUA
+4.CPLD1    Version  : 105
+5.BIOS     Version  : 432
+  
+MPU(Slave) 10 : uptime is  12 days, 21 hours, 3 minutes
+        StartupTime 2018/11/08   18:05:17+08:00 
+Memory     Size     : 8192 M bytes
+Flash      Size     : 4096 M bytes
+NVRAM      Size     : 512 K bytes
+MPU version information:                              
+1.PCB      Version  : DE01MPUA VER C
+2.MAB      Version  : 1 
+3.Board    Type     : CE-MPUA
+4.CPLD1    Version  : 105
+5.BIOS     Version  : 432
+  
+LPU 1 : uptime is 12 days, 21 hours, 0 minute
+        StartupTime 2018/11/08   18:07:37+08:00 
+Memory     Size     : 4096 M bytes
+Flash      Size     : 128  M bytes
+LPU version information:
+1.PCB      Version  : CEL36LQFD VER A
+2.MAB      Version  : 1
+3.Board    Type     : CE-L36LQ-FD
+4.CPLD1    Version  : 106
+5.CPLD2    Version  : 106
+6.BIOS     Version  : 161
+
+LPU 2 : uptime is 12 days, 21 hours, 0 minute
+        StartupTime 2018/11/08   18:07:36+08:00 
+Memory     Size     : 4096 M bytes
+Flash      Size     : 128  M bytes
+LPU version information:
+1.PCB      Version  : CEL36LQFD VER A
+2.MAB      Version  : 1
+3.Board    Type     : CE-L36LQ-FD
+4.CPLD1    Version  : 106
+5.CPLD2    Version  : 106
+6.BIOS     Version  : 161
+
+LPU 3 : uptime is 12 days, 21 hours, 0 minute
+        StartupTime 2018/11/08   18:07:33+08:00 
+Memory     Size     : 4096 M bytes
+Flash      Size     : 128  M bytes
+LPU version information:
+1.PCB      Version  : CEL36LQFD VER A
+2.MAB      Version  : 1
+3.Board    Type     : CE-L36LQ-FD
+4.CPLD1    Version  : 106
+5.CPLD2    Version  : 106
+6.BIOS     Version  : 161
+
+SFU 13 : uptime is 12 days, 21 hours, 2 minutes
+        StartupTime 2018/11/08   18:05:49+08:00 
+Memory     Size     : 512 M bytes
+Flash      Size     : 64  M bytes
+SFU version information:
+1.PCB      Version  : CESFU08G VER A
+2.MAB      Version  : 1
+3.Board    Type     : CE-SFU08G
+4.CPLD1    Version  : 101
+5.BIOS     Version  : 432
+
+SFU 14 : uptime is 12 days, 21 hours, 2 minutes
+        StartupTime 2018/11/08   18:05:49+08:00 
+Memory     Size     : 512 M bytes
+Flash      Size     : 64  M bytes
+SFU version information:
+1.PCB      Version  : CESFU08G VER A
+2.MAB      Version  : 1
+3.Board    Type     : CE-SFU08G
+4.CPLD1    Version  : 101
+5.BIOS     Version  : 432
+
+
+SFU 15 : uptime is 12 days, 21 hours, 2 minutes
+        StartupTime 2018/11/08   18:05:49+08:00 
+Memory     Size     : 512 M bytes
+Flash      Size     : 64  M bytes
+SFU version information:
+1.PCB      Version  : CESFU08G VER A
+2.MAB      Version  : 1
+3.Board    Type     : CE-SFU08G
+4.CPLD1    Version  : 101
+5.BIOS     Version  : 432
+
+SFU 16 : uptime is 12 days, 21 hours, 2 minutes
+        StartupTime 2018/11/08   18:05:49+08:00 
+Memory     Size     : 512 M bytes
+Flash      Size     : 64  M bytes
+SFU version information:
+1.PCB      Version  : CESFU08G VER A
+2.MAB      Version  : 1
+3.Board    Type     : CE-SFU08G
+4.CPLD1    Version  : 101
+5.BIOS     Version  : 432
+
+SFU 17 : uptime is 12 days, 21 hours, 2 minutes
+        StartupTime 2018/11/08   18:05:45+08:00 
+Memory     Size     : 512 M bytes
+Flash      Size     : 64  M bytes
+SFU version information:
+1.PCB      Version  : CESFU08G VER A
+2.MAB      Version  : 1
+3.Board    Type     : CE-SFU08G
+4.CPLD1    Version  : 101
+5.BIOS     Version  : 432
+
+SFU 18 : uptime is 12 days, 21 hours, 2 minutes
+        StartupTime 2018/11/08   18:05:49+08:00 
+Memory     Size     : 512 M bytes
+Flash      Size     : 64  M bytes
+SFU version information:
+1.PCB      Version  : CESFU08G VER A
+2.MAB      Version  : 1
+3.Board    Type     : CE-SFU08G
+4.CPLD1    Version  : 101
+5.BIOS     Version  : 432
+
+CMU(Master) 11 : uptime is 12 days, 18 hours, 55 minutes
+        StartupTime 2018/11/09   02:05:26+08:00
+Memory     Size     : 128 M bytes
+Flash      Size     : 32  M bytes
+CMU version information:
+1.PCB      Version  : DE01CMUA VER B
+2.MAB      Version  : 1 
+3.Board    Type     : CE-CMUA
+4.CPLD1    Version  : 104
+5.BIOS     Version  : 127
+
+CMU(Slave) 12 : uptime is 12 days, 19 hours, 29 minutes
+        StartupTime 2018/11/09   02:05:27+08:00
+Memory     Size     : 128 M bytes
+Flash      Size     : 32  M bytes
+CMU version information:
+1.PCB      Version  : DE01CMUA VER B
+2.MAB      Version  : 1 
+3.Board    Type     : CE-CMUA
+4.CPLD1    Version  : 104
+5.BIOS     Version  : 127
+<QH2AD10U19-FB2-128B>dis startup
+MainBoard:
+  Configured startup system software:        flash:/CE12800-V200R005C00SPC800.cc
+  Startup system software:                   flash:/CE12800-V200R005C00SPC800.cc
+  Next startup system software:              flash:/CE12800-V200R005C00SPC800.cc
+  Startup saved-configuration file:          flash:/basic_spine.cfg
+  Next startup saved-configuration file:     flash:/basic_spine.cfg
+  Startup paf file:                          default
+  Next startup paf file:                     default
+  Startup patch package:                     flash:/CE12800-V200R005HP0001.PAT
+  Next startup patch package:                flash:/CE12800-V200R005HP0001.PAT
+SlaveBoard:
+  Configured startup system software:        flash:/CE12800-V200R005C00SPC800.cc
+  Startup system software:                   flash:/CE12800-V200R005C00SPC800.cc
+  Next startup system software:              flash:/CE12800-V200R005C00SPC800.cc
+  Startup saved-configuration file:          flash:/basic_spine.cfg
+  Next startup saved-configuration file:     flash:/basic_spine.cfg
+  Startup paf file:                          default
+  Next startup paf file:                     default
+  Startup patch package:                     flash:/CE12800-V200R005HP0001.PAT
+  Next startup patch package:                flash:/CE12800-V200R005HP0001.PAT
+<QH2AD10U19-FB2-128B>
+dis patch-information
+Patch Package Name    :flash:/CE12800-V200R005HP0001.PAT
+Patch Package Version :V200R005HP0001
+Patch Package State   :Running   
+Patch Package Run Time:2018-11-09 00:19:29+08:00
+<QH2AD10U19-FB2-128B>
+dis sn all
+Chassis 1:
+Equipment SN(ESN): 2102113773P0JA000015
+License ESN: 2102113773P0JA000015
+
+----------------------------------------------------------------------------
+Slot       Sub    Type               SN                       P/N           
+----------------------------------------------------------------------------
+--         --     BackPlane          2102113773P0JA000015     02113773      
+1          --     CE-L36LQ-FD        023CLT10J7002204         03023CLT      
+2          --     CE-L36LQ-FD        023CLT10J7002200         03023CLT      
+3          --     CE-L36LQ-FD        023CLT10J7002171         03023CLT      
+9          --     CE-MPUA            021NUD6TJ9600800         03021NUD      
+10         --     CE-MPUA            021NUD6TJA600071         03021NUD      
+11         --     CE-CMUA            021NMV6TJ9600040         03021NMV      
+12         --     CE-CMUA            021NMV6TJ9600030         03021NMV      
+13         --     CE-SFU08G          023WFB10JA000238         03023WFB      
+14         --     CE-SFU08G          023WFB10JA000242         03023WFB      
+15         --     CE-SFU08G          023WFB10J9000940         03023WFB      
+16         --     CE-SFU08G          023WFB6TJ9600031         03023WFB      
+17         --     CE-SFU08G          023WFB10J9000928         03023WFB      
+18         --     CE-SFU08G          023WFB10J9000922         03023WFB      
+FAN1       --     FAN-12C            2102120699P0J9000423     02120699      
+FAN2       --     FAN-12C            2102120699P0J9000441     02120699      
+FAN3       --     FAN-12C            2102120699P0J9000426     02120699      
+FAN4       --     FAN-12C            2102120699P0J9000403     02120699      
+FAN5       --     FAN-12C            2102120699P0J9000436     02120699      
+FAN6       --     FAN-12C            2102120699P0J9000418     02120699      
+FAN7       --     FAN-12C            2102120699P0J9000444     02120699      
+FAN8       --     FAN-12C            2102120699P0J9000448     02120699      
+FAN9       --     FAN-12C            2102120699P0J9000442     02120699      
+FAN10      --     FA
+----------------------------------------------------------------------------
+Slot       Sub    Type               SN                       P/N           
+----------------------------------------------------------------------------
+--         --     BackPlane          2102113773P0JA000015     02113773      
+1          --     CE-L36LQ-FD        023CLT10J7002204         03023CLT      
+2          --     CE-L36LQ-FD        023CLT10J7002200         03023CLT      
+3          --     CE-L36LQ-FD        023CLT10J7002171         03023CLT      
+9          --     CE-MPUA            021NUD6TJ9600800         03021NUD      
+10         --     CE-MPUA            021NUD6TJA600071         03021NUD      
+11         --     CE-CMUA            021NMV6TJ9600040         03021NMV      
+12         --     CE-CMUA            021NMV6TJ9600030         03021NMV      
+13         --     CE-SFU08G          023WFB10JA000238         03023WFB      
+14         --     CE-SFU08G          023WFB10JA000242         03023WFB      
+15         --     CE-SFU08G          023WFB10J9000940         03023WFB      
+16         --     CE-SFU08G          023WFB6TJ9600031         03023WFB      
+17         --     CE-SFU08G          023WFB10J9000928         03023WFB      
+18         --     CE-SFU08G          023WFB10J9000922         03023WFB      
+FAN1       --     FAN-12C            2102120699P0J9000423     02120699      
+FAN2       --     FAN-12C            2102120699P0J9000441     02120699      
+FAN3       --     FAN-12C            2102120699P0J9000426     02120699      
+FAN4       --     FAN-12C            2102120699P0J9000403     02120699      
+FAN5       --     FAN-12C            2102120699P0J9000436     02120699      
+FAN6       --     FAN-12C            2102120699P0J9000418     02120699      
+FAN7       --     FAN-12C            2102120699P0J9000444     02120699      
+FAN8       --     FAN-12C            2102120699P0J9000448     02120699      
+FAN9       --     FAN-12C            2102120699P0J9000442     02120699      
+FAN10      --     FAN-12C            2102120699P0J9000446     02120699      
+FAN11      --     FAN-12C            2102120699P0J9000453     02120699      
+FAN12      --     FAN-12C            2102120699P0J9000416     02120699      
+FAN13      --     FAN-12C            2102120699P0J9000443     02120699      
+PWR1       --     PHD-3000WA         2102310VMALUJ9005531     02310VMA      
+PWR2       --     PHD-3000WA         2102310VMALUJ9005525     02310VMA      
+PWR3       --     PHD-3000WA         2102310VMALUJA001645     02310VMA      
+PWR4       --     PHD-3000WA         2102310VMALUJA001610     02310VMA      
+PWR5       --     PHD-3000WA         2102310VMALUJA001489     02310VMA      
+PWR6       --     PHD-3000WA         2102310VMALUJA001491     02310VMA      
+PWR7       --     PHD-3000WA         2102310VMALUJA001579     02310VMA      
+PWR8       --     --                 --                       --            
+----------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Port                 Type                 SN                   Description                                                                                                                                                                                                                                                     
+--------------------------------------------------------------------------------
+40GE1/0/0            02311FPA             AM1830S2BDW          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/1            02311FPA             AM1830S2D24          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/2            02311FPA             AM1830S2CHB          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/3            02311FPA             AM1831S2EKV          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/4            02311FPA             AM1831S2EK4          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/5            02311FPA             AM1832S2FBK          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/6            02311FPA             AM1830S2D47          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/7            02311FPA             AM1832S2F5H          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/8            02311FPA             AM1830S2D41          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/9            02311FPA             AM1830S2C32          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/10           02311FPA             AM1817S20N9          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/11           02311FPA             AM1831S2ER3          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/12           02311FPA             AM1830S2BZR          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/13           02311FPA             AM1817S20GY          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/14           02311FPA             AM1832S2F5J          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/15           02311FPA             AM1830S2BDU          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/16           02311FPA             AM1831S2EMG          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/17           02311FPA             AM1832S2F82          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/18           02311FPA             AM1832S2EZF          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/19           02311FPA             AM1832S2F39          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/20           02311FPA             AM1819S23BV          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/21           02311FPA             AM1831S2ERC          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/22           02311FPA             AM1831S2EJ2          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/23           02311FPA             AM1832S2F63          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/24           02311FPA             AM1819S23BK          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/25           02311FPA             AM1830S2BSF          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/26           02311FPA             AM1831S2EJ9          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/27           02311FPA             AM1830S2BDV          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/28           02311FPA             AM1830S2BX8          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/29           02311FPA             AM1830S2D9H          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/30           02311FPA             AM1830S2BTB          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/31           02311FPA             AM1831S2EUN          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/32           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/33           02311FPA             AM1819S24GC          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE1/0/34           --                   --                   --                                                                                                                                                                                                                                                              
+40GE1/0/35           02311FPA             AM1819S23N3          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/0            02311FPA             AM1819S2284          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/1            02311FPA             AM1831S2ER8          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/2            02311FPA             AM1819S236K          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/3            02311FPA             AM1830S2BXG          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/4            02311FPA             AM1819S23BZ          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/5            02311FPA             AM1831S2EJ5          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/6            02311FPA             AM1819S24G6          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/7            02311FPA             AM1832S2EY1          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/8            02311FPA             AM1825S2AG9          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/9            02311FPA             AM1830S2C35          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/10           02311FPA             AM1819S21XV          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/11           02311FPA             AM1832S2F67          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/12           02311FPA             AM1819S230H          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/13           02311FPA             AM1819S23BH          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/14           02311FPA             AM1819S227P          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/15           02311FPA             AM1819S21YW          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/16           02311FPA             AM1819S21XX          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/17           02311FPA             AM1819S23N4          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/18           02311FPA             AM1819S235W          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/19           02311FPA             AM1831S2EUH          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/20           02311FPA             AM1825S2A5M          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/21           02311FPA             AM1819S2389          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/22           02311FPA             AM1819S22ML          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/23           02311FPA             AM1831S2ER6          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/24           02311FPA             AM1830S2BXF          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/25           02311FPA             AM1832S2F7R          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/26           02311FPA             AM1830S2C31          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/27           02311FPA             AM1825S2ANN          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/28           02311FPA             AM1830S2CH3          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/29           02311FPA             AM1830S2D92          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/30           02311FPA             AM1825S2A5T          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/31           02311FPA             AM1831S2EDX          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/32           --                   --                   --                                                                                                                                                                                                                                                              
+40GE2/0/33           02311FPA             AM1830S2BFA          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE2/0/34           --                   --                   --                                                                                                                                                                                                                                                              
+40GE2/0/35           02311FPA             AM1832S2F65          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/0            --                   --                   --                                                                                                                                                                                                                                                              
+40GE3/0/1            --                   --                   --                                                                                                                                                                                                                                                              
+40GE3/0/2            --                   --                   --                                                                                                                                                                                                                                                              
+40GE3/0/3            --                   --                   --                                                                                                                                                                                                                                                              
+40GE3/0/4            --                   --                   --                                                                                                                                                                                                                                                              
+40GE3/0/5            02311FPA             AM1832S2F3Y          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/6            02311FPA             AM1832S2EYZ          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/7            02311FPA             AM1830S2BDP          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/8            02311FPA             AM1831S2ERN          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/9            02311FPA             AM1832S2EYV          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/10           02311FPA             AM1832S2EZW          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/11           02311FPA             AM1830S2BXH          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/12           02311FPA             AM1831S2ER7          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/13           02311FPA             AM1831S2EMM          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/14           02311FPA             AM1832S2EYN          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/15           02311FPA             AM1832S2EYX          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/16           02311FPA             AM1832S2EXN          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/17           02311FPA             AM1830S2D9A          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/18           02311FPA             AM1832S2F7P          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/19           02311FPA             AM1831S2EUU          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/20           02311FPA             AM1830S2BT7          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/21           02311FPA             AM1832S2F7V          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/22           02311FPA             AM1832S2F7X          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/23           02311FPA             AM1830S2BB8          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/24           02311FPA             AM1832S2FCK          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/25           02311FPA             AM1830S2CH7          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/26           02311FPA             AM1830S2BXB          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/27           02311FPA             AM1830S2BDN          40GE-850nm-LC-100(50um/125um OM3)                                                                                                                                                                                                                               
+40GE3/0/28           --                   --                   --                                                                                                                                                                                                                                                              
+40GE3/0/29           --                   --                   --                                                                                                                                                                                                                                                              
+40GE3/0/30           --                   --                   --                                                                                                                                                                                                                                                              
+40GE3/0/31           --                   --                   --                                                                                                                                                                                                                                                              
+40GE3/0/32           --                   --                   --                                                                                                                                                                                                                                                              
+40GE3/0/33           --                   --                   --                                                                                                                                                                                                                                                              
+40GE3/0/34           --                   --                   --                                                                                                                                                                                                                                                              
+40GE3/0/35           --                   --                   --                                                                                                                                                                                                                                                              
+Sip9/0/0             --                   --                   --                                                                                                                                                                                                                                                              
+Sip9/0/1             --                   --                   --                                                                                                                                                                                                                                                              
+Sip10/0/0            --                   --                   --                                                                                                                                                                                                                                                              
+Sip10/0/1            --                   --                   --                                                                                                                                                                                                                                                              
+--------------------------------------------------------------------------------
+<QH2AD10U19-FB2-128B>display ip interface brief
+*down: administratively down
+!down: FIB overload down
+^down: standby
+(l): loopback
+(s): spoofing
+(d): Dampening Suppressed
+The number of interface that is UP in Physical is 17
+The number of interface that is DOWN in Physical is 33
+The number of interface that is UP in Protocol is 17
+The number of interface that is DOWN in Protocol is 33
+Interface                   IP Address/Mask    Physical Protocol VPN           
+40GE1/0/0                   172.16.15.113/30   down     down     --            
+40GE1/0/1                   172.16.15.117/30   down     down     --            
+40GE1/0/2                   172.16.15.121/30   down     down     --            
+40GE1/0/3                   172.16.15.125/30   down     down     --            
+40GE1/0/4                   172.16.15.129/30   down     down     --            
+40GE1/0/5                   172.16.15.133/30   down     down     --            
+40GE1/0/6                   172.16.15.137/30   down     down     --            
+40GE1/0/7                   172.16.15.141/30   down     down     --            
+40GE1/0/8                   172.16.15.145/30   down     down     --            
+40GE1/0/9                   172.16.15.149/30   up       up       --            
+40GE1/0/10                  172.16.15.153/30   down     down     --            
+40GE1/0/11                  172.16.15.157/30   down     down     --            
+40GE1/0/12                  172.16.15.161/30   down     down     --            
+40GE1/0/13                  172.16.15.165/30   down     down     --            
+40GE1/0/14                  172.16.15.169/30   down     down     --            
+40GE1/0/15                  172.16.15.173/30   down     down     --            
+40GE1/0/16                  172.16.15.177/30   down     down     --            
+40GE1/0/17                  172.16.15.181/30   down     down     --            
+40GE1/0/18                  172.16.15.185/30   down     down     --            
+40GE1/0/19                  172.16.15.189/30   down     down     --            
+40GE1/0/20                  172.16.15.193/30   down     down     --            
+40GE1/0/21                  172.16.15.197/30   up       up       --            
+40GE1/0/22                  172.16.15.201/30   down     down     --            
+40GE1/0/23                  172.16.15.205/30   down     down     --            
+40GE1/0/24                  172.16.15.209/30   down     down     --            
+40GE1/0/25                  172.16.15.213/30   down     down     --            
+40GE1/0/26                  172.16.15.217/30   down     down     --            
+40GE1/0/27                  172.16.15.221/30   down     down     --            
+40GE1/0/28                  172.16.15.225/30   down     down     --            
+40GE1/0/29                  172.16.15.229/30   down     down     --            
+40GE1/0/30                  172.16.15.233/30   down     down     --            
+40GE1/0/31                  172.16.15.237/30   down     down     --            
+40GE1/0/33                  172.16.15.97/30    up       up       --            
+40GE1/0/35                  172.16.15.105/30   up       up       --            
+40GE2/0/0                   172.16.15.241/30   down     down     --            
+40GE2/0/1                   172.16.15.245/30   up       up       --            
+40GE2/0/2                   172.16.15.249/30   down     down     --            
+40GE2/0/3                   172.16.15.253/30   down     down     --            
+40GE2/0/33                  172.16.15.101/30   up       up       --            
+40GE2/0/35                  172.16.15.109/30   up       up       --            
+40GE3/0/15                  172.16.16.169/30   up       up       --            
+40GE3/0/17                  172.16.16.173/30   up       up       --            
+40GE3/0/19                  172.16.16.177/30   up       up       --            
+40GE3/0/21                  172.16.16.181/30   up       up       --            
+40GE3/0/23                  172.16.16.185/30   up       up       --            
+40GE3/0/25                  172.16.16.189/30   up       up       --            
+LoopBack0                   172.16.2.2/32      up       up(s)    --            
+LoopBack1                   12.2.255.2/32      up       up(s)    --            
+MEth0/0/0                   12.255.5.2/24      up       up       OOB           
+NULL0                       unassigned         up       up(s)    --            
+<QH2AD10U19-FB2-128B>
+display license
+ Active License    : flash:/LICCLOUDENGINE12800_V200R003_20181108JLGR60.dat
+ License state     : Normal
+ Revoke ticket     : No ticket
+ 
+ No relevant customer information
+
+ Product name      : CloudEngine 12800
+ Product version   : V200R003
+ License Serial No : LIC20181108JLGR60
+ Creator           : Huawei Technologies Co., Ltd.
+ Created Time      : 2018-11-08 09:56:46
+ Feature name      : CELIC
+ Authorize type    : comm
+ Expired date      : PERMANENT
+ Trial days        : --
+
+ Item name          Item type      Value      Description
+ ------------------------------------------------------------- 
+ DE0S00MPLS01       Function       YES        CE128-LIC-MPLS    
+ DE0S0000VS01       Function       YES        CE128-LIC-VS      
+ DE0S0TRILL01       Function       YES        CE128-LIC-TRILL   
+ CE128-LIC-IPv6     Function       YES        CE128-LIC-IPv6    
+ CE128-LIC-EVN      Function       YES        CE128-LIC-EVN     
+ CE-LIC-TLM         Function       YES        CE-LIC-TLM        
+
+ Master board license state: Normal.
+<QH2AD10U19-FB2-128B>
+#
+#
+<QH2AD10U19-FB2-128B>
