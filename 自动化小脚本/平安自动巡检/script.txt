@@ -1,0 +1,10 @@
+<--获取used-->
+dis ip poo interface vlanif2
+dis ip poo in GigabitEthernet0/0/6.2
+dis ip poo in GigabitEthernet0/0/2.2
+display  ip  pool  interface  Eth-Trunk1.2
+display  ip  pool  interface  Eth-Trunk2.2
+<--获取内存利用率-->
+dis memory-usage
+<--获取CPU利用率-->
+dis cpu-usage
