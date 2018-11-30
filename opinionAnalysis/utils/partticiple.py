@@ -11,19 +11,21 @@ import jieba
 import re
 from jieba.analyse import *
 from conf.settings import FONT_PATH
-
+import numpy as np
+from PIL import Image
 def part(info, newsTitle):
     # 分词并且提取关键词
+    # alice_mask = np.array(Image.open("utils/1.jpg"))
     pattern = re.compile(u'\t|\n|\.|-|—|:|;|\)|\(|\?|"|、|。|，')
     string_data = re.sub(pattern, '', info)
     string_data = re.sub('\d', '', string_data)
     seg_list_exact = jieba.cut(string_data, cut_all=False)
     object_list = []
-    remove_words = [u'的', u'，', u'和', u'是', u'随着', u'对于', ' ', u'对', u'等', u'能', u'都', u'。',
-                    u'、', u'中', u'与', u'在', u'其', u'了', u'可以', u'进行', u'有', u'更', u'需要', u'提供',
-                    u'多', u'能力', u'通过', u'会', u'不同', u'一个', u'这个', u'我们', u'将', u'并',
-                    u'同时', u'看', u'如果', u'但', u'到', u'非常', u'—', u'如何', u'包括', u'这', '》', '《',
-                    '“', '”', ':', '年月日', '年', '月', '日', 'nbsp', 'ldquo', 'rdquo']
+    remove_words = []
+    with open('utils\stopwords.txt', 'rb') as f:
+        for line in f:
+            line = line.decode('utf8')
+            remove_words.append(line.strip())
 
     for word in seg_list_exact:
         if word not in remove_words and len(word) > 1 and not word.isdigit():
@@ -39,6 +41,7 @@ def part(info, newsTitle):
                    max_font_size=60,  # 设置字体最大值
                    color_func=None,  # 设置关键字的字体颜色
                    random_state=42,  # 设置有多少种随机生成状态，即有多少种配色方案
+                   # mask=alice_mask,
                    )
     wc.generate(topWord)
     wc.to_file(pngName)
