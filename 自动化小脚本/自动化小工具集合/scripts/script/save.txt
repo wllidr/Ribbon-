@@ -1,0 +1,27 @@
+dis cur | no
+dis device | no
+dis esn | no
+dis ip int b | no
+dis ll n b | no
+dis bgp peer | no
+dis bgp instan evpn evpn peer | no
+dis arp | no
+dis mac-addres | no
+dis int de | no
+dis dfs-g 1 m-lag | no
+dis vxlan tunnel  | no
+dis vxlan vni  | no
+dis logb | no
+dis alarm active  | no
+dis device alarm hardware | no
+dis device fan  | no
+dis device power | no
+dis device manufacture-info | no
+dis device elabel b | no
+dis device temperature all | no
+dis device power system | no
+display version | no-more
+dis patch | no-more
+display eth-trunk | no-more
+display arp | no-more
+#

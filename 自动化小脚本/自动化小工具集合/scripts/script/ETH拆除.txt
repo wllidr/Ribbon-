@@ -1,0 +1,134 @@
+sys
+#
+interface Eth-Trunk1	
+undo trunkport 10GE1/0/1
+interface Eth-Trunk2	
+undo trunkport 10GE1/0/2
+interface Eth-Trunk3	
+undo trunkport 10GE1/0/3
+interface Eth-Trunk4	
+undo trunkport 10GE1/0/4
+interface Eth-Trunk5	
+undo trunkport 10GE1/0/5
+interface Eth-Trunk6	
+undo trunkport 10GE1/0/6
+interface Eth-Trunk7	
+undo trunkport 10GE1/0/7
+interface Eth-Trunk8	
+undo trunkport 10GE1/0/8
+interface Eth-Trunk9	
+undo trunkport 10GE1/0/9
+interface Eth-Trunk10	
+undo trunkport 10GE1/0/10
+interface Eth-Trunk11	
+undo trunkport 10GE1/0/11
+interface Eth-Trunk12	
+undo trunkport 10GE1/0/12
+interface Eth-Trunk13	
+undo trunkport 10GE1/0/13
+interface Eth-Trunk14	
+undo trunkport 10GE1/0/14
+interface Eth-Trunk15	
+undo trunkport 10GE1/0/15
+interface Eth-Trunk16	
+undo trunkport 10GE1/0/16
+interface Eth-Trunk17	
+undo trunkport 10GE1/0/17
+interface Eth-Trunk18	
+undo trunkport 10GE1/0/18
+interface Eth-Trunk19	
+undo trunkport 10GE1/0/19
+interface Eth-Trunk20	
+undo trunkport 10GE1/0/20
+interface Eth-Trunk21	
+undo trunkport 10GE1/0/21
+interface Eth-Trunk22	
+undo trunkport 10GE1/0/22
+interface Eth-Trunk23	
+undo trunkport 10GE1/0/23
+interface Eth-Trunk24	
+undo trunkport 10GE1/0/24
+interface Eth-Trunk25	
+undo trunkport 10GE1/0/25
+interface Eth-Trunk26	
+undo trunkport 10GE1/0/26
+interface Eth-Trunk27	
+undo trunkport 10GE1/0/27
+interface Eth-Trunk28	
+undo trunkport 10GE1/0/28
+interface Eth-Trunk29	
+undo trunkport 10GE1/0/29
+interface Eth-Trunk30	
+undo trunkport 10GE1/0/30
+interface Eth-Trunk31	
+undo trunkport 10GE1/0/31
+interface Eth-Trunk32	
+undo trunkport 10GE1/0/32
+interface Eth-Trunk33	
+undo trunkport 10GE1/0/33
+interface Eth-Trunk34	
+undo trunkport 10GE1/0/34
+interface Eth-Trunk35	
+undo trunkport 10GE1/0/35
+interface Eth-Trunk36	
+undo trunkport 10GE1/0/36
+#
+commit
+#
+quit
+#
+save
+y
+#
+sys
+#
+undo interface eth-trunk 1
+undo interface eth-trunk 2
+undo interface eth-trunk 3
+undo interface eth-trunk 4
+undo interface eth-trunk 5
+undo interface eth-trunk 6
+undo interface eth-trunk 7
+undo interface eth-trunk 8
+undo interface eth-trunk 9
+undo interface eth-trunk 10
+undo interface eth-trunk 11
+undo interface eth-trunk 12
+undo interface eth-trunk 13
+undo interface eth-trunk 14
+undo interface eth-trunk 15
+undo interface eth-trunk 16
+undo interface eth-trunk 17
+undo interface eth-trunk 18
+undo interface eth-trunk 19
+undo interface eth-trunk 20
+undo interface eth-trunk 21
+undo interface eth-trunk 22
+undo interface eth-trunk 23
+undo interface eth-trunk 24
+undo interface eth-trunk 25
+undo interface eth-trunk 26
+undo interface eth-trunk 27
+undo interface eth-trunk 28
+undo interface eth-trunk 29
+undo interface eth-trunk 30
+undo interface eth-trunk 31
+undo interface eth-trunk 32
+undo interface eth-trunk 33
+undo interface eth-trunk 34
+undo interface eth-trunk 35
+undo interface eth-trunk 36
+#
+commit
+#
+quit
+#
+save
+y
+#
+dis int b | no
+#
+dis cur | no
+#
+dis dfs-g 1 m-lag | no 
+#

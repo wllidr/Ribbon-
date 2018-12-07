@@ -1,0 +1,3 @@
+display eth-trunk | no-more
+display arp | no-more
+#

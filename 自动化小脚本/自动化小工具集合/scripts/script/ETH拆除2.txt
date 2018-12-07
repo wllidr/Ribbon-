@@ -1,0 +1,22 @@
+sys
+#
+int range 10ge1/0/37 to 10ge1/0/46
+undo shutdown 
+dldp enable
+description To-Server
+storm suppression multicast 1
+storm suppression broadcast 1
+#
+commit
+#
+quit
+#
+save
+y
+#
+dis cur | no
+#
+dis dfs-g 1 m-lag | no 
+#
+dis int b | no
+#

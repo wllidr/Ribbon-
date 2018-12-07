@@ -1,0 +1,21 @@
+sys
+undo snmp-agent target-host trap address udp-domain 12.255.7.248 vpn-instance OOB params securityname Snmpv3mgr
+snmp-agent target-host trap address udp-domain 12.3.255.6 params securityname Snmpv3mgr v3 privacy private-netmanager
+snmp-agent trap source loopback1
+#
+commit
+quit
+save
+y
+#
+sys
+acl number 2008 
+ rule 100 permit source 12.3.255.6 0
+#
+commit
+quit
+save
+y
+#
+display current-configuration | no-more
+#

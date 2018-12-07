@@ -1,0 +1,21 @@
+sys
+#
+acl number 2092
+undo rule 15
+ rule 40 permit source 172.16.0.0 0.0.255.255
+ rule 50 permit source 12.3.253.0 0.0.0.255
+ rule 60 permit source 12.3.254.0 0.0.0.255
+#
+lldp management-address bind interface LoopBack 1
+comm 
+#
+quit
+#
+save
+y
+#
+dis ll n int 40g1/0/5 | no
+dis ll n int 40g1/0/5 | no
+#
+dis cur | no
+#

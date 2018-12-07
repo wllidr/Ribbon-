@@ -1,0 +1,7 @@
+dis version
+dis startup
+dis patch-information
+dis sn all
+display ip interface brief
+display license
+#
