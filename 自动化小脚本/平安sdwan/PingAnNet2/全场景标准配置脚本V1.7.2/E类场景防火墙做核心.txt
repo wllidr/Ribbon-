@@ -1,0 +1,236 @@
+默认登陆密码是：admin  Admin@huawei
+首次登陆必须修改密码，修改为：Huawei@123
+华为设备默认账号和密码查询网站：http://support.huawei.com/onlinetoolsweb/pqt/index.jsp?from=timeline&isappinstalled=0
+
+——————————————————————
+
+确认版本信息：
+display version                                                        //配置前检查版本是否为 USG6000V500R005C00SPC100(mini).bin，如果不是，必须升级。
+#
+注：
+1、升级完成后，如果交换机有配置，必须全部恢复出厂配置<HW>reset saved-configuration
+2、USG6510使用的是USG6000V500R005C00SPC100(mini).bin。
+
+————————————————————————
+基础配置：
+
+sysname LIFE-FW-HB-SJZ-LCYYQ-USG6510              //设备名
+#
+firewall detect ftp
+#
+clock timezone BeiJing add 08:00:00
+#
+lldp enable
+#
+——————————————————————
+#
+DHCP配置：
+
+dhcp enable
+dhcp server ping packet 0
+dhcp server ping timeout 0
+dhcp server database enable
+dhcp server database recover
+
+————————————————————————
+#
+undo ntp-service server disable
+ntp-service unicast-server XX.XX.XX.XX             //R1路由器IP
+————————————————————————
+
+ICMP配置：
+icmp ttl-exceeded send
+icmp echo-reply fast enable
+
+——————————————————————
+VLAN配置：
+
+vlan batch 2 to 6 4094
+#
+vlan 2
+ description LifeAgent-WiFi                               
+vlan 3
+ description Live&Training
+vlan 4
+ description PC
+vlan 5
+ description Secure
+vlan 6
+ description Other
+vlan 4094
+ description SW&AP-Manage
+#
+————————————————————————
+
+接口配置：
+#
+interface vlanif2                             //WIFI网段
+ description Wi-Fi-Gateway
+ ip address  XX.XX.XX.XX XX
+ service-manage ping permit
+ dhcp server ip-range XX.XX.XX.XX XX.XX.XX.XX                 // 排除网关
+ dhcp select interface
+ dhcp server gateway-list  XX.XX.XX.XX                        //网关
+ dhcp server lease day 0 hour 2 minute 0
+ dhcp server dns-list XX.XX.XX.XX XX.XX.XX.XX                 //同一运营商时，使用2个出口线路运营商DNS，只有一个加101.198.198.198，同一站点不同运营商时，统一使用101.198.198.198/114.114.114.114；
+#    
+interface vlanif3      //直播&培训网段
+ description PC-Gateway
+ ip address XX.XX.XX.XX  XX
+ service-manage ping permit               
+ dhcp server ip-range XX.XX.XX.XX  XX.XX.XX.XX                //排除网关和接入交换机的IP，需分配一个vlan3的IP给接入交换机
+ dhcp select interface
+ dhcp server gateway-list XX.XX.XX.XX			      //网关
+ dhcp server lease day 0 hour 2 minute 0
+ dhcp server dns-list XX.XX.XX.XX XX.XX.XX.XX                 //同一运营商时，使用2个出口线路运营商DNS，只有一个加101.198.198.198，同一站点不同运营商时，统一使用101.198.198.198/114.114.114.114；
+#                              
+interface vlanif4                              //有线PC网段
+ description PC-Gateway
+ ip address XX.XX.XX.XX  XX
+ service-manage ping permit               
+ dhcp server ip-range XX.XX.XX.XX  XX.XX.XX.XX                //排除网关和接入交换机的IP，需分配一个vlan4的IP给接入交换机
+ dhcp select interface
+ dhcp server gateway-list XX.XX.XX.XX			      //网关
+ dhcp server lease day 0 hour 2 minute 0
+ dhcp server dns-list XX.XX.XX.XX XX.XX.XX.XX                 //同一运营商时，使用2个出口线路运营商DNS，只有一个加101.198.198.198，同一站点不同运营商时，统一使用101.198.198.198/114.114.114.114；
+#
+interface vlanif5                              //安防网段
+ description PC-Gateway
+ ip address XX.XX.XX.XX  XX
+ service-manage ping permit               
+ dhcp server ip-range XX.XX.XX.XX  XX.XX.XX.XX                 //排除网关和接入交换机的IP，需分配一个vlan5的IP给接入交换机
+ dhcp select interface
+ dhcp server gateway-list XX.XX.XX.XX			       //网关
+ dhcp server lease day 0 hour 2 minute 0
+ dhcp server dns-list XX.XX.XX.XX XX.XX.XX.XX                  //同一运营商时，使用2个出口线路运营商DNS，只有一个加101.198.198.198，同一站点不同运营商时，统一使用101.198.198.198/114.114.114.114；
+#
+interface vlanif6                             //其它业务网段
+ ip address XX.XX.XX.XX  XX
+ service-manage ping permit
+ dhcp server ip-range XX.XX.XX.XX XX.XX.XX.XX                  //排除网关
+ dhcp select interface
+ dhcp server gateway-list XX.XX.XX.XX                          //网关
+ dhcp server lease day 0 hour 2 minute 0
+ dhcp server dns-list XX.XX.XX.XX XX.XX.XX.XX                  //同一运营商时，使用2个出口线路运营商DNS，只有一个加101.198.198.198，同一站点不同运营商时，统一使用101.198.198.198/114.114.114.114；
+#
+interface vlanif4094                         //接AP交换机的接口
+ description To-SW&AP-MGMT
+ ip address XX.XX.XX.XX XX                             
+ service-manage ping permit
+ service-manage ssh permit
+ service-manage snmp permit
+ dhcp server ip-range XX.XX.XX.XX XX.XX.XX.XX                 //排除网关和接入交换机的地址，aruba的AP排除最后一个IP（该IP提供给aruba的作为虚拟控制器）
+ dhcp select interface
+ dhcp server gateway-list XX.XX.XX.XX                         //网关
+ dhcp server lease day 0 hour 2 minute 0
+ dhcp server dns-list XX.XX.XX.XX XX.XX.XX.XX                 //同一运营商时，使用2个出口线路运营商DNS，只有一个加101.198.198.198，同一站点不同运营商时，统一使用101.198.198.198/114.114.114.114；
+ dhcp server option XX                                        // 根据实际情况来定，如果现场的AP是属于4030或者4030跟4050混合使用的话，那就使用 option 43；如果AP全部使用的是4050，那就使用 option 148，AP还要升级使用云版本
+#
+interface GigabitEthernet0/0/1          
+ description To-AR161-01-Gi0/0/2_From-FW-01-Gi0/0/1
+ undo shutdown
+ ip address XX.XX.XX.XX  29                  //核心和路由器R1互联的地址
+ service-manage ping permit
+ service-manage ssh permit
+ service-manage snmp permit
+#
+————————————————————————
+接口区域划分：
+
+firewall zone trust         
+ add interface  GigabitEthernet0/0/7                                               //根据是否有业务接口进行加区域
+ add interface  GigabitEthernet0/0/7.2
+ add interface  GigabitEthernet0/0/7.3
+ add interface  GigabitEthernet0/0/7.4
+ add interface  GigabitEthernet0/0/7.5
+ add interface  GigabitEthernet0/0/7.6
+ add interface  GigabitEthernet0/0/7.4094
+#
+firewall zone untrust
+ add interface GigabitEthernet0/0/1
+#
+
+————————————————————————
+路由配置：
+
+router id 3.3.3.3
+#
+ospf 110                                    
+ import-route direct
+ import-route static
+ area 0.0.0.0
+  network  XX.XX.XX.XX 0.0.0.7           //和R1互联的地址段 
+#
+——————————————————————
+安全策略：
+
+security-policy
+ default action permit
+ y
+
+————————————————————————
+用户配置：
+
+user-interface console 0
+ authentication-mode password
+ set authentication password cipher Life@con
+ // 配置完成之后，退出系统，使用 Life@con   密码登陆再接着做以下操作
+
+# 
+aaa
+ undo manager-user admin  
+ manager-user life2018
+   password cipher Pingan@123
+   service-type web terminal ssh
+   level 15
+#
+ manager-user pawlan
+   password cipher Pawlan@2018
+   service-type ftp web terminal telnet ssh
+   level 15
+#                                          
+ manager-user hqnm
+   password cipher Pingan@123$95511%IPSec
+   service-type terminal ssh
+   level 15
+#
+ bind manager-user life2018 role system-admin
+ bind manager-user pawlan role system-admin
+ bind manager-user hqnm role system-admin
+#
+user-interface vty 0 4
+ authentication-mode aaa
+ protocol inbound ssh
+
+————————————————————————
+SSH配置：
+
+rsa local-key-pair create
+ 2048
+
+stelnet server enable
+ssh server port 55522
+y
+ssh authentication-type default password
+ssh user hqnm
+ssh user hqnm authentication-type password
+ssh user hqnm service-type all
+ssh user life2018
+ssh user life2018 authentication-type password
+ssh user life2018 service-type all
+ssh user pawlan
+ssh user pawlan authentication-type password
+ssh user pawlan service-type all
+ssh client first-time enable
+
+————————————————————————
+SNMP标准配置：
+
+snmp-agent  mib-view included View_ALL iso
+snmp-agent sys-info version v2c v3
+snmp-agent  community  read life2018 mib-view View_ALL 
+snmp-agent  community  write life2018 mib-view View_ALL 
+snmp-agent  target-host  trap address udp-domain 172.20.145.196 params securityname life2018 v2c
+snmp-agent trap source vlanif4094
+snmp-agent  trap enable
+y

@@ -1,0 +1,158 @@
+锘块粯璁ょ櫥闄嗗瘑鐮佹槸锛歛dmin@huawei.com
+棣栨＄櫥闄嗗繀椤讳慨鏀瑰瘑鐮侊紝淇鏀逛负锛欻uawei@123
+鍗庝负璁惧囬粯璁よ处鍙峰拰瀵嗙爜鏌ヨ㈢綉绔欙細http://support.huawei.com/onlinetoolsweb/pqt/index.jsp?from=timeline&isappinstalled=0
+
+鈥斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺
+
+纭璁ょ増鏈淇℃伅锛
+display version                                                        //閰嶇疆鍓嶆鏌ョ増鏈鏄鍚︿负 	S2700SI-V100R006C05.cc锛屽傛灉涓嶆槸锛屽繀椤诲崌绾с
+#
+ display patch-information                                              //閰嶇疆鍓嶆鏌ョ増鏈鏄鍚﹀畨瑁呬簡S2700_V100R006SPH031.pat 锛屽傛灉涓嶆槸锛屽繀椤诲畨瑁咃紝瀹夎呭畬鎴愬悗锛屽繀椤讳繚瀛橀厤缃閲嶅惎SW锛屽惁鍒橲W琛ヤ竵涓嶅畬鏁寸敓鏁堛
+娉锛氬崌绾у畬鎴愬悗锛屽傛灉浜ゆ崲鏈烘湁閰嶇疆锛屽繀椤诲叏閮ㄦ仮澶嶅嚭鍘傞厤缃<HW>reset saved-configuration
+
+鈥斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺
+鍩虹閰嶇疆锛
+clock timezone BeiJing add 08:00:00                 
+#
+system-view
+#
+sysname LIFE-SW-HN-ZZ-NYL-S2700-4F-06
+#
+lldp enable
+#
+鈥斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺
+鐢熸垚鏍戦厤缃锛
+
+#
+stp enable
+stp mode rstp
+
+鈥斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺
+VLAN閰嶇疆锛
+
+vlan batch 2 to 6 4094
+#
+vlan 2
+ description LifeAgent-WiFi                               
+vlan 3
+ description Live&Training
+vlan 4
+ description PC
+vlan 5
+ description Secure
+vlan 6
+ description Other
+vlan 4094
+ description SW&AP-Manage
+#
+
+鈥斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺
+undo interface vlanif 1
+y
+#
+
+鎺ュ彛閰嶇疆锛
+interface Vlanif4094
+ description To-SW&AP-MGMT                
+ ip address 133.150.1.11 25
+#
+interface Eth-Trunk1
+ description To-CoreSwitch-Eth_TRUNK1     
+ trunkport GigabitEthernet0/0/1           // 2700SI鍜孍I鐨勭壒娈婃э紝闈㈡澘鏄剧ず涓25/26锛屼氦鎹㈡満杞浠堕厤缃涓1/2
+ trunkport GigabitEthernet0/0/2
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 6 4094
+#
+port-group Zhibo
+ group-member Ethernet0/0/1 to Ethernet0/0/8
+ description To-Live&Training
+ port link-type access
+ port default vlan 3
+ stp edged-port enable
+#
+port-group PC
+ group-member Ethernet0/0/9 to Ethernet0/0/24
+ description To-PC
+ port link-type access
+ port default vlan 4
+ stp edged-port enable
+#
+interface GigabitEthernet0/0/1
+ description To-CoreSwitch-01-Gi1/0/17_From-AccessSwitch-01-Gi0/0/1
+#
+interface GigabitEthernet0/0/2
+ description To-CoreSwitch-01-Gi2/0/17_From-AccessSwitch-01-Gi0/0/2
+#                 
+
+鈥斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺
+NTP閰嶇疆锛
+ntp-service unicast-server 133.150.1.1
+#
+鈥斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺
+璺鐢遍厤缃锛
+                        
+ip route-static  0.0.0.0 0.0.0.0 133.150.1.1 description To-CoreSwitch-MGMT
+#
+
+鈥斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺
+SNMP閰嶇疆锛
+
+snmp-agent
+snmp-agent community read cipher life2018 mib-view View_ALL
+snmp-agent community write cipher life2018 mib-view View_ALL
+snmp-agent sys-info version v2c v3
+snmp-agent target-host trap address udp-domain 172.20.145.196  params securityname cipher life2018 v2c
+snmp-agent mib-view included View_ALL iso
+snmp-agent trap source Vlanif4094
+snmp-agent extend error-code enable
+snmp-agent trap enable
+y
+#
+
+鈥斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺
+鐢ㄦ埛閰嶇疆锛
+
+user-interface con 0                      
+ authentication-mode password
+ set authentication password cipher Life@con
+ // 閰嶇疆瀹屾垚涔嬪悗锛岄鍑虹郴缁燂紝浣跨敤 Life@con   瀵嗙爜鐧婚檰鍐嶆帴鐫鍋氫互涓嬫搷浣
+#
+aaa
+ undo local-user admin   
+ local-user hqnm password cipher Pingan@123$95511
+ local-user hqnm privilege level 15
+ local-user hqnm service-type terminal ssh
+ local-user pawlan password cipher Pawlan@2018
+ local-user pawlan privilege level 15
+ local-user pawlan service-type telnet terminal ssh ftp http
+ local-user life2018 password cipher Pingan@123
+ local-user life2018 privilege level 15
+ local-user life2018 service-type terminal ssh http
+#
+user-interface vty 0 4
+ authentication-mode aaa
+ protocol inbound ssh
+#
+
+鈥斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺斺
+SSH閰嶇疆锛
+
+rsa local-key-pair create
+ 2048
+y
+
+stelnet server enable
+ssh server port 55522
+y
+ssh user hqnm
+ssh user hqnm authentication-type password
+ssh user hqnm service-type all
+ssh user life2018
+ssh user life2018 authentication-type password
+ssh user life2018 service-type all
+ssh user pawlan
+ssh user pawlan authentication-type password
+ssh user pawlan service-type all
+ssh client first-time enable
+#

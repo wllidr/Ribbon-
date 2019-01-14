@@ -1,0 +1,485 @@
+默认登陆密码是：admin@huawei.com
+首次登陆必须修改密码，修改为：Huawei@123
+华为设备默认账号和密码查询网站：http://support.huawei.com/onlinetoolsweb/pqt/index.jsp?from=timeline&isappinstalled=0
+
+——————————————————————
+
+确认版本信息：
+display version                                                        //配置前检查版本是否为 	S5720EI-V200R011C10SPC600.CC，如果不是，必须升级。
+#
+ display patch-information                                              //配置前检查版本是否安装了S5720EI-V200R011SPH007.pat，如果不是，必须安装，安装完成后，必须保存配置重启SW，否则SW补丁不完整生效。
+注：升级完成后，如果交换机有配置，必须全部恢复出厂配置<HW>reset saved-configuration
+
+——————————————————————
+基础配置：
+
+sysname LIFE-SW-GD-GZ-LGYYQ-S5720EI-1     // 名字根据设备地区更改，还有设备型号    
+#
+lldp enable
+#
+clock timezone BeiJing add 08:00:00
+#
+mac-address update arp                    //MAC表更新同步更新ARP表
+
+——————————————————————
+堆叠配置：
+
+主核心配置
+interface stack-port 0/1
+ port interface Gigabitethernet 0/0/31 enable
+ y
+
+interface stack-port 0/2
+ port interface Gigabitethernet 0/0/32 enable
+ y
+
+stack slot 0 renumber 1
+ y
+
+stack slot 0 priority 230
+ y
+
+
+
+备核心
+interface stack-port 0/1
+ port interface Gigabitethernet 0/0/31 enable
+ y
+
+interface stack-port 0/2
+ port interface Gigabitethernet 0/0/32 enable
+ y
+
+stack slot 0 renumber 2
+ y
+
+
+————————————————————————————
+MAD检测配置：配置前，先重启设备，连接好堆叠线，检查堆叠状态OK后；
+
+interface GigabitEthernet1/0/23
+ description To-CoreSwitch-Istack-MAD-Check:Gi2/0/23
+ mad detect mode direct      
+ y
+             
+#
+interface GigabitEthernet1/0/24
+ description To-CoreSwitch-Istack-MAD-Check:Gi2/0/24
+ mad detect mode direct
+ y
+
+#
+interface GigabitEthernet2/0/23
+ description To-CoreSwitch-Istack-MAD-Check:Gi1/0/23
+ mad detect mode direct
+ y
+
+#
+interface GigabitEthernet2/0/24
+ description To-CoreSwitch-Istack-MAD-Check:Gi1/0/24
+ mad detect mode direct
+ y
+
+#
+
+——————————————————————
+生成树配置：
+
+stp enable
+stp tc-protection
+stp region-configuration
+ region-name Pingan
+ active region-configuration
+ quit
+stp instance 0 root primary
+
+——————————————————————
+DHCP配置：
+
+dhcp enable
+dhcp server ping packet 0
+dhcp server ping timeout 0
+dhcp server database enable
+dhcp server database recover
+
+——————————————————————
+VPN配置：
+
+ip vpn-instance LAN
+ ipv4-family
+  route-distinguisher 8888:8888
+  vpn-target 88:888 export-extcommunity
+  vpn-target 88:888 99:999 import-extcommunity
+#
+ip vpn-instance WAN
+ ipv4-family
+  route-distinguisher 9999:9999
+  vpn-target 99:999 export-extcommunity
+  vpn-target 99:999 88:888 import-extcommunity
+
+——————————————————————
+VLAN配置：
+
+vlan batch 2 to 6 4094
+#
+vlan 2
+ description LifeAgent-WiFi                               
+vlan 3
+ description Live&Training
+vlan 4
+ description PC
+vlan 5
+ description Secure
+vlan 6
+ description Other
+vlan 4094
+ description SW&AP-Manage
+#
+
+———————————————————————————
+vlanif口配置：
+undo interface Vlanif1
+y
+#
+interface Vlanif2
+ ip binding vpn-instance LAN
+ description LifeAgent-WiFi-Gateway
+ ip address XX.XX.XX.XX  XX.XX.XX.XX 
+ dhcp select interface
+ dhcp server ip-range XX.XX.XX.XX  XX.XX.XX.XX          // 指定DHCP地址分配范围，默认排除网关
+ dhcp server lease day 0 hour 2 minute 0
+ dhcp server dns-list XX.XX.XX.XX  101.198.198.198      // 同一运营商时，使用2个出口线路运营商DNS，只有一个加101.198.198.198，同一站点不同运营商时，统一使用101.198.198.198/114.114.114.114；
+#
+interface Vlanif3
+ ip binding vpn-instance LAN
+ description Life&Training-Gateway       
+ ip address XX.XX.XX.XX  XX.XX.XX.XX 
+ dhcp select interface
+ dhcp server ip-range XX.XX.XX.XX  XX.XX.XX.XX          // 指定DHCP地址分配范围，默认排除网关
+ dhcp server lease day 0 hour 2 minute 0
+ dhcp server dns-list XX.XX.XX.XX  101.198.198.198      // 同一运营商时，使用2个出口线路运营商DNS，只有一个加101.198.198.198，同一站点不同运营商时，统一使用101.198.198.198/114.114.114.114；
+#
+interface Vlanif4
+ ip binding vpn-instance LAN
+ description PC-Gateway
+ ip address XX.XX.XX.XX  XX.XX.XX.XX 
+ dhcp select interface
+ dhcp server ip-range XX.XX.XX.XX  XX.XX.XX.XX          // 指定DHCP地址分配范围，默认排除网关
+ dhcp server lease day 0 hour 2 minute 0
+ dhcp server dns-list XX.XX.XX.XX  101.198.198.198      // 同一运营商时，使用2个出口线路运营商DNS，只有一个加101.198.198.198，同一站点不同运营商时，统一使用101.198.198.198/114.114.114.114；
+#
+interface Vlanif5
+ ip binding vpn-instance LAN
+ description Secure-Gateway
+ ip address XX.XX.XX.XX  XX.XX.XX.XX 
+ dhcp select interface
+ dhcp server ip-range XX.XX.XX.XX  XX.XX.XX.XX          // 指定DHCP地址分配范围，默认排除网关
+ dhcp server lease day 0 hour 2 minute 0
+ dhcp server dns-list XX.XX.XX.XX  101.198.198.198      // 同一运营商时，使用2个出口线路运营商DNS，只有一个加101.198.198.198，同一站点不同运营商时，统一使用101.198.198.198/114.114.114.114；
+#
+interface Vlanif6
+ ip binding vpn-instance LAN      
+ description Other-Gateway        
+ ip address XX.XX.XX.XX  XX.XX.XX.XX 
+ dhcp select interface
+ dhcp server ip-range XX.XX.XX.XX  XX.XX.XX.XX          // 指定DHCP地址分配范围，默认排除网关
+ dhcp server lease day 0 hour 2 minute 0
+ dhcp server dns-list XX.XX.XX.XX  101.198.198.198      // 同一运营商时，使用2个出口线路运营商DNS，只有一个加101.198.198.198，同一站点不同运营商时，统一使用101.198.198.198/114.114.114.114；
+#
+interface Vlanif4094
+ ip binding vpn-instance LAN
+ description To-SW&AP-MGMT
+ ip address XX.XX.XX.XX  XX.XX.XX.XX 
+ dhcp select interface
+ dhcp server ip-range XX.XX.XX.XX  XX.XX.XX.XX          // 排除本网段之内接入交换机使用的地址
+ dhcp server lease day 0 hour 2 minute 0
+ dhcp server dns-list XX.XX.XX.XX  101.198.198.198      // 同一运营商时，使用2个出口线路运营商DNS，只有一个加101.198.198.198，同一站点不同运营商时，统一使用101.198.198.198/114.114.114.114；
+ dhcp server option XX   // 根据实际情况来定，如果现场的AP是属于4030或者4030跟4050混合使用的话，那就使用 option 43；如果AP全部使用的是4050，那就使用 option 148，AP还要升级使用云版本
+#
+interface Eth-Trunk126
+ undo portswitch
+ ip binding vpn-instance WAN
+ description To-WAN-FW-Eth_Trunk1
+ ip address XX.XX.XX.XX  255.255.255.248                  //默认核心使用第一个IP，FW使用第二个IP
+#
+interface Eth-Trunk127
+ undo portswitch
+ ip binding vpn-instance LAN
+ description To-LAN-FW-Eth_Trunk2
+ ip address XX.XX.XX.XX  255.255.255.248                  //默认核心使用第一个IP，FW使用第二个IP
+#
+interface GigabitEthernet1/0/20                         //连接路由器BC类AR2220E-1的GI0/0/2；
+ undo portswitch
+ ip binding vpn-instance WAN
+ description To-WAN-AR2220E-01-Gi0/0/2_From-CoreSwitch-01-Gi1/0/20
+ ip address XX.XX.XX.XX  255.255.255.248
+#
+interface GigabitEthernet1/0/21
+ description To-WAN-FW-Gi0/0/0_From-CoreSwitch-01-Gi1/0/21
+ eth-trunk 126
+#
+interface GigabitEthernet1/0/22
+ description To-LAN-FW-Gi0/0/2_From-CoreSwitch-01-Gi1/0/22
+ eth-trunk 127
+#
+interface GigabitEthernet2/0/20                         //连接路由器BC类AR2220E-2的GI0/0/2；
+ undo portswitch
+ description To-WAN-AR2220E-02-Gi0/0/2_From-CoreSwitch-01-Gi2/0/20
+ ip binding vpn-instance WAN
+ ip address XX.XX.XX.XX  255.255.255.248  
+#
+interface GigabitEthernet2/0/21
+ description To-WAN-FW-Gi0/0/1_From-CoreSwitch-01-Gi2/0/21
+ eth-trunk 126
+#
+interface GigabitEthernet2/0/22
+ description To-LAN-FW-Gi0/0/3_From-CoreSwitch-01-Gi2/0/22
+ eth-trunk 127
+#
+
+——————————————————————
+
+NTP配置：
+
+undo ntp-service server  disable
+ntp-service unicast-server XX.XX.XX.XX  vpn-instance WAN     // R1接口IP地址
+ntp-service unicast-server XX.XX.XX.XX  vpn-instance WAN     // R2接口IP地址
+
+——————————————————————
+NQA配置：
+
+nqa test-instance admin To_FW
+ test-type icmp
+ destination-address ipv4 XX.XX.XX.XX    // 防火墙WAN侧接口 IP 地址
+ source-address ipv4 XX.XX.XX.XX           // 自身 Eth-trunk127 接口 IP 地址
+ frequency 60               		 // 两次测试之间间隔：60S
+ interval seconds 10     		 // 测试例发送的报文时间间隔为：10S
+ probe-count 5           		 // 探测次数为：5次
+ vpn-instance LAN                         
+ start now
+#
+nqa test-instance admin To_R1
+ test-type icmp
+ destination-address ipv4 XX.XX.XX.XX    // R1接口IP地址   
+ source-address ipv4 XX.XX.XX.XX           // 核心自身Gi1/0/20 接口IP地址   
+ frequency 60
+ interval seconds 10
+ probe-count 5
+ vpn-instance WAN
+ start now
+#
+nqa test-instance admin To_R2
+ test-type icmp
+ destination-address ipv4 XX.XX.XX.XX    // R2接口IP地址    
+ source-address ipv4 XX.XX.XX.XX           // 核心自身G2/0/20接口IP地址 
+ frequency 60
+ interval seconds 10
+ probe-count 5
+ vpn-instance WAN
+ start now
+#
+nqa test-instance admin To_FW_PBR
+ test-type icmp
+ destination-address ipv4  XX.XX.XX.XX    // 防火墙LAN侧接口 IP 地址   
+ source-address ipv4  XX.XX.XX.XX           // 核心自身 Eth-trunk126 WAN侧9口 IP 地址 
+ frequency 6
+ interval seconds 10
+ probe-count 5
+ vpn-instance WAN
+ start now
+#
+———————————————————————————
+策略路由配置：
+
+acl number 3888
+ description WAN_To_FW_PBR
+ rule 5 permit ip
+#
+traffic classifier pbr_fw 
+ if-match acl 3888
+#
+traffic behavior pbr_fw
+ redirect vpn-instance WAN ip-nexthop XX.XX.XX.XX  track-nqa admin To_FW_PBR    // 防火墙WAN侧接口IP地址
+#
+traffic policy pbr_fw 
+ classifier pbr_fw behavior pbr_fw
+#
+interface GigabitEthernet1/0/20
+ traffic-policy pbr_fw inbound
+#
+interface GigabitEthernet2/0/20
+ traffic-policy pbr_fw inbound
+#
+————————————————————————————
+路由配置：
+
+1：静态路由配置
+ip route-static vpn-instance LAN 0.0.0.0 0.0.0.0 XX.XX.XX.XX preference 100 track nqa admin To_R1    // R1接口IP地址
+ip route-static vpn-instance LAN 0.0.0.0 0.0.0.0 XX.XX.XX.XX preference 100 track nqa admin To_R2    // R2接口IP地址
+ip route-static vpn-instance LAN 0.0.0.0 0.0.0.0 XX.XX.XX.XX track nqa admin To_FW                            // 防火墙Eth-trunk2的接口IP
+
+2：动态路由配置
+bgp 100
+ #
+ ipv4-family unicast
+  undo synchronization
+ #
+ ipv4-family vpn-instance LAN
+  import-route direct
+ #
+ ipv4-family vpn-instance WAN
+  import-route direct                     
+#
+router id 4.4.4.4
+ospf 110 router-id 4.4.4.4 vpn-instance WAN
+ default-route-advertise permit-calculate-other
+ import-route bgp
+ import-route direct
+ import-route static
+ vpn-instance-capability simple
+ area 0.0.0.0
+  network XX.XX.XX.XX  0.0.0.7     // 核心自身Gi1/0/20 接口IP网段
+  network XX.XX.XX.XX  0.0.0.7     // 核心自身Gi2/0/20 接口IP网段
+  network XX.XX.XX.XX  0.0.0.7     // 核心自身ETH-TRUNK126 接口IP网段段
+#
+
+————————————————————————————
+ARP安全配置：查看配置命令display cpu-defend configuration packet-type arp-request all
+cpu-defend policy arp
+ car packet-type arp-request cir 192 
+ y
+ quit
+cpu-defend-policy arp global 
+#
+cpu-defend policy default-arp
+ car packet-type arp-request cir 384 
+ y
+ quit
+#
+cpu-defend-policy default-arp
+
+————————————————————————————
+流量优化配置：
+ecmp local-preference disable
+
+————————————————————————————
+SNMP配置：
+
+snmp-agent
+snmp-agent community read cipher life2018 mib-view View_ALL
+snmp-agent community write cipher life2018 mib-view View_ALL
+snmp-agent sys-info version v2c v3
+snmp-agent target-host trap address udp-domain 172.20.145.196 params securityname cipher life2018 v2c
+snmp-agent mib-view included View_ALL iso
+snmp-agent trap source Vlanif4094
+snmp-agent extend error-code enable
+snmp-agent trap enable  
+#
+
+——————————————————————————
+用户配置：
+
+user-interface con 0
+ authentication-mode password
+ set authentication password cipher Life@con    
+ // 配置完成之后，退出系统，使用 Life@con   密码登陆再接着做以下操作
+
+aaa
+ local-aaa-user password policy administrator
+ undo password alert original
+ quit
+ undo local-user admin   
+ local-user hqnm password irreversible-cipher Pingan@123$95511
+ local-user hqnm privilege level 15
+ local-user hqnm service-type terminal ssh
+ local-user pawlan password irreversible-cipher Pawlan@2018
+ local-user pawlan privilege level 15
+ local-user pawlan service-type telnet terminal ssh ftp http
+ local-user life2018 password irreversible-cipher Pingan@123
+ local-user life2018 privilege level 15
+ local-user life2018 service-type terminal ssh http
+#
+user-interface vty 0 4                    
+ authentication-mode aaa
+ protocol inbound ssh
+#
+
+————————————————————————————
+SSH配置：
+
+rsa local-key-pair create
+ 2048
+
+
+stelnet server enable
+ssh server port 55522
+y
+ssh user hqnm
+ssh user hqnm authentication-type password
+ssh user hqnm service-type all
+ssh user life2018
+ssh user life2018 authentication-type password
+ssh user life2018 service-type all
+ssh user pawlan
+ssh user pawlan authentication-type password
+ssh user pawlan service-type all
+ssh client first-time enable
+#
+
+————————————————————————————
+三网合一配置：非必须配置，可选项，根据职场场景和需求配置
+
+#
+vlan batch 7 to 8
+#
+vlan 7
+ description LifeTraining-WiFi
+vlan 8
+ description FreeWiFi-WiFi
+#
+interface Vlanif7
+ ip binding vpn-instance LAN
+ description LifeTraining-WiFi-Gateway
+ ip address XX.XX.XX.XX  XX.XX.XX.XX 
+ dhcp select interface
+ dhcp server ip-range XX.XX.XX.XX  XX.XX.XX.XX          // 指定DHCP地址分配范围，默认排除网关
+ dhcp server lease day 0 hour 2 minute 0
+ dhcp server dns-list XX.XX.XX.XX  101.198.198.198      // 同一运营商时，使用2个出口线路运营商DNS，只有一个加101.198.198.198，同一站点不同运营商时，统一使用101.198.198.198/114.114.114.114；
+#
+interface Vlanif8
+ ip binding vpn-instance LAN      
+ description FreeWiFi-WiFi-Gateway        
+ ip address XX.XX.XX.XX  XX.XX.XX.XX 
+ dhcp select interface
+ dhcp server ip-range XX.XX.XX.XX  XX.XX.XX.XX          // 指定DHCP地址分配范围，默认排除网关
+ dhcp server lease day 0 hour 2 minute 0
+ dhcp server dns-list XX.XX.XX.XX  101.198.198.198      // 同一运营商时，使用2个出口线路运营商DNS，只有一个加101.198.198.198，同一站点不同运营商时，统一使用101.198.198.198/114.114.114.114；
+#
+acl number 3900
+ rule 5 deny ip source 133.124.15.0 0.0.0.127 destination X.X.X.X X.X.X.X               //VLAN2地址段，记住反掩码；
+ rule 10 deny ip source 133.124.15.0 0.0.0.127 destination X.X.X.X X.X.X.X              //VLAN3地址段，记住反掩码；
+ rule 15 deny ip source 133.124.15.0 0.0.0.127 destination X.X.X.X X.X.X.X              //VLAN4地址段，记住反掩码；
+ rule 20 deny ip source 133.124.15.0 0.0.0.127 destination X.X.X.X X.X.X.X              //VLAN5地址段，记住反掩码；
+ rule 25 deny ip source 133.124.15.0 0.0.0.127 destination X.X.X.X X.X.X.X              //VLAN6地址段，记住反掩码；
+ rule 35 deny ip source 133.124.15.0 0.0.0.127 destination X.X.X.X X.X.X.X              //VLAN7地址段，记住反掩码；
+ rule 40 deny ip source 133.124.15.0 0.0.0.127 destination X.X.X.X 0.0.0.7              //AR1路由器LAN地址段，记住反掩码；
+ rule 45 deny ip source 133.124.15.0 0.0.0.127 destination X.X.X.X 0.0.0.7              //AR2路由器LAN地址段，记住反掩码；
+ rule 50 deny ip source 133.124.15.0 0.0.0.127 destination 10.0.0.0 0.255.255.255       //总部10地址段，记住反掩码；
+ rule 55 permit ip source 133.124.15.0 0.0.0.127 destination 172.20.145.195 0           //允许认证服务器，记住反掩码；
+ rule 60 deny ip source 133.124.15.0 0.0.0.127 destination 14.3.12.0 0.0.0.3            //SDWAN隧道14.3地址段，记住反掩码；
+ rule 65 deny ip source 133.124.15.0 0.0.0.127 destination 172.20.0.0 0.0.255.255       //总部172.20地址段，记住反掩码；
+ rule 100 permit ip
+#
+traffic classifier free_wifi_c 
+ if-match acl 3900
+#
+traffic behavior free_wifi_b              
+ permit
+#
+traffic policy free_wifi_geli 
+ classifier free_wifi_c behavior free_wifi_b
+#
+vlan 8
+ traffic-policy free_wifi_geli inbound    
+#
+
