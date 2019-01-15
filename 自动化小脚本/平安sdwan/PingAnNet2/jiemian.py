@@ -34,6 +34,7 @@ class MyFrame(wx.Frame):
         self.updownConnectAc = []
         self.acPortConnects = None
         self.ac1textvalue = self.ac2textvalue = self.optiontextvalue = ''
+
         wx.Frame.__init__(self, None, -1, title, size=(700, 600))
         self.panel = wx.Panel(self)
         self.panel.SetBackgroundColour('white')
@@ -177,7 +178,6 @@ class MyFrame(wx.Frame):
         grid.SetColLabelValue(3, '堆叠台数')
         grid.SetColLabelValue(4, '上联设备')
         grid.SetRowLabelSize(1)
-        # for i in range(0, 5):
         grid.SetColSize(0, 250)
         grid.SetColSize(1, 150)
         grid.SetColSize(2, 200)
@@ -273,7 +273,7 @@ class MyFrame(wx.Frame):
         optionStatic = wx.StaticText(self.panel, -1, 'Option:', style=wx.ALIGN_LEFT | wx.ST_ELLIPSIZE_MIDDLE)
         optionStatic.SetFont(font)
         self.options = ['', '43', '148', '43 & 148']
-        option = wx.Choice(self.panel, -1, choices=self.options , size=(100, 30), style=wx.LB_MULTIPLE)
+        option = wx.Choice(self.panel, -1, choices=self.options , size=(100, 30), style= wx.LB_MULTIPLE)
         option.SetSelection(0)
         option.SetFont(wx.Font(15, wx.ROMAN, wx.NORMAL, wx.NORMAL))
         AC1Static = wx.StaticText(self.panel, -1, '   AC1:', style=wx.ALIGN_LEFT | wx.ST_ELLIPSIZE_MIDDLE)
@@ -360,6 +360,7 @@ class MyFrame(wx.Frame):
         UIButton.Add(button3, proportion=0, flag=wx.ALIGN_CENTER | wx.ALL, border=5)
         UIButton.Add(button4, proportion=0, flag=wx.ALIGN_CENTER | wx.ALL, border=5)
         UIButton.Add(button5, proportion=0, flag=wx.ALIGN_CENTER | wx.ALL, border=5)
+
         if 'D' in self.bussniessClass.upper() or 'E' in self.bussniessClass.upper():
             button2.Disable()
         else:
@@ -811,7 +812,10 @@ class MyFrame(wx.Frame):
                 break
 
         self.acprev = ID
-        purposeChoice = ['', '有线', '无线(友商)', '无线(华为)', '直播/培训', '安防', '其他', '上行(ETH-TRUNK1)', '单线上联', '单线下联']
+        if 'D' in self.bussniessClass or 'E' in self.bussniessClass :
+            purposeChoice = ['', '有线', '无线(友商)', '无线(华为)', '直播/培训', '安防', '其他', '上行(ETH-TRUNK1)', '下行(ETH-TRUNK2)', '单线上联', '单线下联']
+        else:
+            purposeChoice = ['', '有线', '无线(友商)', '无线(华为)', '直播/培训', '安防', '其他', '上行(ETH-TRUNK1)', '单线上联', '单线下联']
         for i in range(ppp):
             self.acgrid.SetCellEditor(i, 0, wx.grid.GridCellTextEditor())
             self.acgrid.SetCellEditor(i, 1, wx.grid.GridCellTextEditor())
@@ -849,6 +853,15 @@ class MyFrame(wx.Frame):
             for i in range(ppp, 8):
                 self.acgrid.SetCellEditor(i, 0, wx.grid.GridCellChoiceEditor(choices=portChoice))
                 self.acgrid.SetCellEditor(i, 1, wx.grid.GridCellChoiceEditor(choices=portChoice))
+        elif 'S3700' in ID:
+            portChoice = [''] + ['Ethernet0/0/' + str(i) for i in range(1, 49)] + ['(光)GigabitEthernet0/0/' + str(i) for i in range(1, 5)]
+            for i in range(ppp):
+                self.acgrid.SetCellEditor(i, 0, wx.grid.GridCellTextEditor())
+                self.acgrid.SetCellEditor(i, 1, wx.grid.GridCellTextEditor())
+            for i in range(ppp, 8):
+                self.acgrid.SetCellEditor(i, 0, wx.grid.GridCellChoiceEditor(choices=portChoice))
+                self.acgrid.SetCellEditor(i, 1, wx.grid.GridCellChoiceEditor(choices=portChoice))
+
         for i in range(0, 8):
             self.acgrid.SetCellEditor(i, 4, wx.grid.GridCellChoiceEditor(choices=self.updownConnect))
         for i in range(0, 8):
@@ -933,9 +946,9 @@ class MyFrame(wx.Frame):
         # print(self.acFiles)
         # print(self.acPortConnects)
         # print(self.fwPortConnect)
-        print(self.fwFile)
-        print(self.acFiles)
-        print(self.swFile)
+        # print(self.fwFile)
+        # print(self.acFiles)
+        # print(self.swFile)
         if self.fwFile != '':
             # print(self.fwFile)
             if 'D' in self.bussniessClass or 'E' in self.bussniessClass:
@@ -965,3 +978,4 @@ if __name__ == '__main__':
     frame = MyFrame('平安脚本工具')
     frame.Show()
     app.MainLoop()
+

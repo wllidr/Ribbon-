@@ -5,75 +5,22 @@
 ——————————————————————
 
 确认版本信息：
-display version                                                        //配置前检查版本是否为 	S5720LI-V200R011C10SPC600.cc，如果不是，必须升级。
+display version                                                        //配置前检查版本是否为 	S2720EI-V200R011C10SPC600.cc，如果不是，必须升级。
 #
- display patch-information                                              //配置前检查版本是否安装了S5720LI-V200R011SPH007.pat  ，如果不是，必须安装，安装完成后，必须保存配置重启SW，否则SW补丁不完整生效。
+ display patch-information                                              //配置前检查版本是否安装了S2720EI-V200R011SPH007.pat ，如果不是，必须安装，安装完成后，必须保存配置重启SW，否则SW补丁不完整生效。
 注：升级完成后，如果交换机有配置，必须全部恢复出厂配置<HW>reset saved-configuration
 
 ——————————————————————
 基础配置：
 
-sysname LIFE-SW-GD-GZ-LGYYQ-S5720LI-1     // 名字根据设备地区更改，还有设备型号
+clock timezone BeiJing add 08:00:00
+#
+sys
+#
+sysname LIFE-SW-GD-GZ-LGYYQ-S2720EI-1     // 名字根据设备地区更改，还有设备型号
 #
 lldp enable
 #
-clock timezone BeiJing add 08:00:00
-#
-
-——————————————————————
-堆叠配置         
-// 注意：需要修改，根据设备数量定，如果只有两台接入交换机，那从接入交换机（slave）就不用配！
-
-主核心配置
-interface stack-port 0/1
- port interface XGigabitethernet 0/0/3 enable
- y
-
-interface stack-port 0/2
- port interface XGigabitethernet 0/0/4 enable
- y
-
-#
-stack slot 0 renumber 1
- y
-
-stack slot 0 priority 230
- y
-
-
-备接入交换机（standby）
-interface stack-port 0/1
- port interface XGigabitethernet 0/0/3 enable
- y
-
-interface stack-port 0/2
- port interface XGigabitethernet 0/0/4 enable
- y
-
-#
-stack slot 0 renumber 2
- y
-
-stack slot 0 priority 200
- y
-
-
-从接入交换机（slave）
-interface stack-port 0/1
- port interface XGigabitethernet 0/0/3 enable
- y
-
-interface stack-port 0/2
- port interface XGigabitethernet 0/0/4 enable
- y
-
-#
-stack slot 0 renumber 3
- y
-
-stack slot 0 priority 150
- y
-
 
 ——————————————————————
 生成树配置：
@@ -104,23 +51,25 @@ vlan 4094
 #
 
 ——————————————————————
-接口配置：
 
+undo interface vlanif 1
+y
+#
+
+接口配置：
 interface Vlanif4094
  description To-SW&AP-MGMT                
  ip address XX.XX.XX.XX 255.255.255.192
 #
 interface Eth-Trunk1
  description To-CoreSwitch-Eth_TRUNK1
- trunkport GigabitEthernet1/0/48       // 接口需要修改，根据现网接入设备的数量修改
- trunkport GigabitEthernet2/0/48
- trunkport GigabitEthernet3/0/48
+ trunkport GigabitEthernet0/0/9        // 接口需要修改，根据现网接入设备的数量修改
+ trunkport GigabitEthernet0/0/10
  port link-type trunk
  undo port trunk allow-pass vlan 1
  port trunk allow-pass vlan 2 to 6 4094
- mad detect mode relay
 #
-interface range GigabitEthernet1/0/1 to GigabitEthernet1/0/24 GigabitEthernet2/0/1 to GigabitEthernet2/0/24    //根据现场业务需求配置
+interface range GigabitEthernet0/0/1 to GigabitEthernet0/0/8 
  description To-Huawei-AP
  port link-type trunk
  port trunk pvid vlan 4094
@@ -128,31 +77,27 @@ interface range GigabitEthernet1/0/1 to GigabitEthernet1/0/24 GigabitEthernet2/0
  port trunk allow-pass vlan 2 4094
  loopback-detect enable
 #
-interface range GigabitEthernet1/0/25 to GigabitEthernet1/0/46    //根据现场业务需求配置
+interface range Ethernet0/0/1 to Ethernet0/0/8
  description To-Live&Training
  port link-type access
  port default vlan 3
  stp edged-port enable
 #
-interface range GigabitEthernet2/0/25 to GigabitEthernet2/0/46 GigabitEthernet3/0/1 to GigabitEthernet3/0/46    //根据现场业务需求配置
+interface range Ethernet0/0/9 to Ethernet0/0/16
  description To-PC
  port link-type access
  port default vlan 4
  stp edged-port enable
 #
-interface GigabitEthernet1/0/48      // 接口不一定是三个，需要修改！
- description To-CoreSwitch-01-Gi1/0/17_From-AccessSwitch-01-Gi1/0/48
+interface GigabitEthernet0/0/9 
+ description To-CoreSwitch-01-Gi1/0/17_From-AccessSwitch-01-Gi0/0/9
 #
-interface GigabitEthernet2/0/48
- description To-CoreSwitch-01-Gi2/0/17_From-AccessSwitch-01-Gi2/0/48
-#
-interface GigabitEthernet3/0/48
- description To-CoreSwitch-01-Gi1/0/18_From-AccessSwitch-01-Gi3/0/48
+interface GigabitEthernet0/0/10
+ description To-CoreSwitch-01-Gi2/0/17_From-AccessSwitch-01-Gi0/0/10
 #                 
 
 ——————————————————————
 NTP配置：
-
 ntp-service unicast-server XX.XX.XX.XX          // 连接CORE的VLAN4094 IP 地址
 #
 
@@ -161,8 +106,7 @@ ntp-service unicast-server XX.XX.XX.XX          // 连接CORE的VLAN4094 IP 地址
                         
 ip route-static 0.0.0.0 0.0.0.0 XX.XX.XX.XX description To-CoreSwitch-MGMT   // 去往CORE的VLAN4094 IP 地址
 #
-
-——————————————————————
+—————————————————————
 SNMP配置：
 
 snmp-agent

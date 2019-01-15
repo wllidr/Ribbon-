@@ -32,7 +32,7 @@ def InitialVariables():
         # print(temp)
         ipStart,ipEnd = ipCacl.ipBegin(temp[0].strip() + '/' + str(int(temp[1])), int(temp[-2]), int(temp[-1]))
         ipPlans.append({'segment':temp[0], 'ipStart': ipStart, 'ipEnd':ipEnd, 'mark':temp[1],
-                       'vlan':temp[2], 'use':temp[3]})
+                       'vlan':temp[2], 'use':temp[3], 'reservedNumber':int(temp[-2])})
     # for ipPlan in ipPlans:
     #     print(ipPlan)
 
@@ -47,13 +47,15 @@ def InitialVariables():
         temp = df.iloc[j, ].tolist()
         devices.append({'deviceName': temp[0], 'deviceRole': temp[1], 'deviceClass': temp[2],
                         'stackNumber' : temp[3], 'topDevice': temp[4]})
-        if 'S5720HI' in temp[0].upper() and '核心' in temp[1] :
+        # print(devices)
+        if '核心' in temp[1] and ('S5720HI' in temp[0].upper() or ('S5720' in temp[0].upper() and 'HI' in temp[0].upper())):
             swModel = 'S5720HI'
-        elif 'S5720EI' in temp[0] and '核心' in temp[1] :
+        elif '核心' in temp[1] and ('S5720EI' in temp[0].upper() or ('S5720' in temp[0].upper() and 'EI' in temp[0].upper())):
             swModel = 'S5720EI'
         if 'FW' in temp[0].upper():
             fwYN = '有FW'
     # print([device for device in devices if '接入' in device['deviceRole']])
+    # print(ipPlans)
     return ipPlans, bussniessClass.upper(), devices, swModel.upper(), fwYN.upper()
 
 if __name__ == '__main__':

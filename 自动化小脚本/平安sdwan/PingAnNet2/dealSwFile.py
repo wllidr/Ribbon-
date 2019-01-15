@@ -163,12 +163,12 @@ def dealSw(swFile, ipPlans, swportConnect, dns1, dns2, option):
                         break
                     if re.search('NTP配置', string):
                         string = portInfos + string
-                    if re.search('//[\s\S]*?\n', string) and not re.search('默认账号和密码查询网站', string):
+                    if re.search('//[\s\S]*?\n', string) and not re.search('默认账号和密码查询网站', string) and not re.search('用户配置', string):
                         string = re.sub('//[\s\S]*?\n', '\n', string)
                     f5.write(re.sub('\r', '', string))
                     string = ''
             if string.strip() != '' and string.strip()[-1] != '#':
-                if re.search('//[\s\S]*?\n', string) and not re.search('默认账号和密码查询网站', string):
+                if re.search('//[\s\S]*?\n', string) and not re.search('默认账号和密码查询网站', string) and not re.search('用户配置', string):
                     string = re.sub('//[\s\S]*?\n', '\n', string)
                 f5.write(re.sub('\r', '', string))
 
@@ -326,7 +326,7 @@ vlan 8
 
 
 def swPortInfos(swportConnect, other):
-    print(swportConnect)
+    # print(swportConnect)
     portInfos = '#\n'
     for port in swportConnect:
         if port['0'] != '' and port['1'] != '' and port['2'] != '':

@@ -5,33 +5,35 @@
 ——————————————————————
 
 确认版本信息：
-display version                                                        //配置前检查版本是否为 	S5720HI-V200R011C10SPC600.CC，如果不是，必须升级。
+display version                                                        //配置前检查版本是否为 	S5720EI-V200R011C10SPC600.cc，如果不是，必须升级。
 #
- display patch-information                                              //配置前检查版本是否安装了S5720HI-V200R011SPH007.pat   ，如果不是，必须安装，安装完成后，必须保存配置重启SW，否则SW补丁不完整生效。
+ display patch-information                                              //配置前检查版本是否安装了S5720EI-V200R011SPH007.pat  ，如果不是，必须安装，安装完成后，必须保存配置重启SW，否则SW补丁不完整生效。
 注：升级完成后，如果交换机有配置，必须全部恢复出厂配置<HW>reset saved-configuration
 
 ——————————————————————
-
 基础配置：
 
-sysname LIFE-SW-GD-GZ-LGYYQ-S5720HI-1     // 名字根据设备地区更改，还有设备型号
+clock timezone BeiJing add 08:00:00
+#
+sys
+#
+sysname  LIFE-SW-HN-ZZ-NYLYYQ-S5720E-01
 #
 lldp enable
 #
-clock timezone BeiJing add 08:00:00
-#
-mac-address update arp                    //MAC表更新同步更新ARP表
-
+mac-address update arp 
+#      
+           
 ——————————————————————
 堆叠配置：
 
 主核心配置
 interface stack-port 0/1
- port interface XGigabitethernet 0/0/3 enable
+ port interface Gigabitethernet 0/0/31 enable
  y
 
 interface stack-port 0/2
- port interface XGigabitethernet 0/0/4 enable
+ port interface Gigabitethernet 0/0/32 enable
  y
 
 stack slot 0 renumber 1
@@ -44,18 +46,17 @@ stack slot 0 priority 230
 
 备核心
 interface stack-port 0/1
- port interface XGigabitethernet 0/0/3 enable
+ port interface Gigabitethernet 0/0/31 enable
  y
 
 interface stack-port 0/2
- port interface XGigabitethernet 0/0/4 enable
+ port interface Gigabitethernet 0/0/32 enable
  y
 
 stack slot 0 renumber 2
  y
 
-
-————————————————————————————
+——————————————————————
 MAD检测配置：配置前，先重启设备，连接好堆叠线，检查堆叠状态OK后；
 
 interface GigabitEthernet1/0/23
@@ -83,7 +84,7 @@ interface GigabitEthernet2/0/24
 
 #
 
-——————————————————————
+————————————————————————————
 生成树配置：
 
 stp enable
@@ -117,7 +118,7 @@ ip vpn-instance WAN
   route-distinguisher 9999:9999
   vpn-target 99:999 export-extcommunity
   vpn-target 99:999 88:888 import-extcommunity
-
+#
 ——————————————————————
 VLAN配置：
 
@@ -195,127 +196,70 @@ interface Vlanif4094
  dhcp server ip-range XX.XX.XX.XX  XX.XX.XX.XX          // 排除本网段之内接入交换机使用的地址
  dhcp server lease day 0 hour 2 minute 0
  dhcp server dns-list XX.XX.XX.XX  101.198.198.198      // 同一运营商时，使用2个出口线路运营商DNS，只有一个加101.198.198.198，同一站点不同运营商时，统一使用101.198.198.198/114.114.114.114；
- dhcp server option XX   // 根据实际情况来定，如果现场的AP是属于4030或者4030跟4050混合使用的话，
-那就使用 option 43；如果AP全部使用的是4050，那就使用 option 148，AP还要升级使用云版本
+ dhcp server option XX   // 根据实际情况来定，如果现场的AP是属于4030或者4030跟4050混合使用的话，那就使用 option 43；如果AP全部使用的是4050，那就使用 option 148，AP还要升级使用云版本
 #
-interface Eth-Trunk126
+interface GigabitEthernet1/0/20
  undo portswitch
- ip binding vpn-instance WAN
- description To-WAN-FW-Eth_Trunk1
- ip address XX.XX.XX.XX  255.255.255.248                  //默认核心使用第一个IP，FW使用第二个IP
-#
-interface Eth-Trunk127
- undo portswitch
- ip binding vpn-instance LAN
- description To-LAN-FW-Eth_Trunk2
- ip address XX.XX.XX.XX  255.255.255.248                  //默认核心使用第一个IP，FW使用第二个IP
-#
-interface GigabitEthernet1/0/20                         //连接路由器A类AR2240C-1的GI0/0/6；
- undo portswitch
- ip binding vpn-instance WAN
  description To-WAN-AR2220E-01-Gi0/0/2_From-CoreSwitch-01-Gi1/0/20
- ip address XX.XX.XX.XX  255.255.255.248
+ ip binding vpn-instance WAN
+ ip address 133.127.0.225  255.255.255.248
 #
 interface GigabitEthernet1/0/21
  description To-WAN-FW-Gi0/0/0_From-CoreSwitch-01-Gi1/0/21
- eth-trunk 126
 #
 interface GigabitEthernet1/0/22
  description To-LAN-FW-Gi0/0/2_From-CoreSwitch-01-Gi1/0/22
- eth-trunk 127
 #
-interface GigabitEthernet2/0/20                       //连接路由器A类AR2240C-2的GI0/0/6；
+interface GigabitEthernet2/0/20
  undo portswitch
  description To-WAN-AR2220E-02-Gi0/0/2_From-CoreSwitch-01-Gi2/0/20
  ip binding vpn-instance WAN
- ip address XX.XX.XX.XX  255.255.255.248
+ ip address 133.127.0.233  255.255.255.248
 #
 interface GigabitEthernet2/0/21
  description To-WAN-FW-Gi0/0/1_From-CoreSwitch-01-Gi2/0/21
- eth-trunk 126
 #
 interface GigabitEthernet2/0/22
  description To-LAN-FW-Gi0/0/3_From-CoreSwitch-01-Gi2/0/22
- eth-trunk 127
-#
-
-——————————————————————
-NTP配置：
-
-undo ntp-service server disable
-ntp-service unicast-server XX.XX.XX.XX  vpn-instance WAN     // R1接口IP地址
-ntp-service unicast-server XX.XX.XX.XX  vpn-instance WAN     // R1接口IP地址
-
-——————————————————————
-NQA配置：
-
-nqa test-instance admin To_FW
- test-type icmp
- destination-address ipv4 XX.XX.XX.XX    // 防火墙WAN侧接口 IP 地址
- source-address ipv4 XX.XX.XX.XX           // 自身 Eth-trunk127 接口 IP 地址
- frequency 60               		 // 两次测试之间间隔：60S
- interval seconds 10     		 // 测试例发送的报文时间间隔为：10S
- probe-count 5           		 // 探测次数为：5次
- vpn-instance LAN                         
- start now
-nqa test-instance admin To_R1
- test-type icmp
- destination-address ipv4 XX.XX.XX.XX    // R1接口IP地址
- source-address ipv4 XX.XX.XX.XX           // 核心自身Gi1/0/20 接口IP地址
- frequency 60
- interval seconds 10
- probe-count 5
- vpn-instance WAN
- start now
-nqa test-instance admin To_R2
- test-type icmp
- destination-address ipv4 XX.XX.XX.XX    // R2接口IP地址
- source-address ipv4 XX.XX.XX.XX           // 核心自身G2/0/20接口IP地址
- frequency 60
- interval seconds 10
- probe-count 5
- vpn-instance WAN
- start now
-nqa test-instance admin To_FW_PBR
- test-type icmp
- destination-address ipv4  XX.XX.XX.XX    // 防火墙LAN侧接口 IP 地址
- source-address ipv4  XX.XX.XX.XX           // 核心自身 Eth-trunk126 WAN侧接口 IP 地址
- frequency 60
- interval seconds 10
- probe-count 5
- vpn-instance WAN
- start now
 #
 
 ————————————————————————————
-策略路由配置：
+NTP配置：
 
-acl number 3888
- description WAN_To_FW_PBR
- rule 5 permit ip
+undo ntp-service server disable
+ntp-service unicast-server 133.127.0.226  vpn-instance WAN     
+ntp-service unicast-server 133.127.0.234  vpn-instance WAN 
+
+——————————————————————
+NQA配置：
 #
-traffic classifier pbr_fw 
- if-match acl 3888
+nqa test-instance admin To_R1
+ test-type icmp
+ destination-address ipv4 133.127.0.226
+ source-address ipv4 133.127.0.225
+ frequency 60
+ interval seconds 10
+ probe-count 5
+ vpn-instance WAN
+ start now
 #
-traffic behavior pbr_fw
- redirect vpn-instance WAN ip-nexthop XX.XX.XX.XX  track-nqa admin To_FW_PBR    // 防火墙WAN侧接口IP地址
+nqa test-instance admin To_R2
+ test-type icmp
+ destination-address ipv4 133.127.0.234
+ source-address ipv4 133.127.0.233
+ frequency 60
+ interval seconds 10
+ probe-count 5
+ vpn-instance WAN
+ start now
 #
-traffic policy pbr_fw 
- classifier pbr_fw behavior pbr_fw
-#
-interface GigabitEthernet1/0/20
- traffic-policy pbr_fw inbound
-#
-interface GigabitEthernet2/0/20
- traffic-policy pbr_fw inbound
-#
+
 ————————————————————————————
 路由配置：
 
 1：静态路由配置
-ip route-static vpn-instance LAN 0.0.0.0 0.0.0.0 XX.XX.XX.XX preference 100 track nqa admin To_R1    // R1接口IP地址
-ip route-static vpn-instance LAN 0.0.0.0 0.0.0.0 XX.XX.XX.XX preference 100 track nqa admin To_R2    // R2接口IP地址
-ip route-static vpn-instance LAN 0.0.0.0 0.0.0.0 XX.XX.XX.XX track nqa admin To_FW                            // 防火墙Eth-trunk2的接口IP 
+ip route-static vpn-instance LAN 0.0.0.0 0.0.0.0 133.127.0.226 preference 100 track nqa admin To_R1
+ip route-static vpn-instance LAN 0.0.0.0 0.0.0.0 133.127.0.234 preference 100 track nqa admin To_R2
 
 2：动态路由配置
 bgp 100
@@ -337,13 +281,12 @@ ospf 110 router-id 4.4.4.4 vpn-instance WAN
  import-route static
  vpn-instance-capability simple
  area 0.0.0.0
-  network XX.XX.XX.XX  0.0.0.7     // 核心自身Gi1/0/20 接口IP网段
-  network XX.XX.XX.XX  0.0.0.7     // 核心自身Gi2/0/20 接口IP网段
-  network XX.XX.XX.XX  0.0.0.7     // 核心自身ETH-TRUNK126 接口IP网段
+  network 133.127.0.225  0.0.0.7
+  network 133.127.0.233  0.0.0.7 
 #
 
 ————————————————————————————
-ARP安全配置：查看配置命令display cpu-defend configuration packet-type arp-request all
+ARP安全配置：查看配置命令 display cpu-defend configuration packet-type arp-request all
 cpu-defend policy arp
  car packet-type arp-request cir 192 
  y
@@ -356,6 +299,7 @@ cpu-defend policy default-arp
  quit
 #
 cpu-defend-policy default-arp
+#
 
 ————————————————————————————
 流量优化配置：
@@ -369,20 +313,20 @@ snmp-agent community read cipher life2018 mib-view View_ALL
 snmp-agent community write cipher life2018 mib-view View_ALL
 snmp-agent sys-info version v2c v3
 snmp-agent target-host trap address udp-domain 172.20.145.196 params securityname cipher life2018 v2c
-// 现在的 POC 的地址是 172.20.145.196，商用的地址有两个，现在还没有
 snmp-agent mib-view included View_ALL iso
 snmp-agent trap source Vlanif4094
 snmp-agent extend error-code enable
-snmp-agent trap enable  
+snmp-agent trap enable                    
 #
 
 ——————————————————————————
 用户配置：
 
-user-interface con 0
+user-interface console 0
  authentication-mode password
- set authentication password cipher Life@con    
+ set authentication password cipher Life@con
  // 配置完成之后，退出系统，使用 Life@con   密码登陆再接着做以下操作
+#
 
 aaa
  local-aaa-user password policy administrator
@@ -482,3 +426,4 @@ traffic policy free_wifi_geli
 vlan 8
  traffic-policy free_wifi_geli inbound    
 #
+

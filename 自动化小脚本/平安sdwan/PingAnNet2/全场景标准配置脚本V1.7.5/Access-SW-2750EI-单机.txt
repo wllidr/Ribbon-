@@ -5,19 +5,21 @@
 ——————————————————————
 
 确认版本信息：
-display version                                                        //配置前检查版本是否为 	S2720EI-V200R011C10SPC600.cc，如果不是，必须升级。
+display version                                                        //配置前检查版本是否为 	S2750EI-V200R011C10SPC600，如果不是，必须升级。
 #
- display patch-information                                              //配置前检查版本是否安装了S2720EI-V200R011SPH007.pat ，如果不是，必须安装，安装完成后，必须保存配置重启SW，否则SW补丁不完整生效。
+ display patch-information                                              //配置前检查版本是否安装了S2750EI-V200R011SPH007.pat  ，如果不是，必须安装，安装完成后，必须保存配置重启SW，否则SW补丁不完整生效。
 注：升级完成后，如果交换机有配置，必须全部恢复出厂配置<HW>reset saved-configuration
 
 ——————————————————————
 基础配置：
 
-sysname LIFE-SW-GD-GZ-LGYYQ-S2720EI-1     // 名字根据设备地区更改，还有设备型号
+clock timezone BeiJing add 08:00:00
+#
+sys
+#
+sysname LIFE-SW-FJ-FZ-MHNY-AR161
 #
 lldp enable
-#
-clock timezone BeiJing add 08:00:00
 #
 
 ——————————————————————
@@ -49,25 +51,17 @@ vlan 4094
 #
 
 ——————————————————————
-
-undo interface vlanif 1
+undo interface Vlanif1
 y
 #
-
 接口配置：
+要有管理IP 和 网关
 interface Vlanif4094
  description To-SW&AP-MGMT                
- ip address XX.XX.XX.XX 255.255.255.192
+ ip address 133.102.10.2 255.255.255.192
 #
-interface Eth-Trunk1
- description To-CoreSwitch-Eth_TRUNK1
- trunkport GigabitEthernet0/0/9        // 接口需要修改，根据现网接入设备的数量修改
- trunkport GigabitEthernet0/0/10
- port link-type trunk
- undo port trunk allow-pass vlan 1
- port trunk allow-pass vlan 2 to 6 4094
-#
-interface range GigabitEthernet0/0/1 to GigabitEthernet0/0/8 
+无线
+interface range Ethernet0/0/1 to Ethernet0/0/15
  description To-Huawei-AP
  port link-type trunk
  port trunk pvid vlan 4094
@@ -75,36 +69,38 @@ interface range GigabitEthernet0/0/1 to GigabitEthernet0/0/8
  port trunk allow-pass vlan 2 4094
  loopback-detect enable
 #
-interface range Ethernet0/0/1 to Ethernet0/0/8
+有线 直播培训
+interface range Ethernet0/0/21 to Ethernet0/0/24
  description To-Live&Training
  port link-type access
  port default vlan 3
  stp edged-port enable
 #
-interface range Ethernet0/0/9 to Ethernet0/0/16
+PC
+interface range Ethernet0/0/16 to Ethernet0/0/20
  description To-PC
  port link-type access
  port default vlan 4
  stp edged-port enable
 #
-interface GigabitEthernet0/0/9 
- description To-CoreSwitch-01-Gi1/0/17_From-AccessSwitch-01-Gi0/0/9
-#
-interface GigabitEthernet0/0/10
- description To-CoreSwitch-01-Gi2/0/17_From-AccessSwitch-01-Gi0/0/10
+上行trunk
+interface GigabitEthernet0/0/1
+ description To-RT-AR161-Gi0/0/2_From-AccessSwitch-01-Gi0/0/4
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4 4094
 #                 
-
 ——————————————————————
 NTP配置：
-ntp-service unicast-server XX.XX.XX.XX          // 连接CORE的VLAN4094 IP 地址
-#
 
+ntp-service unicast-server 133.102.10.1
+#
 ——————————————————————
 路由配置：
                         
-ip route-static 0.0.0.0 0.0.0.0 XX.XX.XX.XX description To-CoreSwitch-MGMT   // 去往CORE的VLAN4094 IP 地址
-#
-—————————————————————
+ip route-static 0.0.0.0 0.0.0.0 133.102.10.1  description To-RT-MGMT
+
+——————————————————————
 SNMP配置：
 
 snmp-agent

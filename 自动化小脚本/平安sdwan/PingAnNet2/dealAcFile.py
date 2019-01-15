@@ -47,12 +47,12 @@ def dealAcs(acFiles, acportConnects, ipPlans, devices):
                         if re.search('route-static', string):
                             string = re.sub('ip\s*route-static\s*[\s\S]*?\n',
                                             'ip route-static  0.0.0.0 0.0.0.0 ' + ipPlans[5]['ipStart'] + ' description To-CoreSwitch-MGMT\n', string)
-                        if re.search('//[\s\S]*?\n', string) and not re.search('默认账号和密码查询网站', string):
+                        if re.search('//[\s\S]*?\n', string) and not re.search('默认账号和密码查询网站', string) and not re.search('用户配置', string):
                             string = re.sub('//[\s\S]*?\n', '\n', string)
                         f1.write(re.sub('\r', '', string))
                         string = ''
                 if string.strip() != '' and string.strip()[-1] != '#':
-                    if re.search('//[\s\S]*?\n', string) and not re.search('默认账号和密码查询网站', string):
+                    if re.search('//[\s\S]*?\n', string) and not re.search('默认账号和密码查询网站', string) and not re.search('用户配置', string):
                         string = re.sub('//[\s\S]*?\n', '\n', string)
                     f1.write(re.sub('\r', '', string))
 
@@ -83,6 +83,7 @@ def acPorts(acportConnect, manageIp, stackFlag, stackNumber):
     temp = []
     temp1 = ['无线(友商)', '无线(华为)', '直播/培训', '有线', '安防', '其他']
     upLineFlag = True
+    downLineFlag = True
     for acport in acportConnect['acPortConnect']:
         if acport['2'] in temp1:
             if acport['2'] not in temp:
@@ -90,8 +91,13 @@ def acPorts(acportConnect, manageIp, stackFlag, stackNumber):
                 for i in range(len(temp1)):
                     if acport['2'] == temp1[0] or acport['2'] == temp1[1]:
                         vlan2To6 += ' ' + str(2) + ' '
-                    else:
+                        break
+                    elif acport['2'] == temp1[i]:
                         vlan2To6 += ' ' + str(i + 1) + ' '
+                        break
+                    else:
+                        pass
+
     vlan2To6 = ' '.join([t for t in sorted(list(set(vlan2To6.split(' ')))) if t.strip()!=''])
     # print(vlan2To6)
     string = '接口配置：\n'
@@ -102,7 +108,7 @@ def acPorts(acportConnect, manageIp, stackFlag, stackNumber):
     for i in range(len(acportConnect['acPortConnect'])):
         # print(acportConnect['acPortConnect'][i]['2'])
         if acportConnect['acPortConnect'][i]['2'] == '有线':
-            if 'S2700' not in acportConnect['sysname']:
+            if 'S2700' not in acportConnect['sysname'] and 'S3700' not in acportConnect['sysname']:
                 if (acportConnect['acPortConnect'][i]['0'] == acportConnect['acPortConnect'][i]['1']) or (acportConnect['acPortConnect'][i]['0'] != '' and acportConnect['acPortConnect'][i]['1'] == ''):
                     string += 'interface ' + acportConnect['acPortConnect'][i]['0'] + '\n'
                 else:
@@ -116,7 +122,7 @@ def acPorts(acportConnect, manageIp, stackFlag, stackNumber):
             string += ' stp edged-port enable\n' + '#\n'
 
         elif acportConnect['acPortConnect'][i]['2'] == '无线(友商)':
-            if 'S2700' not in acportConnect['sysname']:
+            if 'S2700' not in acportConnect['sysname'] and 'S3700' not in acportConnect['sysname']:
                 if (acportConnect['acPortConnect'][i]['0'] == acportConnect['acPortConnect'][i]['1']) or (acportConnect['acPortConnect'][i]['0'] != '' and acportConnect['acPortConnect'][i]['1'] == ''):
                     string += 'interface ' + acportConnect['acPortConnect'][i]['0'] + '\n'
                 else:
@@ -134,7 +140,7 @@ def acPorts(acportConnect, manageIp, stackFlag, stackNumber):
  port trunk allow-pass vlan 2 4094
 #\n'''
         elif acportConnect['acPortConnect'][i]['2'] == '无线(华为)':
-            if 'S2700' not in acportConnect['sysname']:
+            if 'S2700' not in acportConnect['sysname'] and 'S3700' not in acportConnect['sysname']:
                 if (acportConnect['acPortConnect'][i]['0'] == acportConnect['acPortConnect'][i]['1']) or (acportConnect['acPortConnect'][i]['0'] != '' and acportConnect['acPortConnect'][i]['1'] == ''):
                     string += 'interface ' + acportConnect['acPortConnect'][i]['0'] + '\n'
                 else:
@@ -152,7 +158,7 @@ def acPorts(acportConnect, manageIp, stackFlag, stackNumber):
  port trunk allow-pass vlan 2 4094
 #\n'''
         elif acportConnect['acPortConnect'][i]['2'] == '直播/培训':
-            if 'S2700' not in acportConnect['sysname']:
+            if 'S2700' not in acportConnect['sysname'] and 'S3700' not in acportConnect['sysname']:
                 if (acportConnect['acPortConnect'][i]['0'] == acportConnect['acPortConnect'][i]['1']) or (acportConnect['acPortConnect'][i]['0'] != '' and acportConnect['acPortConnect'][i]['1'] == ''):
                     string += 'interface ' + acportConnect['acPortConnect'][i]['0'] + '\n'
                 else:
@@ -168,7 +174,7 @@ def acPorts(acportConnect, manageIp, stackFlag, stackNumber):
  stp edged-port enable
 #\n'''
         elif acportConnect['acPortConnect'][i]['2'] == '安防':
-            if 'S2700' not in acportConnect['sysname']:
+            if 'S2700' not in acportConnect['sysname'] and 'S3700' not in acportConnect['sysname']:
                 if (acportConnect['acPortConnect'][i]['0'] == acportConnect['acPortConnect'][i]['1']) or (acportConnect['acPortConnect'][i]['0'] != '' and acportConnect['acPortConnect'][i]['1'] == ''):
                     string += 'interface ' + acportConnect['acPortConnect'][i]['0'] + '\n'
                 else:
@@ -184,7 +190,7 @@ def acPorts(acportConnect, manageIp, stackFlag, stackNumber):
  stp edged-port enable
 #\n'''
         elif acportConnect['acPortConnect'][i]['2'] == '其他':
-            if 'S2700' not in acportConnect['sysname']:
+            if 'S2700' not in acportConnect['sysname'] and 'S3700' not in acportConnect['sysname']:
                 if (acportConnect['acPortConnect'][i]['0'] == acportConnect['acPortConnect'][i]['1']) or (acportConnect['acPortConnect'][i]['0'] != '' and acportConnect['acPortConnect'][i]['1'] == ''):
                     string += 'interface ' + acportConnect['acPortConnect'][i]['0'] + '\n'
                 else:
@@ -211,32 +217,76 @@ def acPorts(acportConnect, manageIp, stackFlag, stackNumber):
                     temp = acportConnect['acPortConnect'][i]['2'][-2]
                     string += 'interface Eth-Trunk' + temp + '\n'
                     string += ' description To-CoreSwitch-' + acportConnect['acPortConnect'][i]['3'] + '\n'
-                    string += ' trunkport ' + acportConnect['acPortConnect'][i]['0'] + '\n'
-                    string += ' trunkport ' + acportConnect['acPortConnect'][i]['1'] + '\n'
+                    string += ' trunkport ' + acportConnect['acPortConnect'][i]['0'].replace('(光)', '')  + '\n'
+                    string += ' trunkport ' + acportConnect['acPortConnect'][i]['1'].replace('(光)', '')  + '\n'
                     string += ' port link-type trunk\n' + ' undo port trunk allow-pass vlan 1\n'
-                    string += ' port trunk allow-pass vlan ' + vlan2To6 + ' 4094\n'
+                    string += ' port trunk allow-pass vlan ' + vlan2To6 + ' 4094\n' + '#\n'
                 else:
                     string += 'interface Eth-Trunk1\n'
                     string += ' description To-CoreSwitch-' + acportConnect['acPortConnect'][i]['3'] + '\n'
+                    # print(acportConnect['sysname'])
                     if 'S2720' in acportConnect['sysname']:
-                        for i in range(1, stackNumber+1):
-                            string +=  ' trunkport GigabitEthernet' + str(i) + '/0/10\n'
+                        for ab in range(1, stackNumber+1):
+                            string +=  ' trunkport GigabitEthernet' + str(ab) + '/0/10\n'
                         string += ' port link-type trunk\n' + ' undo port trunk allow-pass vlan 1\n'
                         string += ' port trunk allow-pass vlan ' + vlan2To6 + ' 4094\n' + ' mad detect mode relay\n' + '#\n'
                     elif 'S2750' in acportConnect['sysname']:
-                        for i in range(1, stackNumber+1):
-                            string +=  ' trunkport GigabitEthernet' + str(i) + '/0/4\n'
+                        for ab in range(1, stackNumber+1):
+                            string +=  ' trunkport GigabitEthernet' + str(ab) + '/0/4\n'
                         string += ' port link-type trunk\n' + ' undo port trunk allow-pass vlan 1\n'
                         string += ' port trunk allow-pass vlan ' + vlan2To6 + ' 4094\n' + ' mad detect mode relay\n' + '#\n'
                     elif 'S5720' in acportConnect['sysname']:
-                        for i in range(1, stackNumber+1):
-                            string +=  ' trunkport GigabitEthernet' + str(i) + '/0/48\n'
+                        for ab in range(1, stackNumber+1):
+                            string +=  ' trunkport GigabitEthernet' + str(ab) + '/0/48\n'
                         string += ' port link-type trunk\n' + ' undo port trunk allow-pass vlan 1\n'
                         string += ' port trunk allow-pass vlan ' + vlan2To6 + ' 4094\n' + ' mad detect mode relay\n' + '#\n'
                     upLineFlag = False
-            string += 'interface ' + acportConnect['acPortConnect'][i]['0'] + '\n'
+            # print(acportConnect['acPortConnect'][i])
+            string += 'interface ' + acportConnect['acPortConnect'][i]['0'].replace('(光)', '') + '\n'
             string += ' description To-CoreSwitch-01-Gi'+ acportConnect['acPortConnect'][i]['3'].split('t')[-1] + '_From-AccessSwitch-01-Gi' + acportConnect['acPortConnect'][i]['0'].split('t')[-1] + '\n'
             string += '#\n'
+            if acportConnect['acPortConnect'][i]['1'] != '':
+                string += 'interface ' + acportConnect['acPortConnect'][i]['1'].replace('(光)', '') + '\n'
+                string += ' description To-CoreSwitch-01-Gi' + acportConnect['acPortConnect'][i]['3'].split('t')[-1] + '_From-AccessSwitch-01-Gi' + acportConnect['acPortConnect'][i]['1'].split('t')[-1] + '\n'
+                string += '#\n'
+
+        elif '下行' in acportConnect['acPortConnect'][i]['2']:
+            if downLineFlag:
+                if not stackFlag:
+                    temp = acportConnect['acPortConnect'][i]['2'][-2]
+                    string += 'interface Eth-Trunk' + temp + '\n'
+                    string += ' description To-CoreSwitch-' + acportConnect['acPortConnect'][i]['3'] + '\n'
+                    string += ' trunkport ' + acportConnect['acPortConnect'][i]['0'].replace('(光)', '')  + '\n'
+                    string += ' trunkport ' + acportConnect['acPortConnect'][i]['1'].replace('(光)', '')  + '\n'
+                    string += ' port link-type trunk\n' + ' undo port trunk allow-pass vlan 1\n'
+                    string += ' port trunk allow-pass vlan ' + vlan2To6 + ' 4094\n' + '#\n'
+                else:
+                    string += 'interface Eth-Trunk2\n'
+                    string += ' description To-CoreSwitch-' + acportConnect['acPortConnect'][i]['3'] + '\n'
+                    if 'S2720' in acportConnect['sysname']:
+                        for ab in range(1, stackNumber+1):
+                            string +=  ' trunkport GigabitEthernet' + str(ab) + '/0/10\n'
+                        string += ' port link-type trunk\n' + ' undo port trunk allow-pass vlan 1\n'
+                        string += ' port trunk allow-pass vlan ' + vlan2To6 + ' 4094\n' + ' mad detect mode relay\n' + '#\n'
+                    elif 'S2750' in acportConnect['sysname']:
+                        for ab in range(1, stackNumber+1):
+                            string +=  ' trunkport GigabitEthernet' + str(ab) + '/0/4\n'
+                        string += ' port link-type trunk\n' + ' undo port trunk allow-pass vlan 1\n'
+                        string += ' port trunk allow-pass vlan ' + vlan2To6 + ' 4094\n' + ' mad detect mode relay\n' + '#\n'
+                    elif 'S5720' in acportConnect['sysname']:
+                        for ab in range(1, stackNumber+1):
+                            string +=  ' trunkport GigabitEthernet' + str(ab) + '/0/48\n'
+                        string += ' port link-type trunk\n' + ' undo port trunk allow-pass vlan 1\n'
+                        string += ' port trunk allow-pass vlan ' + vlan2To6 + ' 4094\n' + ' mad detect mode relay\n' + '#\n'
+                    downLineFlag = False
+            # print(acportConnect['acPortConnect'][i])
+            string += 'interface ' + acportConnect['acPortConnect'][i]['0'].replace('(光)', '') + '\n'
+            string += ' description To-CoreSwitch-01-Gi'+ acportConnect['acPortConnect'][i]['3'].split('t')[-1] + '_From-AccessSwitch-01-Gi' + acportConnect['acPortConnect'][i]['0'].split('t')[-1] + '\n'
+            string += '#\n'
+            if acportConnect['acPortConnect'][i]['1'] != '':
+                string += 'interface ' + acportConnect['acPortConnect'][i]['1'].replace('(光)', '') + '\n'
+                string += ' description To-CoreSwitch-01-Gi' + acportConnect['acPortConnect'][i]['3'].split('t')[-1] + '_From-AccessSwitch-01-Gi' + acportConnect['acPortConnect'][i]['1'].split('t')[-1] + '\n'
+                string += '#\n'
     # print(string)
     return string
 

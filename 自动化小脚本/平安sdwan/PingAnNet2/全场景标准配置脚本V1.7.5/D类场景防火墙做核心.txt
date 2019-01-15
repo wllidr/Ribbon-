@@ -14,14 +14,17 @@ display version                                                        //ÅäÖÃÇ°¼
 ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 »ù´¡ÅäÖÃ£º
 
+clock timezone BeiJing add 08:00:00
+#
+sys
+#
 sysname LIFE-FW-HB-SJZ-LCYYQ-USG6510              //Éè±¸Ãû
 #
 firewall detect ftp
 #
-clock timezone BeiJing add 08:00:00
-#
 lldp enable
 #
+
 ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 #
 DHCPÅäÖÃ£º

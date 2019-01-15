@@ -13,11 +13,13 @@ display version                                                        //ÅäÖÃÇ°¼
 ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 »ù´¡ÅäÖÃ£º
 
+clock timezone BeiJing add 08:00:00
+#
+sys
+#
 sysname LIFE-SW-GD-GZ-LGYYQ-S2720EI-1     // Ãû×Ö¸ù¾ÝÉè±¸µØÇø¸ü¸Ä£¬»¹ÓÐÉè±¸ÐÍºÅ
 #
 lldp enable
-#
-clock timezone BeiJing add 08:00:00
 #
 
 ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª

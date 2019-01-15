@@ -5,7 +5,7 @@
 ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 
 È·ÈÏ°æ±¾ÐÅÏ¢£º
-display version                                                        //ÅäÖÃÇ°¼ì²é°æ±¾ÊÇ·ñÎª 	USG6000V500R005C00SPC100(mini).bin£¬Èç¹û²»ÊÇ£¬±ØÐëÉý¼¶¡£
+display version                                                        //ÅäÖÃÇ°¼ì²é°æ±¾ÊÇ·ñÎª 	USG6000V500R005C00SPC100.bin£¬Èç¹û²»ÊÇ£¬±ØÐëÉý¼¶¡£
 #
 ×¢£º
 1¡¢Éý¼¶Íê³Éºó£¬Èç¹û½»»»»úÓÐÅäÖÃ£¬±ØÐëÈ«²¿»Ö¸´³ö³§ÅäÖÃ<HW>reset saved-configuration
@@ -13,20 +13,22 @@ display version                                                        //ÅäÖÃÇ°¼
 
 ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 »ù´¡ÅäÖÃ£º
-
-sysname LIFE-FW-GD-GZ-LGYYQ-USG6510          // Ãû×Ö¸ù¾ÝÉè±¸µØÇø¸ü¸Ä£¬»¹ÓÐÉè±¸ÐÍºÅ
+clock timezone BeiJing add 08:00:00
+#
+sys
+#
+sysname LIFE-FW-XX-XX-XXXXX-USG65XX          // Ãû×Ö¸ù¾ÝÉè±¸µØÇø¸ü¸Ä£¬»¹ÓÐÉè±¸ÐÍºÅ
 #
 firewall detect ftp
 #
 lldp enable
 #
-clock timezone BeiJing add 08:00:00
-#
+
 ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 
 NTPÅäÖÃ£º
-ntp-service unicast-server XX.XX.XX.XX         //R1Â·ÓÉÆ÷µÄµØÖ·
-ntp-service unicast-server XX.XX.XX.XX         //R2Â·ÓÉÆ÷µÄµØÖ·
+ntp-service unicast-server XX.XX.XX.XX         //R1Â·ÓÉÆ÷µÄLAN²à½Ó¿ÚµØÖ·
+ntp-service unicast-server XX.XX.XX.XX         //R2Â·ÓÉÆ÷µÄLAN²à½Ó¿ÚµØÖ·
 
 ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 
@@ -54,23 +56,23 @@ interface Eth-Trunk2
  service-manage ssh permit
  service-manage snmp permit
 #
-interface GigabitEthernet0/0/1          
- description To-WAN-CoreSwitch-Gi1/0/21_From-FW-01-Gi0/0/1
+interface GigabitEthernet1/0/0            
+ description To-WAN-CoreSwitch-Gi1/0/21_From-FW-01-Gi0/0/0
  undo shutdown
  eth-trunk 1
 #
-interface GigabitEthernet0/0/2
- description To-WAN-CoreSwitch-Gi2/0/21_From-FW-01-Gi0/0/2
+interface GigabitEthernet1/0/1
+ description To-WAN-CoreSwitch-Gi2/0/21_From-FW-01-Gi0/0/1
  undo shutdown
  eth-trunk 1
 #
-interface GigabitEthernet0/0/3
- description To-LAN-CoreSwitch-Gi1/0/22_From-FW-01-Gi0/0/3
+interface GigabitEthernet1/0/2
+ description To-LAN-CoreSwitch-Gi1/0/22_From-FW-01-Gi0/0/2
  undo shutdown
  eth-trunk 2
 #
-interface GigabitEthernet0/0/4
- description To-LAN-CoreSwitch-Gi2/0/22_From-FW-01-Gi0/0/4
+interface GigabitEthernet1/0/3
+ description To-LAN-CoreSwitch-Gi2/0/22_From-FW-01-Gi0/0/3
  undo shutdown
  eth-trunk 2
 #
@@ -94,7 +96,7 @@ ospf 1
  import-route direct
  import-route static
  area 0.0.0.0
-  network **** 0.0.0.7      // Á¬½ÓºËÐÄEth-trunk1µÄ½Ó¿ÚIPµØÖ·Íø¶Î
+  network **** 0.0.0.7      // Á¬½ÓºËÐÄEth-trunk126µÄ½Ó¿ÚIPµØÖ·Íø¶Î
 #
 ip route-static X.X.X.X 255.255.255.128 X.X.X.X description Wife                     // È¥ÍùWifi Íø¶ÎÂ·ÓÉ£¬Ä¿µÄÎªEth-trunk 127 IPµØÖ·
 ip route-static X.X.X.X 255.255.255.128 X.X.X.X description Live&Training           // È¥Íù Live&Training Íø¶ÎÂ·ÓÉ£¬Ä¿µÄÎªEth-trunk 127 IPµØÖ·
@@ -133,7 +135,7 @@ aaa
    level 15
 #                                          
  manager-user hqnm
-   password cipher Pingan@123$95511%IPSec
+   password cipher Pingan@123$95511
    service-type terminal ssh
    level 15
 #

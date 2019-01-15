@@ -282,13 +282,13 @@ def dealDE(fwFile, ipPlans, fwportConnect, dns1, dns2, option):
                         string += firewall
                     if re.search('接口配置', string):
                         string += fwPortInfos
-                    if re.search('//[\s\S]*?\n', string) and not re.search('默认账号和密码查询网站', string):
+                    if re.search('//[\s\S]*?\n', string) and not re.search('默认账号和密码查询网站', string)and not re.search('用户配置', string):
                         string = re.sub('//[\s\S]*?\n', '\n', string)
                     f.write(re.sub('\r', '', string))
                     string = ''
 
         if string.strip() !='' and string.strip()[-1] != '#':
-            if re.search('//[\s\S]*?\n', string) and not re.search('默认账号和密码查询网站', string):
+            if re.search('//[\s\S]*?\n', string) and not re.search('默认账号和密码查询网站', string)and not re.search('用户配置', string):
                 string = re.sub('//[\s\S]*?\n', '\n', string)
             f.write(re.sub('\r', '', string))
         if Flag78:

@@ -5,22 +5,79 @@
 ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 
 È·ÈÏ°æ±¾ĞÅÏ¢£º
-display version                                                        //ÅäÖÃÇ°¼ì²é°æ±¾ÊÇ·ñÎª 	S5720LI-V200R011C10SPC600.cc£¬Èç¹û²»ÊÇ£¬±ØĞëÉı¼¶¡£
+display version                                                        //ÅäÖÃÇ°¼ì²é°æ±¾ÊÇ·ñÎª 	S2750EI-V200R011C10SPC600£¬Èç¹û²»ÊÇ£¬±ØĞëÉı¼¶¡£
 #
- display patch-information                                              //ÅäÖÃÇ°¼ì²é°æ±¾ÊÇ·ñ°²×°ÁËS5720LI-V200R011SPH007.pat  £¬Èç¹û²»ÊÇ£¬±ØĞë°²×°£¬°²×°Íê³Éºó£¬±ØĞë±£´æÅäÖÃÖØÆôSW£¬·ñÔòSW²¹¶¡²»ÍêÕûÉúĞ§¡£
+ display patch-information                                              //ÅäÖÃÇ°¼ì²é°æ±¾ÊÇ·ñ°²×°ÁËS2750EI-V200R011SPH007.pat  £¬Èç¹û²»ÊÇ£¬±ØĞë°²×°£¬°²×°Íê³Éºó£¬±ØĞë±£´æÅäÖÃÖØÆôSW£¬·ñÔòSW²¹¶¡²»ÍêÕûÉúĞ§¡£
 ×¢£ºÉı¼¶Íê³Éºó£¬Èç¹û½»»»»úÓĞÅäÖÃ£¬±ØĞëÈ«²¿»Ö¸´³ö³§ÅäÖÃ<HW>reset saved-configuration
 
 ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 »ù´¡ÅäÖÃ£º
 
-sysname LIFE-SW-GD-GZ-LGYYQ-S5720LI-1     // Ãû×Ö¸ù¾İÉè±¸µØÇø¸ü¸Ä£¬»¹ÓĞÉè±¸ĞÍºÅ
+clock timezone BeiJing add 08:00:00
+#
+sys
+#
+sysname LIFE-SW-GD-GZ-LGYYQ-S2750EI-1     // Ãû×Ö¸ù¾İÉè±¸µØÇø¸ü¸Ä£¬»¹ÓĞÉè±¸ĞÍºÅ
 #
 lldp enable
 #
-clock timezone BeiJing add 08:00:00
-#
-¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+¶ÑµşÅäÖÃ         
+// ×¢Òâ£ºĞèÒªĞŞ¸Ä£¬¸ù¾İÉè±¸ÊıÁ¿¶¨£¬Èç¹ûÖ»ÓĞÁ½Ì¨½ÓÈë½»»»»ú£¬ÄÇ´Ó½ÓÈë½»»»»ú£¨slave£©¾Í²»ÓÃÅä£¡
+
+Ö÷ºËĞÄÅäÖÃ
+interface stack-port 0/1
+ port interface Gigabitethernet 0/0/1 enable
+ y
+
+interface stack-port 0/2
+ port interface Gigabitethernet 0/0/2 enable
+ y
+
+#
+stack slot 0 renumber 1
+ y
+
+stack slot 0 priority 230
+ y
+
+
+±¸½ÓÈë½»»»»ú£¨standby£©
+interface stack-port 0/1
+ port interface Gigabitethernet 0/0/1 enable
+ y
+
+interface stack-port 0/2
+ port interface Gigabitethernet 0/0/2 enable
+ y
+
+#
+stack slot 0 renumber 2
+ y
+
+stack slot 0 priority 200
+ y
+
+
+´Ó½ÓÈë½»»»»ú£¨slave£©
+interface stack-port 0/1
+ port interface Gigabitethernet 0/0/1 enable
+ y
+
+interface stack-port 0/2
+ port interface Gigabitethernet 0/0/2 enable
+ y
+
+#
+stack slot 0 renumber 3
+ y
+
+stack slot 0 priority 150
+ y
+
+
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 Éú³ÉÊ÷ÅäÖÃ£º
 
 stp region-configuration
@@ -60,13 +117,15 @@ interface Vlanif4094
 #
 interface Eth-Trunk1
  description To-CoreSwitch-Eth_TRUNK1
- trunkport GigabitEthernet0/0/47        //µ¥Ì¨±ê×¼Ê¹ÓÃGI0/0/47ºÍGI0/0/48£»
- trunkport GigabitEthernet0/0/48
+ trunkport GigabitEthernet1/0/4      // ½Ó¿ÚĞèÒªĞŞ¸Ä£¬¸ù¾İÏÖÍø½ÓÈëÉè±¸µÄÊıÁ¿ĞŞ¸Ä
+ trunkport GigabitEthernet2/0/4
+ trunkport GigabitEthernet3/0/4
  port link-type trunk
  undo port trunk allow-pass vlan 1
  port trunk allow-pass vlan 2 to 6 4094
+ mad detect mode relay
 #
-interface range GigabitEthernet0/0/1 to GigabitEthernet0/0/24      //¸ù¾İÏÖ³¡ÒµÎñĞèÇóÅäÖÃ
+interface range Ethernet1/0/1 to Ethernet1/0/24
  description To-Huawei-AP
  port link-type trunk
  port trunk pvid vlan 4094
@@ -74,27 +133,31 @@ interface range GigabitEthernet0/0/1 to GigabitEthernet0/0/24      //¸ù¾İÏÖ³¡ÒµÎ
  port trunk allow-pass vlan 2 4094
  loopback-detect enable
 #
-interface range GigabitEthernet0/0/25 to GigabitEthernet0/0/32      //¸ù¾İÏÖ³¡ÒµÎñĞèÇóÅäÖÃ
+interface range Ethernet2/0/1 to Ethernet2/0/8 
  description To-Live&Training
  port link-type access
  port default vlan 3
  stp edged-port enable
 #
-interface range GigabitEthernet0/0/33 to GigabitEthernet0/0/46       //¸ù¾İÏÖ³¡ÒµÎñĞèÇóÅäÖÃ
+interface range Ethernet2/0/9 to Ethernet2/0/24 Ethernet3/0/1 to Ethernet3/0/24
  description To-PC
  port link-type access
  port default vlan 4
  stp edged-port enable
 #
-interface GigabitEthernet0/0/47      //µ¥Ì¨±ê×¼ÎªGI0/0/47ºÍGI0/0/48Á½¸ö¶Ë¿ÚÉÏÁª£¬ÒÔÊµ¼ÊÎª×¼£¡
- description To-CoreSwitch-01-Gi1/0/17_From-AccessSwitch-01-Gi0/0/47
+interface GigabitEthernet1/0/4      // ½Ó¿Ú²»Ò»¶¨ÊÇÈı¸ö£¬ĞèÒªĞŞ¸Ä£¡
+ description To-CoreSwitch-01-Gi1/0/17_From-AccessSwitch-01-Gi1/0/4
 #
-interface GigabitEthernet0/0/48
- description To-CoreSwitch-01-Gi2/0/17_From-AccessSwitch-01-Gi0/0/48
+interface GigabitEthernet2/0/4
+ description To-CoreSwitch-01-Gi2/0/17_From-AccessSwitch-01-Gi2/0/4
+#
+interface GigabitEthernet3/0/4
+ description To-CoreSwitch-01-Gi1/0/18_From-AccessSwitch-01-Gi3/0/4
 #                 
 
 ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 NTPÅäÖÃ£º
+
 ntp-service unicast-server XX.XX.XX.XX          // Á¬½ÓCOREµÄVLAN4094 IP µØÖ·
 #
 
@@ -103,7 +166,6 @@ ntp-service unicast-server XX.XX.XX.XX          // Á¬½ÓCOREµÄVLAN4094 IP µØÖ·
                         
 ip route-static 0.0.0.0 0.0.0.0 XX.XX.XX.XX description To-CoreSwitch-MGMT   // È¥ÍùCOREµÄVLAN4094 IP µØÖ·
 #
-
 ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 SNMPÅäÖÃ£º
 
