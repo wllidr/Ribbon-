@@ -6,7 +6,7 @@
 import sys; sys.path.append('.')
 import re
 
-def dealAcs(acFiles, acportConnects, ipPlans, devices):
+def dealAcs(acFiles, acportConnects, ipPlans, devices, swPortConnect, fwPortConnect):
     # for port in acportConnects:
     #     print(port)
     # len(acFiles)
@@ -25,7 +25,7 @@ def dealAcs(acFiles, acportConnects, ipPlans, devices):
             stackInfo = stackConfig(stackNumber, sysname)
         file = acFile['acFile']
         manageIp = acFile['manageIp']
-        portInfos = acPorts(acportConnect, manageIp, stackFlag, stackNumber)
+        portInfos = acPorts(acportConnect, manageIp, stackFlag, stackNumber, swPortConnect, fwPortConnect)
         # print(sysname, file, manageIp)
         with open(sysname + '.txt', 'w') as f1:
             with open(file, 'rb') as f:
@@ -77,7 +77,7 @@ def dealAcs(acFiles, acportConnects, ipPlans, devices):
             if string.strip() != '' and string.strip()[-1] == '#':
                 f.write(re.sub('\r', '', string))
 
-def acPorts(acportConnect, manageIp, stackFlag, stackNumber):
+def acPorts(acportConnect, manageIp, stackFlag, stackNumber, swPortConnect, fwPortConnect):
     # print(acportConnect['sysname'])
     vlan2To6 = ''
     temp = []
@@ -242,13 +242,49 @@ def acPorts(acportConnect, manageIp, stackFlag, stackNumber):
                         string += ' port trunk allow-pass vlan ' + vlan2To6 + ' 4094\n' + ' mad detect mode relay\n' + '#\n'
                     upLineFlag = False
             # print(acportConnect['acPortConnect'][i])
-            string += 'interface ' + acportConnect['acPortConnect'][i]['0'].replace('(光)', '') + '\n'
-            string += ' description To-CoreSwitch-01-Gi'+ acportConnect['acPortConnect'][i]['3'].split('t')[-1] + '_From-AccessSwitch-01-Gi' + acportConnect['acPortConnect'][i]['0'].split('t')[-1] + '\n'
-            string += '#\n'
-            if acportConnect['acPortConnect'][i]['1'] != '':
-                string += 'interface ' + acportConnect['acPortConnect'][i]['1'].replace('(光)', '') + '\n'
-                string += ' description To-CoreSwitch-01-Gi' + acportConnect['acPortConnect'][i]['3'].split('t')[-1] + '_From-AccessSwitch-01-Gi' + acportConnect['acPortConnect'][i]['1'].split('t')[-1] + '\n'
+            if 'Gigabit' in acportConnect['acPortConnect'][i]['0']:
+                portHat = 'Gi'
+            else:
+                portHat = 'Eth'
+            # print(portHat)
+            if int(acportConnect['acPortConnect'][i]['0'].split('/')[0][-1]) > 2:
+                string += 'interface ' + acportConnect['acPortConnect'][i]['0'].replace('(光)', '') + '\n'
+                string += ' description To-CoreSwitch-01-'+ acportConnect['acPortConnect'][i]['3'] + '_From-AccessSwitch-0' + acportConnect['acPortConnect'][i]['0'].split('/')[0][-1] + '-' + portHat + acportConnect['acPortConnect'][i]['0'].split('t')[-1] + '\n'
                 string += '#\n'
+                if acportConnect['acPortConnect'][i]['1'] != '':
+                    string += 'interface ' + acportConnect['acPortConnect'][i]['1'].replace('(光)', '') + '\n'
+                    string += ' description To-CoreSwitch-01-' + acportConnect['acPortConnect'][i]['3'] + '_From-AccessSwitch-01-' + portHat + acportConnect['acPortConnect'][i]['1'].split('t')[-1] + '\n'
+                    string += '#\n'
+            else:
+                for swport in swPortConnect:
+                    if swport['2'] == acportConnect['acPortConnect'][i]['3']:
+                        g1 = swport['0']
+                        g2 = swport['1']
+                for fwport in fwPortConnect:
+                    if fwport['2'] == acportConnect['acPortConnect'][i]['3']:
+                        g1 = fwport['0']
+                        g2 = fwport['1']
+
+                if int(acportConnect['acPortConnect'][i]['0'].split('/')[0][-1]) <= 1 :
+                    string += 'interface ' + acportConnect['acPortConnect'][i]['0'].replace('(光)', '') + '\n'
+                    string += ' description To-CoreSwitch-01-Gi' + g1.split('t')[-1] + '_From-AccessSwitch-01' + '-' + portHat + acportConnect['acPortConnect'][i]['0'].split('t')[-1] + '\n'
+                    string += '#\n'
+                else:
+                    if acportConnect['acPortConnect'][i]['0'].split('/')[0][-1] == 0:
+                        tempnumber = 1
+                    else:
+                        tempnumber = acportConnect['acPortConnect'][i]['0'].split('/')[0][-1]
+                    string += 'interface ' + acportConnect['acPortConnect'][i]['0'].replace('(光)', '') + '\n'
+                    string += ' description To-CoreSwitch-01-Gi' + g2.split('t')[-1] + '_From-AccessSwitch-0' + str(tempnumber) + '-' + portHat + acportConnect['acPortConnect'][i]['0'].split('t')[-1] + '\n'
+                    string += '#\n'
+                # print(string)
+                # print(acportConnect['acPortConnect'][i])
+
+                if acportConnect['acPortConnect'][i]['1'] != '':
+                    string += 'interface ' + acportConnect['acPortConnect'][i]['1'].replace('(光)', '') + '\n'
+                    string += ' description To-CoreSwitch-01-Gi' + g2.split('t')[-1] + '_From-AccessSwitch-02-' + portHat + acportConnect['acPortConnect'][i]['1'].split('t')[-1] + '\n'
+                    string += '#\n'
+                # print(string)
 
         elif '下行' in acportConnect['acPortConnect'][i]['2']:
             if downLineFlag:
@@ -280,13 +316,48 @@ def acPorts(acportConnect, manageIp, stackFlag, stackNumber):
                         string += ' port trunk allow-pass vlan ' + vlan2To6 + ' 4094\n' + ' mad detect mode relay\n' + '#\n'
                     downLineFlag = False
             # print(acportConnect['acPortConnect'][i])
-            string += 'interface ' + acportConnect['acPortConnect'][i]['0'].replace('(光)', '') + '\n'
-            string += ' description To-CoreSwitch-01-Gi'+ acportConnect['acPortConnect'][i]['3'].split('t')[-1] + '_From-AccessSwitch-01-Gi' + acportConnect['acPortConnect'][i]['0'].split('t')[-1] + '\n'
-            string += '#\n'
-            if acportConnect['acPortConnect'][i]['1'] != '':
-                string += 'interface ' + acportConnect['acPortConnect'][i]['1'].replace('(光)', '') + '\n'
-                string += ' description To-CoreSwitch-01-Gi' + acportConnect['acPortConnect'][i]['3'].split('t')[-1] + '_From-AccessSwitch-01-Gi' + acportConnect['acPortConnect'][i]['1'].split('t')[-1] + '\n'
+            if 'Gigabit' in acportConnect['acPortConnect'][i]['0']:
+                portHat = 'Gi'
+            else:
+                portHat = 'Eth'
+            # print(portHat)
+            if int(acportConnect['acPortConnect'][i]['0'].split('/')[0][-1]) > 2:
+                string += 'interface ' + acportConnect['acPortConnect'][i]['0'].replace('(光)', '') + '\n'
+                string += ' description To-CoreSwitch-01-'+ acportConnect['acPortConnect'][i]['3'] + '_From-AccessSwitch-0' + acportConnect['acPortConnect'][i]['0'].split('/')[0][-1] + '-' + portHat + acportConnect['acPortConnect'][i]['0'].split('t')[-1] + '\n'
                 string += '#\n'
+                if acportConnect['acPortConnect'][i]['1'] != '':
+                    string += 'interface ' + acportConnect['acPortConnect'][i]['1'].replace('(光)', '') + '\n'
+                    string += ' description To-CoreSwitch-01-' + acportConnect['acPortConnect'][i]['3'] + '_From-AccessSwitch-01-' + portHat + acportConnect['acPortConnect'][i]['1'].split('t')[-1] + '\n'
+                    string += '#\n'
+            else:
+                for swport in swPortConnect:
+                    if swport['2'] == acportConnect['acPortConnect'][i]['3']:
+                        g1 = swport['0']
+                        g2 = swport['1']
+                for fwport in fwPortConnect:
+                    if fwport['2'] == acportConnect['acPortConnect'][i]['3']:
+                        g1 = fwport['0']
+                        g2 = fwport['1']
+
+                if int(acportConnect['acPortConnect'][i]['0'].split('/')[0][-1]) <= 1 :
+                    string += 'interface ' + acportConnect['acPortConnect'][i]['0'].replace('(光)', '') + '\n'
+                    string += ' description To-CoreSwitch-01-Gi' + g1.split('t')[-1] + '_From-AccessSwitch-01' + '-' + portHat + acportConnect['acPortConnect'][i]['0'].split('t')[-1] + '\n'
+                    string += '#\n'
+                else:
+                    if acportConnect['acPortConnect'][i]['0'].split('/')[0][-1] == 0:
+                        tempnumber = 1
+                    else:
+                        tempnumber = acportConnect['acPortConnect'][i]['0'].split('/')[0][-1]
+                    string += 'interface ' + acportConnect['acPortConnect'][i]['0'].replace('(光)', '') + '\n'
+                    string += ' description To-CoreSwitch-01-Gi' + g2.split('t')[-1] + '_From-AccessSwitch-0' + str(tempnumber) + '-' + portHat + acportConnect['acPortConnect'][i]['0'].split('t')[-1] + '\n'
+                    string += '#\n'
+                # print(string)
+                # print(acportConnect['acPortConnect'][i])
+
+                if acportConnect['acPortConnect'][i]['1'] != '':
+                    string += 'interface ' + acportConnect['acPortConnect'][i]['1'].replace('(光)', '') + '\n'
+                    string += ' description To-CoreSwitch-01-Gi' + g2.split('t')[-1] + '_From-AccessSwitch-02-' + portHat + acportConnect['acPortConnect'][i]['1'].split('t')[-1] + '\n'
+                    string += '#\n'
     # print(string)
     return string
 

@@ -97,7 +97,7 @@ def dealDE(fwFile, ipPlans, fwportConnect, dns1, dns2, option):
         if fwPort['0'] != '' and fwPort['1']!='' and fwPort['2']!='':
             firewall += ' add interface  ' + fwPort['2'] + '\n'
             fwPortInfos += 'interface ' + fwPort['2'] + '\n'
-            fwPortInfos += ' description To-LAN-AccessSwitch-Eth_Trunk1'  + '\n'
+            fwPortInfos += ' description To-LAN-AccessSwitch-Eth_Trunk' + fwPort['2'].strip().split('k')[-1] + '\n'
             fwPortInfos += ''' portswitch
  service-manage ping permit
  service-manage ssh permit
@@ -111,7 +111,7 @@ def dealDE(fwFile, ipPlans, fwportConnect, dns1, dns2, option):
             fwPortInfos += ' portswitch\n'
             fwPortInfos += ' eth-trunk ' + fwPort['2'].split('k')[-1] + '\n#\n'
             fwPortInfos += 'interface ' + fwPort['1'] + '\n'
-            fwPortInfos += ' description To-AccessSwitch-' + '-'.join(fwPort['3']['sysname'].split('-')[-3:]) + '-Gi' + fwPort['3']['1'].split('t')[-1] + '__From-CoreSwitch-01-Gi' + fwPort['1'].split('t')[-1] + '\n'
+            fwPortInfos += ' description To-AccessSwitch-' + '-'.join(fwPort['3']['sysname'].split('-')[-3:]) + '-Gi' + fwPort['3']['1'].split('t')[-1] + '__From-CoreSwitch-02-Gi' + fwPort['1'].split('t')[-1] + '\n'
             fwPortInfos += ' portswitch\n'
             fwPortInfos += ' eth-trunk ' + fwPort['2'].split('k')[-1] + '\n#\n'
         elif fwPort['0'] != '' and fwPort['1'] == '' and fwPort['2'] == '':
@@ -258,7 +258,7 @@ def dealDE(fwFile, ipPlans, fwportConnect, dns1, dns2, option):
                         except:
                             pass
                         temp = re.search('(ip\s*address[\s\S]*?\n)', string).groups()[0]
-                        string = re.sub(temp, 'ip address ' + ipPlans[5]['ipStart'] + ' ' + str(
+                        string = re.sub(temp, 'ip address ' + '.'.join(ipPlans[5]['ipStart'].split('.')[:-1]) + '.' + str(int(ipPlans[5]['ipStart'].split('.')[-1].strip()) - int(ipPlans[5]['reservedNumber'])) + ' ' + str(
                             int(ipPlans[5]['mark'])) + '\n', string)
                         temp = re.findall('dhcp\s*server\s*ip-range[\s\S]*?\n', string)
                         string = re.sub(temp[0], 'dhcp server ip-range ' + '.'.join(ipPlans[5]['ipStart'].split('.')[:-1]) + '.' + str(int(ipPlans[5]['ipStart'].split('.')[-1].strip()) + 1) + '  ' +ipPlans[5]['ipEnd'] + '\n', string)

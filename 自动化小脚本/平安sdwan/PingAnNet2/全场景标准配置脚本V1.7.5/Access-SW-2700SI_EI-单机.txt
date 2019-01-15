@@ -141,7 +141,7 @@ user-interface vty 0 4
 SSH配置：
 
 rsa local-key-pair create
- 2048
+2048
 
 stelnet server enable
 ssh server port 55522

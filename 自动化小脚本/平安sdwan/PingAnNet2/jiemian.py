@@ -1,3 +1,9 @@
+'''
+    Author : Ribbon Huang
+    Date : 2018 - 01 - 07
+    Desc :
+        平安SDWan配置生成工具, 界面部分
+'''
 import sys; sys.path.append('.')
 import wx
 import wx.grid
@@ -11,22 +17,40 @@ import easygui
 wildcardMark = {'1': '127.255.255.255', '2': '63.255.255.255', '3': '31.255.255.255', '4': '15.255.255.255',
                 '5': '7.255.255.255', '6': '3.255.255.255', '7': '1.255.255.255', '8': '0.255.255.255',
                 '9': '0.127.255.255', '10': '0.63.255.255', '11': '0.31.255.255', '12': '0.15.255.255',
-                '13': '0.7.255.255', '14': '0.3.255.255', '15': '0.1.255.255', '16': '0.0.255.255',
-                '17': '0.0.127.255', '18': '0.0.63.255', '19': '0.0.31.255', '20': '0.0.15.255',
-                '21': '0.0.7.255', '22': '0.0.3.255', '23': '0.0.1.255', '24': '0.0.0.255',
-                '25': '0.0.0.127', '26': '0.0.0.63', '27': '0.0.0.31', '28': '0.0.0.15', '29': '0.0.0.7',
-                '30': '0.0.0.3', '31': '0.0.0.1', '32': '0.0.0.0'}
+                '13': '0.7.255.255', '14': '0.3.255.255', '15': '0.1.255.255', '16': '0.0.255.255','17': '0.0.127.255',
+                '18': '0.0.63.255', '19': '0.0.31.255', '20': '0.0.15.255','21': '0.0.7.255', '22': '0.0.3.255',
+                '23': '0.0.1.255', '24': '0.0.0.255','25': '0.0.0.127', '26': '0.0.0.63', '27': '0.0.0.31', '28': '0.0.0.15',
+                '29': '0.0.0.7','30': '0.0.0.3', '31': '0.0.0.1', '32': '0.0.0.0'}
+
+class TableError(Exception):
+    '''自定义的缺少表格或者模板错误'''
+    def __init__(self,ErrorInfo):
+        super().__init__(self)
+        #初始化父类
+        self.errorinfo=ErrorInfo
+
+    def __str__(self):
+        return self.errorinfo
 
 class MyFrame(wx.Frame):
     def __init__(self, title):
         self.page = [1, 2, 3, 4, 5, 6]
         self.acprev = ''
         self.i = 0
-        self.ipPlans, self.bussniessClass, self.devices, self.swModel, self.fwYN = tableVariables.InitialVariables()
-        self.acFiles, self.swFile, self.fwFile = configFiles.fileSelect(self.bussniessClass, self.fwYN, self.devices, self.swModel, self.ipPlans)
         self.dns1 = self.dns2 = self.option = self.optionSelect = ''
         self.swPortConnect = []
         self.fwPortConnect = []
+
+        try:
+            self.ipPlans, self.bussniessClass, self.devices, self.swModel, self.fwYN = tableVariables.InitialVariables()
+        except:
+            raise TableError('缺少数据源表格.......')
+
+        try:
+            self.acFiles, self.swFile, self.fwFile = configFiles.fileSelect(self.bussniessClass, self.fwYN, self.devices, self.swModel, self.ipPlans)
+        except:
+            raise TableError('缺少全场景标准配置脚本模板, 模板中没有该型号，或者模板被删除.....')
+
         for i in range(len(self.acFiles)):
             self.swPortConnect.append({'0':'', '1':'', '2':'', '3':'', 'mad':''})
             self.fwPortConnect.append({'0':'', '1':'', '2':'', '3':'', 'mad':''})
@@ -214,6 +238,7 @@ class MyFrame(wx.Frame):
         UIButton.Add(button3, proportion=0, flag=wx.ALIGN_CENTER | wx.ALL, border=5)
         UIButton.Add(button4, proportion=0, flag=wx.ALIGN_CENTER | wx.ALL, border=5)
         UIButton.Add(button5, proportion=0, flag=wx.ALIGN_CENTER | wx.ALL, border=5)
+
         if 'D' in self.bussniessClass.upper() or 'E' in self.bussniessClass.upper():
             button2.Disable()
             swModelChoice.Disable()
@@ -428,6 +453,7 @@ class MyFrame(wx.Frame):
             elif port['0'] == '' and port['1'] != '' and port['2'] == '':
                 self.updownConnect.append(port['1'])
         self.updownConnect = list(set(self.updownConnect))
+        easygui.msgbox('核心接口关系提交成功.....')
 
     def FWUI(self, event):
         self.i += 1
@@ -607,6 +633,7 @@ class MyFrame(wx.Frame):
             elif port['0'] == '' and port['1'] != '' and port['2'] == '':
                 self.updownConnect.append(port['1'])
         self.updownConnect = list(set(self.updownConnect))
+        easygui.msgbox('防火墙端口关系提交成功.......')
 
     def ACUI(self, event):
         self.i += 1
@@ -787,7 +814,7 @@ class MyFrame(wx.Frame):
                             port['sysname'] = self.acPortConnects[i]['sysname']
                             self.fwPortConnect[j]['3'] = port
         # print(self.updownConnect)
-        # print(self.fwPortConnect)
+        easygui.msgbox(self.acprev + ' 设备接口关系提交成功...')
 
     def dealAcFileButtons(self, event):
         # for acFile in self.acFiles:
@@ -943,23 +970,21 @@ class MyFrame(wx.Frame):
         mainSizer1.Fit(self)
 
     def OnSureCreateFiles(self, event):
-        # print(self.acFiles)
-        # print(self.acPortConnects)
         # print(self.fwPortConnect)
-        # print(self.fwFile)
-        # print(self.acFiles)
-        # print(self.swFile)
+        # print(self.swPortConnect)
         if self.fwFile != '':
             # print(self.fwFile)
             if 'D' in self.bussniessClass or 'E' in self.bussniessClass:
                 dealFwFile.dealDE(self.fwFile, self.ipPlans, self.fwPortConnect, self.dns1, self.dns2, self.option)
             else:
                 dealFwFile.dealABC(self.fwFile, self.ipPlans)
+
         if self.swFile != '':
             # print(self.swFile)
             dealSwFile.dealSw(self.swFile, self.ipPlans, self.swPortConnect, self.dns1, self.dns2, self.option)
+
         if self.acFiles != '':
-            dealAcFile.dealAcs(self.acFiles, self.acPortConnects, self.ipPlans, [device for device in self.devices if '接入' in device['deviceRole']])
+            dealAcFile.dealAcs(self.acFiles, self.acPortConnects, self.ipPlans, [device for device in self.devices if '接入' in device['deviceRole']], self.swPortConnect, self.fwPortConnect)
         easygui.msgbox('生成文件完成')
 
     def OnChangeGrid(self, event):
@@ -974,8 +999,15 @@ class MyFrame(wx.Frame):
                         self.acgrid.SetCellEditor(i, 4, wx.grid.GridCellChoiceEditor(choices=self.updownConnectAc[j]['port']))
 
 if __name__ == '__main__':
-    app = wx.App()
-    frame = MyFrame('平安脚本工具')
-    frame.Show()
-    app.MainLoop()
+    try:
+        app = wx.App()
+        frame = MyFrame('平安脚本工具')
+        frame.Show()
+        app.MainLoop()
+    except Exception as e:
+        if '缺少数据源表格' in str(e) or '缺少全场景标准配置脚本模板' in str(e):
+            e = str(e) + '\n' + '''链接：https://pan.baidu.com/s/1ZHglgLvI7Z_kfAV3JftbAQ 提取码：nykf 复制这段内容后打开百度网盘手机App，操作更方便哦'''
+            easygui.msgbox(str(e))
+        else:
+            easygui.msgbox(str(e))
 
