@@ -116,7 +116,10 @@ def begin_fabfile(file):
     '''
         excel文件信息读取
     '''
-    df = pandas.read_excel(file, sheet_name='服务器文件上传下载')
+    try:
+        df = pandas.read_excel(file, sheet_name='服务器文件上传下载')
+    except:
+        df = pandas.read_excel(file, sheet_name='Sheet1')
     df = df.fillna(method='ffill', axis=0)
     # print(df.iloc[0, :])
     for i in range(df.shape[0]):
@@ -159,6 +162,8 @@ def begin_fabfile(file):
     execute(go)
 
 if __name__ == '__main__':
+    print('开始文件传输跟刷脚本.........')
     begin_fabfile()
+    print('文件传输跟刷脚本结束.........')
 
 logger.removeHandler(fileHandler)

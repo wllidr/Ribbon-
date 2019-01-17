@@ -36,7 +36,7 @@ class MySSH:
             self.logger = logging.getLogger(self.host + '--' + self.device_name)
             formatter = logging.Formatter('%(message)s')
             self.fileHandler = logging.FileHandler(
-                '.\\Logger\\' + t + '\\' + self.host + '--' + self.device_name + '.txt')
+                '.\\Logger\\' + t + '\\' + self.host + '--' + self.device_name + '.txt', encoding='utf8')
             self.fileHandler.setFormatter(formatter)
             self.console_handler = logging.StreamHandler(sys.stdout)
             # 终端日志按照指定的格式来写
@@ -51,9 +51,11 @@ class MySSH:
             self.ssh_fd.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             self.ssh_fd.connect(self.host, port = self.port, username = self.username, password = self.password)
             self.channel = self.ssh_fd.invoke_shell()
+            self.channel.keep_this = self.ssh_fd
             # self.channel.settimeout(30)
             self.logger.info('Connect ' + self.device_name + ' device SSH Success...')
             self.channel.send('scr 0 t\n')
+            self.channel.keep_this = self.ssh_fd
         except Exception as ex:
             self.logger.info('ssh %s@%s: %s' % (self.username, self.host, ex))
 
@@ -63,13 +65,14 @@ class MySSH:
         info = ''
         if checkIf:
             while True:
+                info = ''
                 temp = self.channel.recv(65535)
-                try:
-                    info = info + temp.decode('utf8', 'ignore')
-                except:
-                    break
+                info = info + temp.decode('utf-8', 'ignore')
                 info = re.sub('\\x1b\[\d*\w?', '', info)
                 info = re.sub('\r\n', '\n', info)
+                i = info.split('\n')
+                temp = [p for p in i if p.strip() != '']
+                info = '\n'.join(temp)
                 self.logger.info(info)
                 if cmd.strip().replace(' ', '') in info.replace(' ', ''):
                     break
@@ -167,7 +170,9 @@ def autoScriptBegin(checkIf, poolNumber, file_path, script_path):
         os.makedirs('.\\Failed_log\\' + t)
     if not os.path.exists('.\\Logger\\' + t):
         os.makedirs('.\\Logger\\' + t)
+    print('开始刷脚本...............')
     temp = main(checkIf, poolNumber, file_path, script_path)
+    print('刷脚本结束...............')
     if temp:
         easygui.msgbox('异常退出！检查参数是否有误！！')
     else:

@@ -112,7 +112,12 @@ class MyFrame(wx.Frame):
                 grid.SetCellValue(i, j, str(value))
                 grid.SetCellAlignment(i, j, wx.ALIGN_CENTER, wx.ALIGN_CENTER)
                 j += 1
-        grid.SetReadOnly(0,0)
+        for i in range(len(self.devices)):
+            grid.SetReadOnly(i,0)
+            grid.SetReadOnly(i, 1)
+            grid.SetReadOnly(i, 2)
+            grid.SetReadOnly(i, 3)
+            grid.SetReadOnly(i, 4)
 
         '''主界面上的按钮'''
         button = wx.Button(self.panel, -1, '加载源数据', size=(150, 33))
@@ -214,7 +219,12 @@ class MyFrame(wx.Frame):
                 grid.SetCellValue(i, j, str(value))
                 grid.SetCellAlignment(i, j, wx.ALIGN_CENTER, wx.ALIGN_CENTER)
                 j += 1
-        grid.SetReadOnly(0, 0)
+        for i in range(len(self.devices)):
+            grid.SetReadOnly(i,0)
+            grid.SetReadOnly(i, 1)
+            grid.SetReadOnly(i, 2)
+            grid.SetReadOnly(i, 3)
+            grid.SetReadOnly(i, 4)
 
         '''主界面上的按钮'''
         button = wx.Button(self.panel, -1, '加载源数据', size=(150, 33))
@@ -256,7 +266,7 @@ class MyFrame(wx.Frame):
         mainSizer1.Add(grid, proportion=0, flag=wx.ALIGN_CENTER | wx.ALL, border=5)
         self.panel.SetSizer(mainSizer1)
 
-        mainSizer1.SetMinSize((1100 + self.page[self.i], 600))
+        mainSizer1.SetMinSize((1100 + self.page[self.i ], 600))
         mainSizer1.Fit(self)
 
     def SWUI(self, event):
@@ -431,6 +441,7 @@ class MyFrame(wx.Frame):
         self.ac1textvalue = self.swAC1Text.GetValue()
         self.ac2textvalue = self.swAC2Text.GetValue()
         self.optiontextvalue = self.optionSelect
+
         if self.optionSelect == '':
             self.option = ''
         elif self.optionSelect == '43':
@@ -440,6 +451,7 @@ class MyFrame(wx.Frame):
         else:
             self.option = 'dhcp server option 43 sub-option 2 ip-address ' + self.swAC1Text.GetValue() + ' ' + self.swAC2Text.GetValue() + '\n'
             self.option = ' dhcp server option 148 ascii agilemode=agile-cloud;agilemanage-mode=domain;agilemanage-domain=device-naas1.huawei.com;agilemanage-port=10020;'
+
         for i in range(len(self.acFiles)):
             self.swPortConnect[i]['0'] = self.grid.GetCellValue(i, 0)
             self.swPortConnect[i]['1'] = self.grid.GetCellValue(i, 1)
@@ -452,6 +464,7 @@ class MyFrame(wx.Frame):
                 self.updownConnect.append(port['0'])
             elif port['0'] == '' and port['1'] != '' and port['2'] == '':
                 self.updownConnect.append(port['1'])
+
         self.updownConnect = list(set(self.updownConnect))
         easygui.msgbox('核心接口关系提交成功.....')
 
@@ -918,14 +931,14 @@ class MyFrame(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.OnSureCreateFiles, sure)
 
         # 选择生成文件格式
-        fileClassStatic = wx.StaticText(self.panel, -1, '生成文件格式:  ', style=wx.ALIGN_LEFT | wx.ST_ELLIPSIZE_MIDDLE)
-        fileClassStatic.SetFont(font)
-        fileClassChoice = wx.Choice(self.panel, -1, choices=['Txt', 'Cfg'], size=(80, 30))
-        fileClassChoice.SetFont(wx.Font(15, wx.ROMAN, wx.NORMAL, wx.NORMAL))
-        fileClassChoice.SetSelection(0)
-        box1 = wx.BoxSizer()
-        box1.Add(fileClassStatic)
-        box1.Add(fileClassChoice)
+        # fileClassStatic = wx.StaticText(self.panel, -1, '生成文件格式:  ', style=wx.ALIGN_LEFT | wx.ST_ELLIPSIZE_MIDDLE)
+        # fileClassStatic.SetFont(font)
+        # fileClassChoice = wx.Choice(self.panel, -1, choices=['Txt', 'Cfg'], size=(80, 30))
+        # fileClassChoice.SetFont(wx.Font(15, wx.ROMAN, wx.NORMAL, wx.NORMAL))
+        # fileClassChoice.SetSelection(0)
+        # box1 = wx.BoxSizer()
+        # box1.Add(fileClassStatic)
+        # box1.Add(fileClassChoice)
 
         '''主界面上的按钮'''
         button = wx.Button(self.panel, -1, '加载源数据', size=(150, 33))
@@ -949,6 +962,7 @@ class MyFrame(wx.Frame):
         UIButton.Add(button3, proportion=0, flag=wx.ALIGN_CENTER | wx.ALL, border=5)
         UIButton.Add(button4, proportion=0, flag=wx.ALIGN_CENTER | wx.ALL, border=5)
         UIButton.Add(button5, proportion=0, flag=wx.ALIGN_CENTER | wx.ALL, border=5)
+
         if 'D' in self.bussniessClass.upper() or 'E' in self.bussniessClass.upper():
             button2.Disable()
         else:
@@ -962,7 +976,7 @@ class MyFrame(wx.Frame):
 
         mainSizer1 = wx.BoxSizer(wx.VERTICAL)
         mainSizer1.Add(UIButton, proportion=0, flag=wx.ALIGN_CENTER | wx.ALL, border=5)
-        mainSizer1.Add(box1, proportion=0, flag=wx.ALIGN_CENTER | wx.ALL, border=5)
+        # mainSizer1.Add(box1, proportion=0, flag=wx.ALIGN_CENTER | wx.ALL, border=5)
         mainSizer1.Add(sure, proportion=0, flag=wx.ALIGN_CENTER | wx.ALL, border=5)
         self.panel.SetSizer(mainSizer1)
 
@@ -972,20 +986,24 @@ class MyFrame(wx.Frame):
     def OnSureCreateFiles(self, event):
         # print(self.fwPortConnect)
         # print(self.swPortConnect)
-        if self.fwFile != '':
-            # print(self.fwFile)
-            if 'D' in self.bussniessClass or 'E' in self.bussniessClass:
-                dealFwFile.dealDE(self.fwFile, self.ipPlans, self.fwPortConnect, self.dns1, self.dns2, self.option)
-            else:
-                dealFwFile.dealABC(self.fwFile, self.ipPlans)
+        try:
+            if self.fwFile != '':
+                # print(self.fwFile)
+                if 'D' in self.bussniessClass or 'E' in self.bussniessClass:
+                    dealFwFile.dealDE(self.fwFile, self.ipPlans, self.fwPortConnect, self.dns1, self.dns2, self.option)
+                else:
+                    dealFwFile.dealABC(self.fwFile, self.ipPlans)
 
-        if self.swFile != '':
-            # print(self.swFile)
-            dealSwFile.dealSw(self.swFile, self.ipPlans, self.swPortConnect, self.dns1, self.dns2, self.option)
+            if self.swFile != '':
+                # print(self.swFile)
+                dealSwFile.dealSw(self.swFile, self.ipPlans, self.swPortConnect, self.dns1, self.dns2, self.option)
 
-        if self.acFiles != '':
-            dealAcFile.dealAcs(self.acFiles, self.acPortConnects, self.ipPlans, [device for device in self.devices if '接入' in device['deviceRole']], self.swPortConnect, self.fwPortConnect)
-        easygui.msgbox('生成文件完成')
+            if self.acFiles != '':
+                # print(self.acFiles)
+                dealAcFile.dealAcs(self.acFiles, self.acPortConnects, self.ipPlans, [device for device in self.devices if '接入' in device['deviceRole']], self.swPortConnect, self.fwPortConnect)
+            easygui.msgbox('生成文件成功.........')
+        except:
+            easygui.msgbox('选择端口参数选择有问题，生成文本失败.....')
 
     def OnChangeGrid(self, event):
         for i in range(0, 8):

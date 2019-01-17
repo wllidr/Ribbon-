@@ -82,10 +82,10 @@ def dealSw(swFile, ipPlans, swportConnect, dns1, dns2, option):
                                         ipPlans[4]['ipEnd'] + '\n', string)
                     if re.search('interfacevlanif4094', re.sub(' ', '', string.lower())):
                         temp = re.search('(ip\s*address[\s\S]*?\n)', string).groups()[0]
-                        string = re.sub(temp, 'ip address ' + '.'.join(ipPlans[5]['ipStart'].split('.')[:-1]) + '.' + str(int(ipPlans[5]['ipStart'].split('.')[-1].strip()) - int(ipPlans[5]['reservedNumber'])) + ' ' + str(
+                        string = re.sub(temp, 'ip address ' + '.'.join(ipPlans[5]['ipStart'].split('.')[:-1]) + '.' + str(int(ipPlans[5]['ipStart'].split('.')[-1].strip())) + ' ' + str(
                             int(ipPlans[5]['mark'])) + '\n', string)
                         temp = re.search('(server\s*ip-range[\s\S]*?\n)', string).groups()[0]
-                        string = re.sub(temp, 'server ip-range ' + '.'.join(ipPlans[5]['ipStart'].split('.')[:-1]) + '.' + str(int(ipPlans[5]['ipStart'].split('.')[-1].strip()) + 1) + '  ' + ipPlans[5]['ipEnd'] + '\n', string)
+                        string = re.sub(temp, 'server ip-range ' + '.'.join(ipPlans[5]['ipStart'].split('.')[:-1]) + '.' + str(int(ipPlans[5]['ipStart'].split('.')[-1].strip()) + 1 + int(ipPlans[5]['reservedNumber'])) + '  ' + ipPlans[5]['ipEnd'] + '\n', string)
                         temp = re.search('(dhcp\s*server\s*option[\s\S]*?\n)', string).groups()[0]
                         string = re.sub(temp, option + '\n', string)
                     if re.search('interfaceeth-trunk126\s', re.sub(' ', '', string.lower())):
@@ -341,7 +341,7 @@ def swPortInfos(swportConnect, other):
             portInfos += ' description To-AccessSwitch-' + '-'.join(port['3']['sysname'].split('-')[-3:]) + '-Gi' + port['3']['0'].split('t')[-1] + '__From-CoreSwitch-01-Gi' + port['0'].split('t')[-1] + '\n'
             portInfos += ' eth-trunk ' + port['2'].split('k')[-1] + '\n' + '#\n'
             portInfos += 'interface ' + port['1'] + '\n'
-            portInfos += ' description To-AccessSwitch-' + '-'.join(port['3']['sysname'].split('-')[-3:]) + '-Gi' + port['3']['0'].split('t')[-1] + '__From-CoreSwitch-02Gi' + port['1'].split('t')[-1] + '\n'
+            portInfos += ' description To-AccessSwitch-' + '-'.join(port['3']['sysname'].split('-')[-3:]) + '-Gi' + port['3']['1'].split('t')[-1] + '__From-CoreSwitch-02Gi' + port['1'].split('t')[-1] + '\n'
             portInfos += ' eth-trunk ' + port['2'].split('k')[-1] + '\n' + '#\n'
         elif port['0'] != '' and port['1'] == '' and port['2'] == '':
             portInfos += 'interface ' + port['0'] + '\n'

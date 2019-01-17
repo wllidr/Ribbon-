@@ -1,0 +1,166 @@
+默认登陆密码是：admin@huawei.com
+首次登陆必须修改密码，修改为：Huawei@123
+华为设备默认账号和密码查询网站：http://support.huawei.com/onlinetoolsweb/pqt/index.jsp?from=timeline&isappinstalled=0
+
+——————————————————————
+
+确认版本信息：
+display version                                                        //配置前检查版本是否为 	S2750EI-V200R011C10SPC600，如果不是，必须升级。
+#
+ display patch-information                                              //配置前检查版本是否安装了S2750EI-V200R011SPH007.pat  ，如果不是，必须安装，安装完成后，必须保存配置重启SW，否则SW补丁不完整生效。
+注：升级完成后，如果交换机有配置，必须全部恢复出厂配置<HW>reset saved-configuration
+
+——————————————————————
+基础配置：
+
+clock timezone BeiJing add 08:00:00
+#
+sys
+#
+sysname LIFE-SW-FJ-FZ-MHNY-AR161
+#
+lldp enable
+#
+
+——————————————————————
+生成树配置：
+
+stp region-configuration
+ region-name Pingan
+ active region-configuration
+#
+stp enable
+
+——————————————————————
+VLAN配置：
+
+vlan batch 2 to 6 4094
+#
+vlan 2
+ description LifeAgent-WiFi                               
+vlan 3
+ description Live&Training
+vlan 4
+ description PC
+vlan 5
+ description Secure
+vlan 6
+ description Other
+vlan 4094
+ description SW&AP-Manage
+#
+
+——————————————————————
+undo interface Vlanif1
+y
+#
+接口配置：
+要有管理IP 和 网关
+interface Vlanif4094
+ description To-SW&AP-MGMT                
+ ip address 133.102.10.2 255.255.255.192
+#
+无线
+interface range Ethernet0/0/1 to Ethernet0/0/15
+ description To-Huawei-AP
+ port link-type trunk
+ port trunk pvid vlan 4094
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 4094
+ loopback-detect enable
+#
+有线 直播培训
+interface range Ethernet0/0/21 to Ethernet0/0/24
+ description To-Live&Training
+ port link-type access
+ port default vlan 3
+ stp edged-port enable
+#
+PC
+interface range Ethernet0/0/16 to Ethernet0/0/20
+ description To-PC
+ port link-type access
+ port default vlan 4
+ stp edged-port enable
+#
+上行trunk
+interface GigabitEthernet0/0/1
+ description To-RT-AR161-Gi0/0/2_From-AccessSwitch-01-Gi0/0/4
+ port link-type trunk
+ undo port trunk allow-pass vlan 1
+ port trunk allow-pass vlan 2 to 4 4094
+#                 
+——————————————————————
+NTP配置：
+
+ntp-service unicast-server 133.102.10.1
+#
+——————————————————————
+路由配置：
+                        
+ip route-static 0.0.0.0 0.0.0.0 133.102.10.1  description To-RT-MGMT
+
+——————————————————————
+SNMP配置：
+
+snmp-agent
+snmp-agent community read cipher life2018 mib-view View_ALL
+snmp-agent community write cipher life2018 mib-view View_ALL
+snmp-agent sys-info version v2c v3
+snmp-agent target-host trap address udp-domain 172.20.145.196  params securityname cipher life2018 v2c
+snmp-agent mib-view included View_ALL iso
+snmp-agent trap source Vlanif4094
+snmp-agent extend error-code enable
+snmp-agent trap enable
+#
+
+——————————————————————
+用户配置：
+
+user-interface con 0                      
+ authentication-mode password
+ set authentication password cipher Life@con
+ // 配置完成之后，退出系统，使用 Life@con   密码登陆再接着做以下操作
+#
+aaa
+ local-aaa-user password policy administrator
+ undo password alert original
+ quit
+ undo local-user admin   
+ local-user hqnm password irreversible-cipher Pingan@123$95511
+ local-user hqnm privilege level 15
+ local-user hqnm service-type terminal ssh
+ local-user pawlan password irreversible-cipher Pawlan@2018
+ local-user pawlan privilege level 15
+ local-user pawlan service-type telnet terminal ssh ftp http
+ local-user life2018 password irreversible-cipher Pingan@123
+ local-user life2018 privilege level 15
+ local-user life2018 service-type terminal ssh http
+#
+user-interface vty 0 4
+ authentication-mode aaa
+ protocol inbound ssh
+#
+
+——————————————————————
+SSH配置：
+
+rsa local-key-pair create
+2048
+
+stelnet server enable
+ssh server port 55522
+y
+ssh user hqnm
+ssh user hqnm authentication-type password
+ssh user hqnm service-type all
+ssh user life2018
+ssh user life2018 authentication-type password
+ssh user life2018 service-type all
+ssh user pawlan
+ssh user pawlan authentication-type password
+ssh user pawlan service-type all
+ssh client first-time enable
+#
+
+——————————————————————

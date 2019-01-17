@@ -40,6 +40,7 @@ class MySSH:
         self.ssh_fd.connect(self.host, port = self.port, username = self.username, password = self.password)
         self.channel = self.ssh_fd.invoke_shell()
         self.channel.timeout = 30
+        self.channel.keep_this = self.ssh_fd
 
     def exe(self, cmd):
         '''有验证执行shell'''
@@ -147,10 +148,8 @@ def PingNetworkSegment(infos, port, username, password):
     usedIp = []
     unUsedIp = []
 
-
 def Ping(port, username, password, info):
     PingThread(info['ip'], 3, port, username, password).run()
-
 
 def main(file_path):
     infos = []
@@ -177,9 +176,13 @@ def main(file_path):
 
 
 def begin_ip_scan(file_path):
+    print('IP 扫描开始.........')
+    if not os.path.exists('自动生成文件文件夹'):
+        os.mkdir('自动生成文件文件夹')
     main(file_path)
     t = time.strftime('%Y%m%d_%H%M', time.localtime())
     workbook.save('自动生成文件文件夹' + '/' + 'ip扫描汇总表单' + t + '.xls')
+    print('IP 扫描结束.........')
     easygui.msgbox('作业完成.....')
 
 if __name__ == '__main__':

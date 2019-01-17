@@ -1,7 +1,6 @@
 '''
     自动化模板生成脚本工具
 '''
-import easygui
 import pandas as pd
 import os
 import re
@@ -12,11 +11,9 @@ def config(filePath):
         :return: 配置参数
     '''
     sheet_config = '配置参数'
-    configVariables = pd.read_excel(filePath, sheet_name = sheet_config).T
-    index = configVariables.ix[0, :].tolist()
-    index = [s.lower() for s in index]
-    configVariables = configVariables.ix[:, :].T
-    return index, configVariables
+    df2 = pd.read_excel(filePath, sheet_name = sheet_config)
+    df2.columns = [column.strip() for column in df2.columns]
+    return df2
 
 def templete(filePath, templeteRow):
     '''
@@ -24,13 +21,12 @@ def templete(filePath, templeteRow):
         :return: 模板参数
     '''
     sheet_templete = '配置模板'
-    templeteVariabeles1 = pd.read_excel(filePath, sheet_name=sheet_templete, header=None)
+    df1 = pd.read_excel(filePath, sheet_name=sheet_templete, header=None)
     row = ord(templeteRow) - 65
-    templeteVariabeles1 = templeteVariabeles1.ix[:, row]
+    df1 = df1.ix[:, row]
+    return df1.tolist()
 
-    return templeteVariabeles1
-
-def saveConfig(templete, templeteVariables, configVariables, savePath):
+def saveConfig(df1, df2, savePath):
     '''
         :param templete:  模板
         :param templeteVariables:  模板的所有所需变量
@@ -40,27 +36,25 @@ def saveConfig(templete, templeteVariables, configVariables, savePath):
     '''
     if not os.path.exists(savePath):
         os.makedirs(savePath)
-    # print(configVariables.shape[0])
-    for i in range(configVariables.shape[0]):
-        filePath = savePath + '\\' + str(configVariables.iloc[i, :].iloc[0]) + '.txt'
-        f = open(filePath, 'w')
-        for j in range(templete.shape[0]):
-            line = templete.iloc[j]
-            groups = re.findall('<.*?>', line)
-            # print(groups)
-            if groups:
-                try:
-                    for g in groups:
-                        line = re.sub(g, str(configVariables.iloc[i, :][g.lower()]), line)
-                    f.write(line + '\n')
-                except Exception:
-                    f.write(line + '\n')
-            else:
+    # print(df2)
+    for i in range(df2.shape[0]):
+        # print(df2.iloc[i , 0])
+        # print(df2.loc[i, '<SYSNAME>'])
+        if os.path.exists(savePath + '/' + df2.iloc[i, 0]+'.txt'):
+            os.remove(savePath + '/' + df2.iloc[i, 0]+'.txt')
+        with open(savePath + '/' + df2.iloc[i, 0]+'.txt', 'w') as f:
+            for line in df1:
+                allReplace = re.findall('<[\s\S]*?>', line)
+                if allReplace:
+                    for replace in allReplace:
+                        # print(replace)
+                        # print(df2.loc[i, replace])
+                        line = re.sub(replace, str(df2.loc[i, replace]), line)
                 f.write(line + '\n')
-        # f.close()
 
 def begin_template(filePath, templeteRow, savePath):
-    print('开始生成脚本配置..............')
+    print('使用自动生成配置模板........')
+    # print('开始生成脚本配置..............')
     if filePath == '':
         filePath = '工具表格模板.xls'
     if templeteRow == '':
@@ -68,14 +62,11 @@ def begin_template(filePath, templeteRow, savePath):
     if savePath == '':
         savePath = 'Scripts'
     templeteRow = templeteRow.upper()
+    df1 = templete(filePath, templeteRow)
+    df2 = config(filePath)
+    saveConfig(df1, df2, savePath)
+    print('配置生成成功........')
+    # print(df1)
 
-    templeteVariables, configVariables = config(filePath)
-    templete1 = templete(filePath, templeteRow)
-    templete1 = templete1.dropna(axis=0, how='all')
-    templete1.index = [x for x in range(templete1.shape[0])]
-    try:
-        saveConfig(templete1, templeteVariables, configVariables, savePath)
-    except:
-        pass
-    print('生成脚本配置完成..............')
-    easygui.msgbox('自动模板配置生成完成.....', title='提示框')
+if __name__ == '__main__':
+    begin_template(r'C:\Users\Ribbon\Desktop\工作\润迅\自动化小工具集合\1.xlsx', '', '')

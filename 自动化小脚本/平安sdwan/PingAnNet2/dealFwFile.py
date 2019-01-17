@@ -61,9 +61,7 @@ def dealABC(fwFile, ipPlans):
                                         ' description SW&AP-Manage \n']
                         for i in range(len(routes)):
                             string = re.sub(routes[i], 'route-static ' + ipPlans[i]['ipStart'].split('-')[0] + ' ' + str(
-                                int(ipPlans[i]['mark'])) + ' ' + '.'.join(
-                                ipPlans[9]['ipStart'].split('-')[0].split('.')[:-1]) + '.' + str(
-                                int(ipPlans[9]['ipStart'].split('-')[0].split('.')[-1].strip()) + 1) + descriptions[i], string)
+                                int(ipPlans[i]['mark'])) + ' ' +ipPlans[9]['ipStart'] + descriptions[i], string)
                     if re.search('//[\s\S]*?\n', string) and not re.search('默认账号和密码查询网站', string):
                         string = re.sub('//[\s\S]*?\n', '\n', string)
                     f.write(re.sub('\r', '', string))
@@ -261,7 +259,7 @@ def dealDE(fwFile, ipPlans, fwportConnect, dns1, dns2, option):
                         string = re.sub(temp, 'ip address ' + '.'.join(ipPlans[5]['ipStart'].split('.')[:-1]) + '.' + str(int(ipPlans[5]['ipStart'].split('.')[-1].strip()) - int(ipPlans[5]['reservedNumber'])) + ' ' + str(
                             int(ipPlans[5]['mark'])) + '\n', string)
                         temp = re.findall('dhcp\s*server\s*ip-range[\s\S]*?\n', string)
-                        string = re.sub(temp[0], 'dhcp server ip-range ' + '.'.join(ipPlans[5]['ipStart'].split('.')[:-1]) + '.' + str(int(ipPlans[5]['ipStart'].split('.')[-1].strip()) + 1) + '  ' +ipPlans[5]['ipEnd'] + '\n', string)
+                        string = re.sub(temp[0], 'dhcp server ip-range ' + '.'.join(ipPlans[5]['ipStart'].split('.')[:-1]) + '.' + str(int(ipPlans[5]['ipStart'].split('.')[-1].strip()) + 1 + int(ipPlans[5]['reservedNumber'])) + '  ' +ipPlans[5]['ipEnd'] + '\n', string)
                         # print(string)
                         temp = re.search('(dhcp\s*server\s*option[\s\S]*?\n)', string).groups()[0]
                         string = re.sub(temp, option + '\n', string)

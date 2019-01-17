@@ -68,7 +68,7 @@ def fileSelect(bussniessClass, fwYN, devices, swModel, ipPlans):
                     acFile = os.path.join(os.path.join(os.path.dirname(os.path.dirname('.')), path), acFile)
                 except:
                     easygui.msgbox('选择型号错误或者是堆叠台数类型有误')
-            manageIp1 = '.'.join(manageIp.split('.')[:-1]) + '.' + str((int(manageIp.split('.')[-1]) + i - reservedNumber))
+            manageIp1 = '.'.join(manageIp.split('.')[:-1]) + '.' + str((int(manageIp.split('.')[-1]) + i))
             i += 1
             acFiles.append({'sysname':device['deviceName'], 'acFile': acFile, 'manageIp':manageIp1 + '/' + str(int(mark)), 'stackNumber' : device['stackNumber']})
     # print(acFiles)

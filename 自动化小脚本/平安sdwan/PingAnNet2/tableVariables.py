@@ -30,7 +30,7 @@ def InitialVariables():
     for i in range(2, ipDf.shape[0]):
         temp = ipDf.iloc[i, ].tolist()
         # print(temp)
-        ipStart,ipEnd = ipCacl.ipBegin(temp[0].strip() + '/' + str(int(temp[1])), int(temp[-2]), int(temp[-1]))
+        ipStart,ipEnd = ipCacl.ipBegin(temp[0].strip() + '/' + str(int(temp[1])), 0, int(temp[-1]))
         ipPlans.append({'segment':temp[0], 'ipStart': ipStart, 'ipEnd':ipEnd, 'mark':temp[1],
                        'vlan':temp[2], 'use':temp[3], 'reservedNumber':int(temp[-2])})
     # for ipPlan in ipPlans:

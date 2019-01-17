@@ -17,6 +17,9 @@ def main(path):
     font.underline = True # 下划线
     font.italic = True # 斜体字
     style.font = font # 设定样式
+    worksheet.col(0).width = 0x0d00 + 50 * 50
+    for i in range(1, 10):
+        worksheet.col(i).width = 0x0d00
     worksheet.write(0, 0, '<SYSNAME>')
     worksheet.write(0, 1, '<文件IP名称>')
     worksheet.write(0, 2, '<A对端>')
@@ -95,4 +98,4 @@ def begin_peer(path):
     easygui.msgbox('peer参数采集完成')
 
 if __name__ == '__main__':
-    begin_peer(r'C:\Users\Ribbon\Desktop\润迅\自动化小工具\自动化刷脚本\Logger\1A - 副本')
+    begin_peer(r'C:\Users\Ribbon\Desktop\工作\润迅\自动化小工具\自动化刷脚本\Logger\1A')
