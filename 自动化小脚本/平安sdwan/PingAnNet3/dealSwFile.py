@@ -5,6 +5,7 @@
 '''
 import sys; sys.path.append('.')
 import re
+import openConfigFile
 
 wildcardMark = {'1': '127.255.255.255', '2': '63.255.255.255', '3': '31.255.255.255', '4': '15.255.255.255',
                 '5': '7.255.255.255', '6': '3.255.255.255', '7': '1.255.255.255', '8': '0.255.255.255',
@@ -23,7 +24,7 @@ def dealSw(swFile, ipPlans, swportConnect, dns1, dns2, option):
     file = swFile['swFile']
     portInfos = swPortInfos(swportConnect, other)
     with open(sysname + '.txt', 'w') as f5:
-        with open(file, 'rb') as f:
+        with openConfigFile.OpenConfigFile().open(file, mode='r', pwd='Pingan123'.encode('utf-8')) as f:
             string = ''
             for line in f:
                 line = line.decode('gbk', 'ignore')

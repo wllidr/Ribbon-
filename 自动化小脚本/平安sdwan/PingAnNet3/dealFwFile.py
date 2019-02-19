@@ -5,6 +5,7 @@
 '''
 import sys; sys.path.append('.')
 import re
+import openConfigFile
 
 wildcardMark = {'1': '127.255.255.255', '2': '63.255.255.255', '3': '31.255.255.255', '4': '15.255.255.255',
                 '5': '7.255.255.255', '6': '3.255.255.255', '7': '1.255.255.255', '8': '0.255.255.255',
@@ -31,7 +32,7 @@ def dealABC(fwFile, ipPlans):
     file = fwFile['fwFile']
     with open(sysname + '.txt', 'w') as f:
         string = ''
-        with open(file, 'rb') as f1:
+        with openConfigFile.OpenConfigFile().open(file, mode='r', pwd='Pingan123'.encode('utf-8')) as f1:
             for line in f1:
                 line = line.decode('gbk', 'ignore')
                 string += line
@@ -149,7 +150,7 @@ def dealDE(fwFile, ipPlans, fwportConnect, dns1, dns2, option):
     # print(file)
     with open(sysname + '.txt', 'w') as f:
         string = ''
-        with open(file, 'rb') as f1:
+        with openConfigFile.OpenConfigFile().open(file, mode='r', pwd='Pingan123'.encode('utf-8')) as f1:
             for line in f1:
                 line = line.decode('gbk', 'ignore')
                 string += line

@@ -5,6 +5,7 @@
 '''
 import sys; sys.path.append('.')
 import re
+import openConfigFile
 
 def dealAcs(acFiles, acportConnects, ipPlans, devices, swPortConnect, fwPortConnect):
     # for port in acportConnects:
@@ -28,7 +29,7 @@ def dealAcs(acFiles, acportConnects, ipPlans, devices, swPortConnect, fwPortConn
         portInfos = acPorts(acportConnect, manageIp, stackFlag, stackNumber, swPortConnect, fwPortConnect)
         # print(sysname, file, manageIp)
         with open(sysname + '.txt', 'w') as f1:
-            with open(file, 'rb') as f:
+            with openConfigFile.OpenConfigFile().open(file, mode='r', pwd='Pingan123'.encode('utf-8')) as f:
                 string = ''
                 for line in f:
                     try:
