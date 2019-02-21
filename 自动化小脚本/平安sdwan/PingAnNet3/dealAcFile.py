@@ -6,6 +6,7 @@
 import sys; sys.path.append('.')
 import re
 import openConfigFile
+import chardet
 
 def dealAcs(acFiles, acportConnects, ipPlans, devices, swPortConnect, fwPortConnect):
     # for port in acportConnects:
@@ -15,7 +16,8 @@ def dealAcs(acFiles, acportConnects, ipPlans, devices, swPortConnect, fwPortConn
         acFile = acFiles[i]
         acportConnect = acportConnects[i]
         sysname = acFile['sysname']
-        # print(sysname)
+        deviceClass = acFile['deviceClass']
+        # print(deviceClass)
         stackNumber = '不堆叠'
         if '不堆叠' in str(devices[i]['stackNumber']):
             stackFlag = False
@@ -23,19 +25,24 @@ def dealAcs(acFiles, acportConnects, ipPlans, devices, swPortConnect, fwPortConn
             stackFlag = True
             stackNumber = int(devices[i]['stackNumber'])
         if stackFlag and stackNumber > 3:
-            stackInfo = stackConfig(stackNumber, sysname)
+            stackInfo = stackConfig(stackNumber, sysname, deviceClass)
         file = acFile['acFile']
         manageIp = acFile['manageIp']
-        portInfos = acPorts(acportConnect, manageIp, stackFlag, stackNumber, swPortConnect, fwPortConnect)
+        portInfos = acPorts(acportConnect, manageIp, stackFlag, stackNumber, swPortConnect, fwPortConnect, acportConnects)
         # print(sysname, file, manageIp)
         with open(sysname + '.txt', 'w') as f1:
-            with openConfigFile.OpenConfigFile().open(file, mode='r', pwd='Pingan123'.encode('utf-8')) as f:
+            with openConfigFile.OpenConfigFile().open(file, mode='r', pwd='1qaz@WSX3EDc95511'.encode('utf-8')) as f:
                 string = ''
                 for line in f:
                     try:
-                        line = line.decode('gbk')
+                        dicts = chardet.detect(line)
+                        line = line.decode(dicts["encoding"])
                     except:
-                        line = line.decode('utf8', 'ignore')
+                        try:
+                            line = line.decode('gbk')
+                        except:
+                            line = line.decode('utf8', 'ignore')
+
                     string += line
                     if line.strip() == '#':
                         if re.search('sysname[\s\S]*?\n', string):
@@ -78,28 +85,31 @@ def dealAcs(acFiles, acportConnects, ipPlans, devices, swPortConnect, fwPortConn
             if string.strip() != '' and string.strip()[-1] == '#':
                 f.write(re.sub('\r', '', string))
 
-def acPorts(acportConnect, manageIp, stackFlag, stackNumber, swPortConnect, fwPortConnect):
+def acPorts(acportConnect, manageIp, stackFlag, stackNumber, swPortConnect, fwPortConnect, acportConnects):
     # print(acportConnect['sysname'])
     vlan2To6 = ''
     temp = []
     temp1 = ['无线(友商)', '无线(华为)', '直播/培训', '有线', '安防', '其他']
     upLineFlag = True
     downLineFlag = True
-    for acport in acportConnect['acPortConnect']:
-        if acport['2'] in temp1:
-            if acport['2'] not in temp:
-                temp.append(acport['2'])
-                for i in range(len(temp1)):
-                    if acport['2'] == temp1[0] or acport['2'] == temp1[1]:
-                        vlan2To6 += ' ' + str(2) + ' '
-                        break
-                    elif acport['2'] == temp1[i]:
-                        vlan2To6 += ' ' + str(i + 1) + ' '
-                        break
-                    else:
-                        pass
+    for index in range(len(acportConnects)):
+        acportConnectIndex = acportConnects[index]
+        for acport in acportConnectIndex['acPortConnect']:
+            if acport['2'] in temp1:
+                if acport['2'] not in temp:
+                    temp.append(acport['2'])
+                    for i in range(len(temp1)):
+                        if acport['2'] == temp1[0] or acport['2'] == temp1[1]:
+                            vlan2To6 += ' ' + str(2) + ' '
+                            break
+                        elif acport['2'] == temp1[i]:
+                            vlan2To6 += ' ' + str(i + 1) + ' '
+                            break
+                        else:
+                            pass
 
     vlan2To6 = ' '.join([t for t in sorted(list(set(vlan2To6.split(' ')))) if t.strip()!=''])
+    # print(vlan2To6)
     # print(vlan2To6)
     string = '接口配置：\n'
     string += '\n' + 'interface Vlanif4094\n' + ' description To-SW&AP-MGMT  \n'
@@ -207,8 +217,12 @@ def acPorts(acportConnect, manageIp, stackFlag, stackNumber, swPortConnect, fwPo
  stp edged-port enable
 #\n'''
         elif acportConnect['acPortConnect'][i]['2'] == '单线上联' or acportConnect['acPortConnect'][i]['2'] == '单线下联':
+            print(acportConnect['acPortConnect'][i])
             string += 'interface ' + acportConnect['acPortConnect'][i]['0'].replace('(光)', '') + '\n'
-            string += ' description To-CoreSwitch-' + acportConnect['acPortConnect'][i]['3'].replace('(光)', '') + '\n'
+            if acportConnect['acPortConnect'][i]['4'] == '核心/防火墙':
+                string += ' description To-CoreSwitch-' + acportConnect['acPortConnect'][i]['3'].replace('(光)', '') + '\n'
+            else:
+                string += ' description To-' + acportConnect['acPortConnect'][i]['4'] + '-' + acportConnect['acPortConnect'][i]['3'].replace('(光)','') + '\n'
             string += ' port link-type trunk\n' + ' undo port trunk allow-pass vlan 1\n'
             string += ' port trunk allow-pass vlan ' + vlan2To6 + ' 4094\n' + '#\n'
 
@@ -223,12 +237,18 @@ def acPorts(acportConnect, manageIp, stackFlag, stackNumber, swPortConnect, fwPo
                     string += ' port link-type trunk\n' + ' undo port trunk allow-pass vlan 1\n'
                     string += ' port trunk allow-pass vlan ' + vlan2To6 + ' 4094\n' + '#\n'
                 else:
+
                     string += 'interface Eth-Trunk1\n'
                     string += ' description To-CoreSwitch-' + acportConnect['acPortConnect'][i]['3'] + '\n'
-                    # print(acportConnect['sysname'])
+                    # print(acportConnect['deviceClass'])
+
                     if 'S2720' in acportConnect['sysname']:
-                        for ab in range(1, stackNumber+1):
-                            string +=  ' trunkport GigabitEthernet' + str(ab) + '/0/10\n'
+                        if '52TP' in acportConnect['deviceClass']:
+                            for ab in range(1, stackNumber+1):
+                                string +=  ' trunkport GigabitEthernet' + str(ab) + '/0/15\n'
+                        else:
+                            for ab in range(1, stackNumber+1):
+                                string +=  ' trunkport GigabitEthernet' + str(ab) + '/0/10\n'
                         string += ' port link-type trunk\n' + ' undo port trunk allow-pass vlan 1\n'
                         string += ' port trunk allow-pass vlan ' + vlan2To6 + ' 4094\n' + ' mad detect mode relay\n' + '#\n'
                     elif 'S2750' in acportConnect['sysname']:
@@ -362,20 +382,31 @@ def acPorts(acportConnect, manageIp, stackFlag, stackNumber, swPortConnect, fwPo
     # print(string)
     return string
 
-def stackConfig(stackNumber, sysname):
+def stackConfig(stackNumber, sysname, deviceClass):
     # print(sysname, stackNumber)
     stackInfo = ''
     levels = [230, 200, 150, 0]
     if 'S2720' in sysname:
-        for i in range(1, stackNumber + 1):
-            stackInfo += 'interface stack-port 0/1\n'
-            stackInfo += ' port interface Gigabitethernet 0/0/11 enable\n' + ' y\n#\n'
-            stackInfo += 'interface stack-port 0/2\n'
-            stackInfo += ' port interface Gigabitethernet 0/0/12 enable\n' + ' y\n#\n'
-            stackInfo += 'stack slot 0 renumber ' + str(i) + '\n' + ' y\n#\n'
-            if levels[i-1] != 0:
-                stackInfo += 'stack slot 0 priority ' + str(levels[i-1]) + '\n' + ' y\n#\n'
-            stackInfo += '\n'
+        if '52TP' in deviceClass:
+            for i in range(1, stackNumber + 1):
+                stackInfo += 'interface stack-port 0/1\n'
+                stackInfo += ' port interface Gigabitethernet 0/0/19 enable\n' + ' y\n#\n'
+                stackInfo += 'interface stack-port 0/2\n'
+                stackInfo += ' port interface Gigabitethernet 0/0/20 enable\n' + ' y\n#\n'
+                stackInfo += 'stack slot 0 renumber ' + str(i) + '\n' + ' y\n#\n'
+                if levels[i-1] != 0:
+                    stackInfo += 'stack slot 0 priority ' + str(levels[i-1]) + '\n' + ' y\n#\n'
+                stackInfo += '\n'
+        else:
+            for i in range(1, stackNumber + 1):
+                stackInfo += 'interface stack-port 0/1\n'
+                stackInfo += ' port interface Gigabitethernet 0/0/11 enable\n' + ' y\n#\n'
+                stackInfo += 'interface stack-port 0/2\n'
+                stackInfo += ' port interface Gigabitethernet 0/0/12 enable\n' + ' y\n#\n'
+                stackInfo += 'stack slot 0 renumber ' + str(i) + '\n' + ' y\n#\n'
+                if levels[i-1] != 0:
+                    stackInfo += 'stack slot 0 priority ' + str(levels[i-1]) + '\n' + ' y\n#\n'
+                stackInfo += '\n'
     elif 'S2750' in sysname:
         for i in range(1, stackNumber + 1):
             stackInfo += 'interface stack-port 0/1\n'

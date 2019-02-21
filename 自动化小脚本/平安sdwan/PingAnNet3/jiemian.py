@@ -4,7 +4,7 @@
     Desc :
         平安SDWan配置生成工具, 界面部分
 '''
-import sys; sys.path.append('.')
+import sys;sys.path.append('.')
 import wx
 import wx.grid
 import tableVariables
@@ -41,6 +41,7 @@ class MyFrame(wx.Frame):
         self.dns1 = self.dns2 = self.option = self.optionSelect = ''
         self.swPortConnect = []
         self.fwPortConnect = []
+        self.acRowNumbers = 10
 
         try:
             self.ipPlans, self.bussniessClass, self.devices, self.swModel, self.fwYN = tableVariables.InitialVariables()
@@ -378,7 +379,7 @@ class MyFrame(wx.Frame):
 
         self.grid.SetRowLabelSize(30)
         self.grid.SetRowLabelSize(1)
-
+        self.Bind(wx.grid.EVT_GRID_CMD_CELL_CHANGED, self.OnChangeGridSw, self.grid)
         '''主界面上的按钮'''
         button = wx.Button(self.panel, -1, '加载源数据', size=(150, 33))
         button2 = wx.Button(self.panel, -1, "核心", size=(150, 33))
@@ -429,6 +430,28 @@ class MyFrame(wx.Frame):
 
         mainSizer1.SetMinSize((1100 + self.page[self.i], 600))
         mainSizer1.Fit(self)
+
+    def OnChangeGridSw(self, event):
+        portChoice1 = [''] + ['GigabitEthernet1/0/' + str(i) for i in range(24, 0, -1)]
+        portChoice2 = [''] + ['GigabitEthernet2/0/' + str(i) for i in range(24, 0, -1)]
+        portChoice3 = [''] + ['Eth-Trunk' + str(i) for i in range(1, 20)]
+        for i in range(0,len(self.acFiles)):
+            if self.grid.GetCellValue(i, 0) != '':
+                portChoice1.remove(self.grid.GetCellValue(i, 0))
+            if self.grid.GetCellValue(i, 1) != '':
+                portChoice2.remove(self.grid.GetCellValue(i, 1))
+            if self.grid.GetCellValue(i, 2) != '':
+                portChoice3.remove(self.grid.GetCellValue(i, 2))
+
+        for i in range(len(self.acFiles)):
+            self.grid.SetCellEditor(i, 0, wx.grid.GridCellChoiceEditor(choices=portChoice1))
+            self.grid.SetCellAlignment(i, 0, wx.ALIGN_CENTER, wx.ALIGN_CENTER)
+        for i in range(len(self.acFiles)):
+            self.grid.SetCellEditor(i, 1, wx.grid.GridCellChoiceEditor(choices=portChoice2))
+            self.grid.SetCellAlignment(i, 1, wx.ALIGN_CENTER, wx.ALIGN_CENTER)
+        for i in range(len(self.acFiles)):
+            self.grid.SetCellEditor(i, 2, wx.grid.GridCellChoiceEditor(choices=portChoice3))
+            self.grid.SetCellAlignment(i, 2, wx.ALIGN_CENTER, wx.ALIGN_CENTER)
 
     def optionChoice(self, event):
         self.optionSelect = self.options[int(event.GetEventObject().GetSelection())]
@@ -561,6 +584,7 @@ class MyFrame(wx.Frame):
                 self.fwgrid.SetCellAlignment(i, 2, wx.ALIGN_CENTER, wx.ALIGN_CENTER)
                 self.fwgrid.SetCellEditor(i, 3, wx.grid.GridCellChoiceEditor(choices=portChoice4))
                 self.fwgrid.SetCellAlignment(i, 3, wx.ALIGN_CENTER, wx.ALIGN_CENTER)
+            self.Bind(wx.grid.EVT_GRID_CMD_CELL_CHANGED, self.OnChangeGridFw, self.fwgrid)
             self.fwgrid.SetRowLabelSize(30)
             self.fwgrid.SetRowLabelSize(1)
 
@@ -624,6 +648,24 @@ class MyFrame(wx.Frame):
         mainSizer1.SetMinSize((1100 + self.page[self.i], 600))
         mainSizer1.Fit(self)
 
+    def OnChangeGridFw(self, event):
+        portChoice1 = [''] + ['GigabitEthernet0/0/' + str(i) for i in range(3, 8)]
+        portChoice3 = [''] + ['Eth-Trunk' + str(i) for i in range(1, 4)]
+        for i in range(0,len(self.acFiles)):
+            if self.fwgrid.GetCellValue(i, 0) != '':
+                portChoice1.remove(self.fwgrid.GetCellValue(i, 0))
+            if self.fwgrid.GetCellValue(i, 1) != '':
+                portChoice1.remove(self.fwgrid.GetCellValue(i, 1))
+            if self.fwgrid.GetCellValue(i, 2) != '':
+                portChoice3.remove(self.fwgrid.GetCellValue(i, 2))
+        for i in range(len(self.acFiles)):
+            self.fwgrid.SetCellEditor(i, 0, wx.grid.GridCellChoiceEditor(choices=portChoice1))
+            self.fwgrid.SetCellAlignment(i, 0, wx.ALIGN_CENTER, wx.ALIGN_CENTER)
+            self.fwgrid.SetCellEditor(i, 1, wx.grid.GridCellChoiceEditor(choices=portChoice1))
+            self.fwgrid.SetCellAlignment(i, 1, wx.ALIGN_CENTER, wx.ALIGN_CENTER)
+            self.fwgrid.SetCellEditor(i, 2, wx.grid.GridCellChoiceEditor(choices=portChoice3))
+            self.fwgrid.SetCellAlignment(i, 2, wx.ALIGN_CENTER, wx.ALIGN_CENTER)
+
     def OnSureFwPorts(self, event):
         self.dns1 = self.dns1Text.GetValue()
         self.dns2 = self.dns2Text.GetValue()
@@ -672,22 +714,29 @@ class MyFrame(wx.Frame):
         acFileButtons0 = wx.BoxSizer()
         if not self.acPortConnects:
             self.acPortConnects = []
+            # print(self.acFiles)
             for i in range(len(self.acFiles)):
                 if str(self.acFiles[i]['stackNumber']).strip() == '不堆叠':
-                    self.acPortConnects.append({'sysname':self.acFiles[i]['sysname'], 'acPortConnect':[{'0':'', '1':'', '2':'', '3':'', '4':''}, {'0':'', '1':'', '2':'', '3':'', '4':''},{'0': '', '1': '','2': '', '3': '','4': ''},
-                                                                                                       {'0': '', '1': '','2': '', '3': '','4': ''},{'0': '', '1': '','2': '', '3': '','4': ''},{'0': '', '1': '','2': '', '3': '','4': ''}
-                                                                             , {'0': '', '1': '','2': '', '3': '','4': ''}, {'0': '', '1': '','2': '', '3': '','4': ''}]})
+                    self.acPortConnects.append({'sysname':self.acFiles[i]['sysname'],'deviceClass':self.acFiles[i]['deviceClass'], 'acPortConnect':[{'0':'', '1':'', '2':'', '3':'', '4':''} for _ in range(self.acRowNumbers)]})
+
                 else:
-                    self.acPortConnects.append({'sysname': self.acFiles[i]['sysname'], 'acPortConnect': []})
+                    self.acPortConnects.append({'sysname': self.acFiles[i]['sysname'],'deviceClass':self.acFiles[i]['deviceClass'], 'acPortConnect': []})
                     for j in range(int(self.acFiles[i]['stackNumber'])):
                         if 'S2720' in self.acFiles[i]['sysname'].upper():
-                            self.acPortConnects[-1]['acPortConnect'].append({'0': 'GigabitEthernet' + str(j + 1) + '/0/10', '1': '','2': '上行(ETH-TRUNK1)', '3': '','4': ''})
+                            # print(self.acFiles[i]['deviceClass'])
+                            if '52TP' in self.acFiles[i]['deviceClass']:
+                                self.acPortConnects[-1]['acPortConnect'].append({'0': 'GigabitEthernet' + str(j + 1) + '/0/15', '1': '', '2': '上行(ETH-TRUNK1)', '3': '', '4': ''})
+                            else:
+                                self.acPortConnects[-1]['acPortConnect'].append({'0': 'GigabitEthernet' + str(j + 1) + '/0/10', '1': '','2': '上行(ETH-TRUNK1)', '3': '','4': ''})
                         elif 'S2750' in self.acFiles[i]['sysname'].upper():
                             self.acPortConnects[-1]['acPortConnect'].append({'0': 'GigabitEthernet' + str(j + 1) + '/0/4', '1': '', '2': '上行(ETH-TRUNK1)', '3': '','4': ''})
                         elif 'S5720' in self.acFiles[i]['sysname'].upper():
                             self.acPortConnects[-1]['acPortConnect'].append({'0': 'GigabitEthernet' + str(j + 1) + '/0/48', '1': '', '2': '上行(ETH-TRUNK1)', '3': '','4': ''})
-                    for j in range(int(self.acFiles[i]['stackNumber']), 8):
+                    # print(int(self.acFiles[i]['stackNumber']), self.acRowNumbers)
+                    for j in range(int(self.acFiles[i]['stackNumber']), self.acRowNumbers):
                         self.acPortConnects[-1]['acPortConnect'].append({'0': '', '1': '','2': '', '3': '','4': ''})
+                    # print(self.acPortConnects)
+                    # print(len(self.acPortConnects[-1]['acPortConnect']))
                 self.updownConnectAc.append({'sysname':self.acFiles[i]['sysname'], 'port':[]})
 
         for i in range(len(self.acFiles)):
@@ -705,16 +754,18 @@ class MyFrame(wx.Frame):
 
         '''AC接入表格'''
         self.acgrid = wx.grid.Grid(self.panel, -1)
-        self.acgrid.CreateGrid(8, 5)
-        self.acgrid.SetGridCursor((8, 5))
+        self.acgrid.CreateGrid(self.acRowNumbers, 5)
+        self.acgrid.SetGridCursor((self.acRowNumbers, 5))
         self.acgrid.SetColLabelValue(0, '开始端口')
         self.acgrid.SetColLabelValue(1, '结束端口')
         self.acgrid.SetColLabelValue(2, '用途')
         self.acgrid.SetColLabelValue(3, '互联设备')
         self.acgrid.SetColLabelValue(4, '互联端口')
-        for i in range(0, 5):
+        for i in range(0, 3):
             self.acgrid.SetColSize(i, 200)
-        for i in range(0, 8):
+        self.acgrid.SetColSize(3, 270)
+        self.acgrid.SetColSize(4, 200)
+        for i in range(0, self.acRowNumbers):
             self.acgrid.SetRowSize(i, 30)
             self.acgrid.SetCellAlignment(i, 0, wx.ALIGN_CENTER, wx.ALIGN_CENTER)
             self.acgrid.SetCellAlignment(i, 1, wx.ALIGN_CENTER, wx.ALIGN_CENTER)
@@ -795,7 +846,7 @@ class MyFrame(wx.Frame):
         else:
             for i in range(len(self.acPortConnects)):
                 if self.acPortConnects[i]['sysname'] == self.acprev:
-                    for j in range(8):
+                    for j in range(self.acRowNumbers):
                         self.acPortConnects[i]['acPortConnect'][j]['0'] = self.acgrid.GetCellValue(j, 0)
                         self.acPortConnects[i]['acPortConnect'][j]['1'] = self.acgrid.GetCellValue(j, 1)
                         self.acPortConnects[i]['acPortConnect'][j]['2'] = self.acgrid.GetCellValue(j, 2)
@@ -804,7 +855,7 @@ class MyFrame(wx.Frame):
             for i in range(len(self.updownConnectAc)):
                 if self.updownConnectAc[i]['sysname'] == self.acprev:
                     # print(self.updownConnectAc)
-                    for j in range(8):
+                    for j in range(self.acRowNumbers):
                         if '单线' in self.acgrid.GetCellValue(j, 2):
                             self.updownConnectAc[i]['port'].append(self.acgrid.GetCellValue(j, 0))
                             self.updownConnectAc[i]['port'] = list(set(self.updownConnectAc[i]['port']))
@@ -852,6 +903,8 @@ class MyFrame(wx.Frame):
         for ac in self.acFiles:
             if ac['sysname'] == ID:
                 self.manageIp.SetValue(ac['manageIp'])
+                deviceClass = ac['deviceClass']
+                stackNumberTemp = ac['stackNumber']
                 if str(ac['stackNumber']).strip() == '不堆叠':
                     ppp = 0
                 else:
@@ -867,30 +920,50 @@ class MyFrame(wx.Frame):
         for i in range(ppp):
             self.acgrid.SetCellEditor(i, 0, wx.grid.GridCellTextEditor())
             self.acgrid.SetCellEditor(i, 1, wx.grid.GridCellTextEditor())
-        for i in range(ppp, 8):
+        for i in range(ppp, self.acRowNumbers):
             self.acgrid.SetCellEditor(i, 2, wx.grid.GridCellChoiceEditor(choices=purposeChoice))
         if 'S2700' in ID:
             portChoice = [''] + ['Ethernet0/0/' + str(i) for i in range(1, 25)] + ['GigabitEthernet0/0/' + str(i) for i in range(1, 3)]
             for i in range(ppp):
                 self.acgrid.SetCellEditor(i, 0, wx.grid.GridCellTextEditor())
                 self.acgrid.SetCellEditor(i, 1, wx.grid.GridCellTextEditor())
-            for i in range(ppp, 8):
+            for i in range(ppp, self.acRowNumbers):
                 self.acgrid.SetCellEditor(i, 0, wx.grid.GridCellChoiceEditor(choices=portChoice))
                 self.acgrid.SetCellEditor(i, 1, wx.grid.GridCellChoiceEditor(choices=portChoice))
         elif 'S2720' in ID:
-            portChoice = [''] + ['Ethernet0/0/' + str(i) for i in range(1, 17)] + ['GigabitEthernet0/0/' + str(i) for i in range(1, 11)]
-            for i in range(ppp):
-                self.acgrid.SetCellEditor(i, 0, wx.grid.GridCellTextEditor())
-                self.acgrid.SetCellEditor(i, 1, wx.grid.GridCellTextEditor())
-            for i in range(ppp, 8):
-                self.acgrid.SetCellEditor(i, 0, wx.grid.GridCellChoiceEditor(choices=portChoice))
-                self.acgrid.SetCellEditor(i, 1, wx.grid.GridCellChoiceEditor(choices=portChoice))
+            # print(deviceClass, 111111111)
+            if '52TP' in deviceClass:
+                if stackNumberTemp == '不堆叠':
+                    portChoice = [''] + ['Ethernet0/0/' + str(i) for i in range(1, 33)] + ['GigabitEthernet0/0/' + str(i) for i in range(1, 17)]
+                    for i in range(ppp):
+                        self.acgrid.SetCellEditor(i, 0, wx.grid.GridCellTextEditor())
+                        self.acgrid.SetCellEditor(i, 1, wx.grid.GridCellTextEditor())
+                    for i in range(ppp, self.acRowNumbers):
+                        self.acgrid.SetCellEditor(i, 0, wx.grid.GridCellChoiceEditor(choices=portChoice))
+                        self.acgrid.SetCellEditor(i, 1, wx.grid.GridCellChoiceEditor(choices=portChoice))
+                else:
+                    portChoice = [''] + ['Ethernet'+ str(aa) + '/0/' + str(i) for aa in range(1, stackNumberTemp + 1) for i in range(1, 33)] +\
+                                 ['GigabitEthernet'+ str(aa) + '/0/' + str(i) for aa in range(1, stackNumberTemp + 1) for i in range(1, 15)]
+                    for i in range(ppp):
+                        self.acgrid.SetCellEditor(i, 0, wx.grid.GridCellTextEditor())
+                        self.acgrid.SetCellEditor(i, 1, wx.grid.GridCellTextEditor())
+                    for i in range(ppp, self.acRowNumbers):
+                        self.acgrid.SetCellEditor(i, 0, wx.grid.GridCellChoiceEditor(choices=portChoice))
+                        self.acgrid.SetCellEditor(i, 1, wx.grid.GridCellChoiceEditor(choices=portChoice))
+            else:
+                portChoice = [''] + ['Ethernet0/0/' + str(i) for i in range(1, 17)] + ['GigabitEthernet0/0/' + str(i) for i in range(1, 11)]
+                for i in range(ppp):
+                    self.acgrid.SetCellEditor(i, 0, wx.grid.GridCellTextEditor())
+                    self.acgrid.SetCellEditor(i, 1, wx.grid.GridCellTextEditor())
+                for i in range(ppp, self.acRowNumbers):
+                    self.acgrid.SetCellEditor(i, 0, wx.grid.GridCellChoiceEditor(choices=portChoice))
+                    self.acgrid.SetCellEditor(i, 1, wx.grid.GridCellChoiceEditor(choices=portChoice))
         elif 'S2750' in ID:
             portChoice = [''] + ['Ethernet0/0/' + str(i) for i in range(1, 25)] + ['GigabitEthernet0/0/' + str(i) for i in range(3, 5)]
             for i in range(ppp):
                 self.acgrid.SetCellEditor(i, 0, wx.grid.GridCellTextEditor())
                 self.acgrid.SetCellEditor(i, 1, wx.grid.GridCellTextEditor())
-            for i in range(ppp, 8):
+            for i in range(ppp, self.acRowNumbers):
                 self.acgrid.SetCellEditor(i, 0, wx.grid.GridCellChoiceEditor(choices=portChoice))
                 self.acgrid.SetCellEditor(i, 1, wx.grid.GridCellChoiceEditor(choices=portChoice))
         elif 'S5720' in ID:
@@ -898,7 +971,7 @@ class MyFrame(wx.Frame):
             for i in range(ppp):
                 self.acgrid.SetCellEditor(i, 0, wx.grid.GridCellTextEditor())
                 self.acgrid.SetCellEditor(i, 1, wx.grid.GridCellTextEditor())
-            for i in range(ppp, 8):
+            for i in range(ppp, self.acRowNumbers):
                 self.acgrid.SetCellEditor(i, 0, wx.grid.GridCellChoiceEditor(choices=portChoice))
                 self.acgrid.SetCellEditor(i, 1, wx.grid.GridCellChoiceEditor(choices=portChoice))
         elif 'S3700' in ID:
@@ -906,22 +979,61 @@ class MyFrame(wx.Frame):
             for i in range(ppp):
                 self.acgrid.SetCellEditor(i, 0, wx.grid.GridCellTextEditor())
                 self.acgrid.SetCellEditor(i, 1, wx.grid.GridCellTextEditor())
-            for i in range(ppp, 8):
+            for i in range(ppp, self.acRowNumbers):
                 self.acgrid.SetCellEditor(i, 0, wx.grid.GridCellChoiceEditor(choices=portChoice))
                 self.acgrid.SetCellEditor(i, 1, wx.grid.GridCellChoiceEditor(choices=portChoice))
 
-        for i in range(0, 8):
+        for i in range(0, self.acRowNumbers):
             self.acgrid.SetCellEditor(i, 4, wx.grid.GridCellChoiceEditor(choices=self.updownConnect))
-        for i in range(0, 8):
+        for i in range(0, self.acRowNumbers):
             self.acgrid.SetCellEditor(i, 3, wx.grid.GridCellChoiceEditor(choices=['' , '核心/防火墙'] + acsysnames))
         for i in range(len(self.acPortConnects)):
+            # print(len(self.acPortConnects), 'aa')
             if self.acPortConnects[i]['sysname'] == self.acprev:
-                for j in range(8):
+                # print(self.acRowNumbers, 'bb')
+                for j in range(self.acRowNumbers):
+                    # print(len(self.acPortConnects[i]['acPortConnect']))
                     self.acgrid.SetCellValue(j, 0, self.acPortConnects[i]['acPortConnect'][j]['0'])
                     self.acgrid.SetCellValue(j, 1, self.acPortConnects[i]['acPortConnect'][j]['1'])
                     self.acgrid.SetCellValue(j, 2, self.acPortConnects[i]['acPortConnect'][j]['2'])
                     self.acgrid.SetCellValue(j, 4, self.acPortConnects[i]['acPortConnect'][j]['3'])
                     self.acgrid.SetCellValue(j, 3, self.acPortConnects[i]['acPortConnect'][j]['4'])
+
+        for i in range(0, self.acRowNumbers):
+            if self.acgrid.GetCellValue(i, 3) == '核心/防火墙':
+                self.acgrid.SetCellEditor(i, 4, wx.grid.GridCellChoiceEditor(choices=self.updownConnect))
+            elif self.acgrid.GetCellValue(i, 3) == '':
+                self.acgrid.SetCellEditor(i, 4, wx.grid.GridCellChoiceEditor(choices=['']))
+            else:
+                for j in range(len(self.updownConnectAc)):
+                    if self.updownConnectAc[j]['sysname'] == self.acgrid.GetCellValue(i, 3):
+                        tempChoice = self.updownConnectAc[j]['port']
+                        if self.acgrid.GetCellValue(i, 4) != '' and self.acgrid.GetCellValue(i, 4) in tempChoice:
+                            tempChoice.remove(self.acgrid.GetCellValue(i, 4))
+                        self.acgrid.SetCellEditor(i, 4, wx.grid.GridCellChoiceEditor(choices=tempChoice))
+
+        self.acportChoiceTemp = portChoice
+
+        #  删除一些选择机会
+        for i in range(self.acRowNumbers):
+            if self.acgrid.GetCellValue(i, 1) != '' and self.acgrid.GetCellValue(i, 0) != '':
+                start = int(self.acgrid.GetCellValue(i, 0).split('/')[-1])
+                end = int(self.acgrid.GetCellValue(i, 1).split('/')[-1])
+                for ab in range(start, end + 1):
+                    # print('/'.join(self.acgrid.GetCellValue(i, 0).split('/')[:-1]) + '/' + str(ab))
+                    try:
+                        portChoice.remove('/'.join(self.acgrid.GetCellValue(i, 0).split('/')[:-1]) + '/' + str(ab))
+                    except:
+                        pass
+            elif self.acgrid.GetCellValue(i, 0) != '' and self.acgrid.GetCellValue(i, 1) == '':
+                if self.acgrid.GetCellValue(i, 0) in portChoice:
+                    portChoice.remove(self.acgrid.GetCellValue(i, 0))
+            elif self.acgrid.GetCellValue(i, 1) != '' and self.acgrid.GetCellValue(i, 0) == '':
+                if self.acgrid.GetCellValue(i, 1) in portChoice:
+                    portChoice.remove(self.acgrid.GetCellValue(i, 1))
+        for i in range(self.acRowNumbers):
+            self.acgrid.SetCellEditor(i, 0, wx.grid.GridCellChoiceEditor(choices=portChoice))
+            self.acgrid.SetCellEditor(i, 1, wx.grid.GridCellChoiceEditor(choices=portChoice))
 
     '''输出界面'''
     def OutPutUI(self, event):
@@ -1002,11 +1114,17 @@ class MyFrame(wx.Frame):
                     dealFwFile.dealDE(self.fwFile, self.ipPlans, self.fwPortConnect, self.dns1, self.dns2, self.option)
                 else:
                     dealFwFile.dealABC(self.fwFile, self.ipPlans)
+        except Exception as e:
+            easygui.msgbox('生成防火墙文件失败' + '\n' + str(e))
 
+        try:
             if self.swFile != '':
                 # print(self.swFile)
                 dealSwFile.dealSw(self.swFile, self.ipPlans, self.swPortConnect, self.dns1, self.dns2, self.option)
+        except Exception as e:
+            easygui.msgbox('生成核心文件失败' + '\n' + str(e))
 
+        try:
             if self.acFiles != '':
                 # print(self.acFiles)
                 dealAcFile.dealAcs(self.acFiles, self.acPortConnects, self.ipPlans, [device for device in self.devices if '接入' in device['deviceRole']], self.swPortConnect, self.fwPortConnect)
@@ -1015,7 +1133,28 @@ class MyFrame(wx.Frame):
             easygui.msgbox('选择端口参数选择有问题，生成文本失败.....')
 
     def OnChangeGrid(self, event):
-        for i in range(0, 8):
+        portChoice = self.acportChoiceTemp
+        for i in range(self.acRowNumbers):
+            if self.acgrid.GetCellValue(i, 1) != '' and self.acgrid.GetCellValue(i, 0) != '':
+                start = int(self.acgrid.GetCellValue(i, 0).split('/')[-1])
+                end = int(self.acgrid.GetCellValue(i, 1).split('/')[-1])
+                for ab in range(start, end + 1):
+                    # print('/'.join(self.acgrid.GetCellValue(i, 0).split('/')[:-1]) + '/' + str(ab))
+                    try:
+                        portChoice.remove('/'.join(self.acgrid.GetCellValue(i, 0).split('/')[:-1]) + '/' + str(ab))
+                    except:
+                        pass
+            elif self.acgrid.GetCellValue(i, 0) != '' and self.acgrid.GetCellValue(i, 1) == '':
+                if self.acgrid.GetCellValue(i, 0) in portChoice:
+                    portChoice.remove(self.acgrid.GetCellValue(i, 0))
+            elif self.acgrid.GetCellValue(i, 1) != '' and self.acgrid.GetCellValue(i, 0) == '':
+                if self.acgrid.GetCellValue(i, 1) in portChoice:
+                    portChoice.remove(self.acgrid.GetCellValue(i, 1))
+        for i in range(self.acRowNumbers):
+            self.acgrid.SetCellEditor(i, 0, wx.grid.GridCellChoiceEditor(choices=portChoice))
+            self.acgrid.SetCellEditor(i, 1, wx.grid.GridCellChoiceEditor(choices=portChoice))
+
+        for i in range(0, self.acRowNumbers):
             if self.acgrid.GetCellValue(i, 3) == '核心/防火墙':
                 self.acgrid.SetCellEditor(i, 4, wx.grid.GridCellChoiceEditor(choices=self.updownConnect))
             elif self.acgrid.GetCellValue(i, 3) == '':
@@ -1023,12 +1162,15 @@ class MyFrame(wx.Frame):
             else:
                 for j in range(len(self.updownConnectAc)):
                     if self.updownConnectAc[j]['sysname'] == self.acgrid.GetCellValue(i, 3):
-                        self.acgrid.SetCellEditor(i, 4, wx.grid.GridCellChoiceEditor(choices=self.updownConnectAc[j]['port']))
+                        tempChoice = self.updownConnectAc[j]['port']
+                        if self.acgrid.GetCellValue(i, 4) != '' and self.acgrid.GetCellValue(i, 4) in tempChoice:
+                            tempChoice.remove(self.acgrid.GetCellValue(i, 4))
+                        self.acgrid.SetCellEditor(i, 4, wx.grid.GridCellChoiceEditor(choices=tempChoice))
 
 if __name__ == '__main__':
     try:
         app = wx.App()
-        frame = MyFrame('平安自动化小工具')
+        frame = MyFrame('平安寿险职场网络配置自动化工具')
         frame.Show()
         app.MainLoop()
     except Exception as e:

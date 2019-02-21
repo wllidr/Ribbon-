@@ -24,7 +24,7 @@ def dealSw(swFile, ipPlans, swportConnect, dns1, dns2, option):
     file = swFile['swFile']
     portInfos = swPortInfos(swportConnect, other)
     with open(sysname + '.txt', 'w') as f5:
-        with openConfigFile.OpenConfigFile().open(file, mode='r', pwd='Pingan123'.encode('utf-8')) as f:
+        with openConfigFile.OpenConfigFile().open(file, mode='r', pwd='1qaz@WSX3EDc95511'.encode('utf-8')) as f:
             string = ''
             for line in f:
                 line = line.decode('gbk', 'ignore')
@@ -349,7 +349,6 @@ def swPortInfos(swportConnect, other):
             portInfos += ' eth-trunk ' + port['2'].split('k')[-1] + '\n' + '#\n'
         elif port['0'] != '' and port['1'] == '' and port['2'] == '':
             portInfos += 'interface ' + port['0'] + '\n'
-            portInfos += ' undo portswitch\n'
             portInfos += ' description To-AccessSwitch-' + '-'.join(port['3']['sysname'].split('-')[-3:]) + '-Gi' + port['3']['0'].split('t')[-1] + '__From-CoreSwitch-01-Gi' + port['0'].split('t')[-1] + '\n'
             portInfos += ''' port link-type trunk
  undo port trunk allow-pass vlan 1\n'''
@@ -359,7 +358,6 @@ def swPortInfos(swportConnect, other):
             portInfos += '#\n'
         elif port['0'] == '' and port['1'] != '' and port['2'] == '':
             portInfos += 'interface ' + port['1'] + '\n'
-            portInfos += ' undo portswitch\n'
             if port['3']['0'] != '':
                 portInfos += ' description To-AccessSwitch-' + '-'.join(port['3']['sysname'].split('-')[-3:]) + '-Gi' + port['3']['0'].split('t')[-1] + '__From-CoreSwitch-01-Gi' + port['1'].split('t')[-1] + '\n'
             else:

@@ -27,12 +27,12 @@ def dealABC(fwFile, ipPlans):
             ips.append('.'.join(ipPlan['ipStart'].split('-')[0].split('.')[:-1]) + '.' + str(int(ipPlan['ipStart'].split('-')[0].split('.')[-1].strip()) + 1))
         if str(ipPlan['vlan']).strip() == '7' or str(ipPlan['vlan']).strip() == '8':
             Flag78 = True
-
+    # print(ips)
     sysname = fwFile['sysname']
     file = fwFile['fwFile']
     with open(sysname + '.txt', 'w') as f:
         string = ''
-        with openConfigFile.OpenConfigFile().open(file, mode='r', pwd='Pingan123'.encode('utf-8')) as f1:
+        with openConfigFile.OpenConfigFile().open(file, mode='r', pwd='1qaz@WSX3EDc95511'.encode('utf-8')) as f1:
             for line in f1:
                 line = line.decode('gbk', 'ignore')
                 string += line
@@ -41,6 +41,7 @@ def dealABC(fwFile, ipPlans):
                         string = re.sub('sysname[\s\S]*?\n', 'sysname ' + sysname + '\n', string)
                     if re.search('unicast-server', string):
                         ntps = re.findall('unicast-server[\s\S]*?\n', string)
+                        # print(ntps)
                         for i in range(len(ips)):
                             string = re.sub(ntps[i], 'unicast-server ' + ips[i] + '\n', string)
                     if re.search('interfaceeth-trunk1', re.sub(' ', '', string.lower())):
@@ -150,7 +151,7 @@ def dealDE(fwFile, ipPlans, fwportConnect, dns1, dns2, option):
     # print(file)
     with open(sysname + '.txt', 'w') as f:
         string = ''
-        with openConfigFile.OpenConfigFile().open(file, mode='r', pwd='Pingan123'.encode('utf-8')) as f1:
+        with openConfigFile.OpenConfigFile().open(file, mode='r', pwd='1qaz@WSX3EDc95511'.encode('utf-8')) as f1:
             for line in f1:
                 line = line.decode('gbk', 'ignore')
                 string += line

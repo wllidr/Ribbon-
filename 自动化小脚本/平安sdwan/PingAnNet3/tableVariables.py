@@ -52,8 +52,9 @@ def InitialVariables():
             swModel = 'S5720HI'
         elif '核心' in temp[1] and ('S5720EI' in temp[0].upper() or ('S5720' in temp[0].upper() and 'EI' in temp[0].upper())):
             swModel = 'S5720EI'
-        if 'FW' in temp[0].upper():
+        if 'FW' in temp[0].upper() or '防火墙' in temp[1]:
             fwYN = '有FW'
+
     # print([device for device in devices if '接入' in device['deviceRole']])
     # print(ipPlans)
     return ipPlans, bussniessClass.upper(), devices, swModel.upper(), fwYN.upper()
