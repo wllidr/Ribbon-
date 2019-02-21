@@ -6,6 +6,7 @@ import os
 import threadpool
 import re
 import xlwt
+import easygui
 
 bdVniIps = []
 def get_info(file):
@@ -74,6 +75,7 @@ def begin_vni_bd(path):
         j += 1
     workbook.save('自动生成文件文件夹/VNIBDIP提取表格.xls')
     print('VNI BD IP号提取结束..........')
+    easygui.msgbox('VNI BD IP号提取结束..........')
 
 if __name__ == '__main__':
     path = r'C:\Users\Ribbon\Desktop\润迅\自动化小工具\自动化刷脚本\Logger\1A'

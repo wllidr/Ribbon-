@@ -4,6 +4,7 @@
 import pandas as pd
 import os
 import re
+import easygui
 
 def config(filePath):
     '''
@@ -66,6 +67,7 @@ def begin_template(filePath, templeteRow, savePath):
     df2 = config(filePath)
     saveConfig(df1, df2, savePath)
     print('配置生成成功........')
+    easygui.msgbox('配置生成完成')
     # print(df1)
 
 if __name__ == '__main__':

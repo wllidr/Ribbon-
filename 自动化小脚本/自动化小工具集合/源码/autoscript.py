@@ -52,7 +52,7 @@ class MySSH:
             self.ssh_fd.connect(self.host, port = self.port, username = self.username, password = self.password)
             self.channel = self.ssh_fd.invoke_shell()
             self.channel.keep_this = self.ssh_fd
-            # self.channel.settimeout(30)
+            self.channel.settimeout(30)
             self.logger.info('Connect ' + self.device_name + ' device SSH Success...')
             self.channel.send('scr 0 t\n')
             self.channel.keep_this = self.ssh_fd

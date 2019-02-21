@@ -183,7 +183,7 @@ def begin_ip_scan(file_path):
     t = time.strftime('%Y%m%d_%H%M', time.localtime())
     workbook.save('自动生成文件文件夹' + '/' + 'ip扫描汇总表单' + t + '.xls')
     print('IP 扫描结束.........')
-    easygui.msgbox('作业完成.....')
+    easygui.msgbox('IP 网段扫描结束.....')
 
 if __name__ == '__main__':
     file_path = r'D:\shengkai\3.6\集成应用\工具表格模板.xls'

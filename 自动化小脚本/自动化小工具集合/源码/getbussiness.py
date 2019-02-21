@@ -2,6 +2,7 @@ import xlrd
 import xlwt
 import os
 import pandas as pd
+import easygui
 
 def create_Excel(fileName):
     '''生成下发业务总表'''
@@ -98,6 +99,7 @@ def begin_bussiness(filePath):
     create_Excel(filePath)
     split_table()
     print('业务下发表生成完毕..................')
+    easygui.msgbox('业务下发表生成完毕')
 
 if __name__ == '__main__':
     filePath = r'D:\shengkai\3.6\集成应用\工具表格模板.xls'

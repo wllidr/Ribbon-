@@ -4,9 +4,9 @@
     Desc:
         集成各种网络小工具于一体
 '''
+import sys; sys.path.append('.')
 import wx
-import sys
-sys.path.append('.')
+import win32api
 import autoscript
 import ipscan
 import autotemplate
@@ -23,25 +23,28 @@ class AutoTools(wx.Frame):
         self.i = 0
         self.panel = self.panel1 = self.panel2 = self.panel3 = self.panel4 = self.panel5 = self.panel6 = self.panel7 = None
         wx.Frame.__init__(self, parent, title=title, size=(700, 400))
+        exeName = win32api.GetModuleFileName(win32api.GetModuleHandle(None))
+        icon = wx.Icon(exeName, wx.BITMAP_TYPE_ICO)
+        self.SetIcon(icon)
         self.SetBackgroundColour('white')
         self.CreateStatusBar()# 创建位于窗口的底部的状态栏
 
         filemenu = wx.Menu()  #设置菜单
-        menuAutoScript = filemenu.Append(wx.ID_FILE1, "&自动刷脚本", "自动刷脚本配置，并且生成日志文件")
+        menuAutoScript = filemenu.Append(wx.ID_FILE, "&自动刷脚本", "自动刷脚本配置，并且生成日志文件")
         filemenu.AppendSeparator()
-        menutemplate = filemenu.Append(wx.ID_FILE3, "&自动模板配置生成", "根据模板批量生产配置")
+        menutemplate = filemenu.Append(wx.ID_FILE1, "&自动模板配置生成", "根据模板批量生产配置")
         filemenu.AppendSeparator()
-        menufileupdown = filemenu.Append(wx.ID_FILE7, "&服务器文件上传下载", "对服务器文件进行上传下载操作， 并且执行fabscript.txt的脚本....")
+        menufileupdown = filemenu.Append(wx.ID_FILE2, "&服务器文件上传下载", "对服务器文件进行上传下载操作， 并且执行fabscript.txt的脚本....")
         filemenu.AppendSeparator()
-        menuIpCheck = filemenu.Append(wx.ID_FILE, "&IP检测器", "用于检测IP是否连通以及在连通后尝试ssh获取设备名，并生成表格")
+        menuIpCheck = filemenu.Append(wx.ID_FILE3, "&IP检测器", "用于检测IP是否连通以及在连通后尝试ssh获取设备名，并生成表格")
         filemenu.AppendSeparator()
-        menubussiness = filemenu.Append(wx.ID_FILE9, "&业务下发", "业务下发表格的生成......")
+        menubussiness = filemenu.Append(wx.ID_FILE4, "&业务下发", "业务下发表格的生成......")
         filemenu.AppendSeparator()
-        menusn = filemenu.Append(wx.ID_FILE8, "&SN版本补丁License提取", "SN、版本补丁、License、管理口IP、设备名称等提取......")
-        menuVniDd = filemenu.Append(wx.ID_ABOUT,"&VNI以及BD号提取", "用于VNI以及BD号提取，并生成表格")
-        menupeer = filemenu.Append(wx.ID_FILE5, "&获取peer参数", "获取peer的参数，并且形成表格...")
+        menusn = filemenu.Append(wx.ID_FILE5, "&SN版本补丁License提取", "SN、版本补丁、License、管理口IP、设备名称等提取......")
+        menuVniDd = filemenu.Append(wx.ID_FILE6, "&VNI以及BD号提取", "用于VNI以及BD号提取，并生成表格")
+        menupeer = filemenu.Append(wx.ID_FILE7, "&获取peer参数", "获取peer的参数，并且形成表格...")
         filemenu.AppendSeparator()
-        menuExit = filemenu.Append(wx.ID_EXIT,"&退出","退出后界面将关闭") # 退出按钮，整个系统退出
+        menuExit = filemenu.Append(wx.ID_EXIT, "&退出", "退出后界面将关闭") # 退出按钮，整个系统退出
 
         #创建菜单栏
         menuBar = wx.MenuBar()
@@ -90,7 +93,7 @@ class AutoTools(wx.Frame):
         font = wx.Font(18, wx.ROMAN, wx.NORMAL, wx.NORMAL)
 
         '''选择EXcel的地址选择框'''
-        excelStticText = wx.StaticText(self.panel, -1, 'excel表格地址:')
+        excelStticText = wx.StaticText(self.panel, -1, 'excel表格地址')
         self.excelPath = wx.TextCtrl(self.panel, size=(400, 30), style=wx.TE_CENTER | wx.TE_READONLY)
         excelStticText.SetFont(font)
         button1 = wx.Button(self.panel, -1, '打开', size=(120, 30))
@@ -101,7 +104,7 @@ class AutoTools(wx.Frame):
         btnSizer.Add(button1, proportion=0, flag=wx.ALIGN_LEFT | wx.RIGHT, border=5)
 
         '''脚本文件夹路径选择框'''
-        dirStaticText = wx.StaticText(self.panel, -1, '脚本文件夹地址:')
+        dirStaticText = wx.StaticText(self.panel, -1, '脚本文件夹地址')
         self.scriptPath = wx.TextCtrl(self.panel, size=(400, 30), style=wx.TE_CENTER | wx.TE_READONLY)
         dirStaticText.SetFont(font)
         button3 = wx.Button(self.panel, -1, '打开', size=(120, 30))
@@ -112,7 +115,7 @@ class AutoTools(wx.Frame):
         dirSizer1.Add(button3, proportion=0, flag=wx.ALIGN_LEFT | wx.RIGHT, border=5)
 
         '''线程数'''
-        poolNumberStatic = wx.StaticText(self.panel, -1, '线程数(填数字):')
+        poolNumberStatic = wx.StaticText(self.panel, -1, '线程数(填数字)')
         self.poolNumber = wx.TextCtrl(self.panel, size=(400, 30), style=wx.TE_CENTER )
         poolNumberStatic.SetFont(font)
         button6 = wx.Button(self.panel, -1, '清除', size=(120, 30))
@@ -123,7 +126,7 @@ class AutoTools(wx.Frame):
         numberSizer.Add(button6, proportion=0, flag=wx.ALIGN_LEFT | wx.RIGHT, border=5)
 
         '''是否需要进行验证'''
-        checkIf = wx.StaticText(self.panel, -1, '刷脚本时是否需要进行验证: ')
+        checkIf = wx.StaticText(self.panel, -1, '刷脚本时是否需要进行验证')
         checkIf.SetFont(font)
         self.choice = ['Yes', 'No']
         chooseCheckChoice = wx.Choice(self.panel, -1, choices=self.choice, size=(60, 30))
@@ -139,7 +142,7 @@ class AutoTools(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.EnSure, button5)
 
         '''操作说明'''
-        operateStatic = wx.StaticText(self.panel, -1, '操作说明:')
+        operateStatic = wx.StaticText(self.panel, -1, '操作说明')
         operateStatic.SetFont(font)
         operateInfo = wx.TextCtrl(self.panel, size=(600, 120), style=wx.TE_MULTILINE | wx.TE_READONLY)
         operateInfo.AppendText('1. 选择所需刷配置设备文件的Excel文档\n2. 选择Excel文件中刷配置文件的文件夹\n3. 写入刷配置的线程数（数字）\n4. 选择刷脚本是否需要验证，默认为需要验证\n5. 当以上参数确认无误，点击确认按钮开始刷配置')
@@ -219,7 +222,7 @@ class AutoTools(wx.Frame):
         font = wx.Font(18, wx.ROMAN, wx.NORMAL, wx.NORMAL)
 
         '''脚本文件夹路径选择框'''
-        vniStaticText = wx.StaticText(self.panel1, -1, '配置文件夹地址:')
+        vniStaticText = wx.StaticText(self.panel1, -1, '配置文件夹地址')
         self.vniStaticPath = wx.TextCtrl(self.panel1, size=(400, 30), style=wx.TE_CENTER | wx.TE_READONLY)
         vniStaticText.SetFont(font)
         button26 = wx.Button(self.panel1, -1, '打开', size=(120, 30))
@@ -234,7 +237,7 @@ class AutoTools(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.EnSurePanel1, button25)
 
         '''操作说明'''
-        operateStatic = wx.StaticText(self.panel1, -1, '操作说明:')
+        operateStatic = wx.StaticText(self.panel1, -1, '操作说明')
         operateStatic.SetFont(font)
         operateInfo = wx.TextCtrl(self.panel1, size=(600, 120), style=wx.TE_MULTILINE | wx.TE_READONLY)
         operateInfo.AppendText(
@@ -291,7 +294,7 @@ class AutoTools(wx.Frame):
         font = wx.Font(18, wx.ROMAN, wx.NORMAL, wx.NORMAL)
 
         '''选择EXcel的地址选择框'''
-        excelStticText = wx.StaticText(self.panel2, -1, '模板表格地址:')
+        excelStticText = wx.StaticText(self.panel2, -1, '模板表格地址')
         self.ipCheckExcel = wx.TextCtrl(self.panel2, size=(400, 30), style=wx.TE_CENTER | wx.TE_READONLY)
         excelStticText.SetFont(font)
         button7 = wx.Button(self.panel2, -1, '打开', size=(120, 30))
@@ -306,7 +309,7 @@ class AutoTools(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.EnSurePanel2, button9)
 
         '''操作说明'''
-        operateStatic = wx.StaticText(self.panel2, -1, '操作说明:')
+        operateStatic = wx.StaticText(self.panel2, -1, '操作说明')
         operateStatic.SetFont(font)
         operateInfo = wx.TextCtrl(self.panel2, size=(600, 120), style=wx.TE_MULTILINE | wx.TE_READONLY)
         operateInfo.AppendText(
@@ -365,7 +368,7 @@ class AutoTools(wx.Frame):
         self.panel3= wx.Panel(self)
         self.panel3.SetBackgroundColour('white')
         font = wx.Font(18, wx.ROMAN, wx.NORMAL, wx.NORMAL)
-        excelStticText = wx.StaticText(self.panel3, -1, '模板表格地址:')
+        excelStticText = wx.StaticText(self.panel3, -1, '模板表格地址')
         self.templeteExcelPath = wx.TextCtrl(self.panel3, size=(400, 30), style=wx.TE_CENTER | wx.TE_READONLY)
         excelStticText.SetFont(font)
         button9 = wx.Button(self.panel3, -1, '打开', size=(120, 30))
@@ -376,7 +379,7 @@ class AutoTools(wx.Frame):
         btnSizer.Add(button9, proportion=0, flag=wx.ALIGN_LEFT | wx.RIGHT, border=5)
 
         '''配置模板的选择'''
-        templeteStatic = wx.StaticText(self.panel3, -1, '模板列的选择（A-Z）')
+        templeteStatic = wx.StaticText(self.panel3, -1, '模板列的选择(A-Z)')
         templeteStatic.SetFont(font)
         self.templeteSelect = wx.TextCtrl(self.panel3, size=(400, 30), style=wx.TE_CENTER )
         button11 = wx.Button(self.panel3, -1, '清除', size=(120, 30))
@@ -402,7 +405,7 @@ class AutoTools(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.EnSureTemplate, button13)
 
         '''操作说明'''
-        operateStatic = wx.StaticText(self.panel3, -1, '操作说明:')
+        operateStatic = wx.StaticText(self.panel3, -1, '操作说明')
         operateStatic.SetFont(font)
         operateInfo = wx.TextCtrl(self.panel3, size=(600, 120), style=wx.TE_MULTILINE | wx.TE_READONLY)
         operateInfo.AppendText(
@@ -474,7 +477,7 @@ class AutoTools(wx.Frame):
         font = wx.Font(18, wx.ROMAN, wx.NORMAL, wx.NORMAL)
 
         '''选择peer所需文件夹地址'''
-        excelStticText = wx.StaticText(self.panel4, -1, '配置文件夹地址:')
+        excelStticText = wx.StaticText(self.panel4, -1, '配置文件夹地址')
         self.peerDir = wx.TextCtrl(self.panel4, size=(400, 30), style=wx.TE_CENTER | wx.TE_READONLY)
         excelStticText.SetFont(font)
         button14 = wx.Button(self.panel4, -1, '打开', size=(120, 30))
@@ -489,7 +492,7 @@ class AutoTools(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.EnSurePanel4, button16)
 
         '''操作说明'''
-        operateStatic = wx.StaticText(self.panel4, -1, '操作说明:')
+        operateStatic = wx.StaticText(self.panel4, -1, '操作说明')
         operateStatic.SetFont(font)
         operateInfo = wx.TextCtrl(self.panel4, size=(600, 120), style=wx.TE_MULTILINE | wx.TE_READONLY)
         operateInfo.AppendText(
@@ -546,7 +549,7 @@ class AutoTools(wx.Frame):
 
         '''选择EXcel的地址选择框'''
         font = wx.Font(18, wx.ROMAN, wx.NORMAL, wx.NORMAL)
-        excelStticText = wx.StaticText(self.panel5, -1, '上传下载表格:')
+        excelStticText = wx.StaticText(self.panel5, -1, '上传下载表格')
         self.fabupdown = wx.TextCtrl(self.panel5, size=(400, 30), style=wx.TE_CENTER | wx.TE_READONLY)
         excelStticText.SetFont(font)
         button20 = wx.Button(self.panel5, -1, '打开', size=(120, 30))
@@ -557,7 +560,7 @@ class AutoTools(wx.Frame):
         btnSizer.Add(button20, proportion=0, flag=wx.ALIGN_LEFT | wx.RIGHT, border=5)
 
         '''操作说明'''
-        operateStatic = wx.StaticText(self.panel5, -1, '操作说明:')
+        operateStatic = wx.StaticText(self.panel5, -1, '操作说明')
         operateStatic.SetFont(font)
         operateInfo = wx.TextCtrl(self.panel5, size=(600, 120), style=wx.TE_MULTILINE | wx.TE_READONLY)
         operateInfo.AppendText(
@@ -623,7 +626,7 @@ class AutoTools(wx.Frame):
         self.panel6.SetBackgroundColour('white')
 
         '''选择文件夹'''
-        StticText = wx.StaticText(self.panel6, -1, '配置文件夹地址:')
+        StticText = wx.StaticText(self.panel6, -1, '配置文件夹地址')
         self.configPath = wx.TextCtrl(self.panel6, size=(400, 30), style=wx.TE_CENTER | wx.TE_READONLY)
         StticText.SetFont(font)
         button30 = wx.Button(self.panel6, -1, '打开', size=(120, 30))
@@ -634,11 +637,11 @@ class AutoTools(wx.Frame):
         btnSizer.Add(button30, proportion=0, flag=wx.ALIGN_LEFT | wx.RIGHT, border=5)
 
         '''操作说明'''
-        operateStatic = wx.StaticText(self.panel6, -1, '操作说明:')
+        operateStatic = wx.StaticText(self.panel6, -1, '操作说明')
         operateStatic.SetFont(font)
         operateInfo = wx.TextCtrl(self.panel6, size=(600, 120), style=wx.TE_MULTILINE | wx.TE_READONLY)
         operateInfo.AppendText(
-            '1. 选择 “设备配置的文件的文件夹” 路径\n2. 以上确认无误后，按确认开始执行程序\n3.表格会生成在 "自动生成文件夹/采集SN信息.xls" ')
+            '1. 选择 "设备配置的文件的文件夹" 路径\n2. 以上确认无误后，按确认开始执行程序\n3.表格会生成在 "自动生成文件夹/采集SN信息.xls" ')
         font1 = wx.Font(12, wx.ROMAN, wx.NORMAL, wx.NORMAL)
         operateInfo.SetFont(font1)
         operate = wx.BoxSizer()
@@ -661,11 +664,8 @@ class AutoTools(wx.Frame):
             self.configPath.SetValue(dlg.GetPath())
         dlg.Destroy()
 
-
-
     def EnSurePanel6(self, event):
         snscratch.Sn(self.configPath.GetValue())
-        pass
 
     "业务下发界面"
     def OnBussiness(self, event):
@@ -693,7 +693,7 @@ class AutoTools(wx.Frame):
         if self.i > 5:
             self.i = 0
         '''选择EXcel的地址选择框'''
-        excelStticText = wx.StaticText(self.panel7, -1, '业务下发模板表格:')
+        excelStticText = wx.StaticText(self.panel7, -1, '业务下发模板表格')
         self.bussinessPath = wx.TextCtrl(self.panel7, size=(400, 30), style=wx.TE_CENTER | wx.TE_READONLY)
         excelStticText.SetFont(font)
         button30 = wx.Button(self.panel7, -1, '打开', size=(120, 30))
@@ -704,7 +704,7 @@ class AutoTools(wx.Frame):
         btnSizer.Add(button30, proportion=0, flag=wx.ALIGN_LEFT | wx.RIGHT, border=5)
 
         '''操作说明'''
-        operateStatic = wx.StaticText(self.panel7, -1, '操作说明:')
+        operateStatic = wx.StaticText(self.panel7, -1, '操作说明')
         operateStatic.SetFont(font)
         operateInfo = wx.TextCtrl(self.panel7, size=(600, 120), style=wx.TE_MULTILINE | wx.TE_READONLY)
         operateInfo.AppendText(
@@ -736,9 +736,6 @@ class AutoTools(wx.Frame):
         if dialogResult != wx.ID_OK:
             return
         self.bussinessPath.SetValue(fileDialog.GetPath())
-
-    def OnButton31(self, event):
-        self.bussinessPath.Clear()
 
     def EnSurePanel7(self, event):
         getbussiness.begin_bussiness(self.bussinessPath.GetValue())

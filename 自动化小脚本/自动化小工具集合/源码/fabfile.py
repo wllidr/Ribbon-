@@ -11,6 +11,7 @@ import hashlib
 import logging
 import re
 import time
+import easygui
 
 if not os.path.exists('自动生成文件文件夹'):
     os.makedirs('自动生成文件文件夹')
@@ -83,7 +84,7 @@ def fileConvert(retry = 3):
     跑脚本，可以进行升级，查询等等操作，再script.txt上写好指令
 '''
 def runOther():
-    if os.path.exists('script.txt'):
+    if os.path.exists('fabscript.txt'):
         logger.info('\n\n------' + env.host + '的脚本所有指令结果如下-------')
         with open('fabscript.txt', 'r') as f:
             for line in f:
@@ -165,5 +166,6 @@ if __name__ == '__main__':
     print('开始文件传输跟刷脚本.........')
     begin_fabfile()
     print('文件传输跟刷脚本结束.........')
+    easygui.msgbox('文件传输跟刷脚本结束')
 
 logger.removeHandler(fileHandler)
