@@ -6,6 +6,7 @@
 import sys; sys.path.append('.')
 import re
 import openConfigFile
+import os
 
 wildcardMark = {'1': '127.255.255.255', '2': '63.255.255.255', '3': '31.255.255.255', '4': '15.255.255.255',
                 '5': '7.255.255.255', '6': '3.255.255.255', '7': '1.255.255.255', '8': '0.255.255.255',
@@ -16,7 +17,7 @@ wildcardMark = {'1': '127.255.255.255', '2': '63.255.255.255', '3': '31.255.255.
                 '25': '0.0.0.127', '26': '0.0.0.63', '27': '0.0.0.31', '28': '0.0.0.15', '29': '0.0.0.7',
                 '30': '0.0.0.3', '31': '0.0.0.1', '32': '0.0.0.0'}
 
-def dealABC(fwFile, ipPlans):
+def dealABC(fwFile, ipPlans, excelPath):
     ips = []
 
     for ipPlan in ipPlans:
@@ -30,7 +31,7 @@ def dealABC(fwFile, ipPlans):
     # print(ips)
     sysname = fwFile['sysname']
     file = fwFile['fwFile']
-    with open(sysname + '.txt', 'w') as f:
+    with open(os.path.dirname(excelPath) + '/' + sysname + '.txt', 'w') as f:
         string = ''
         with openConfigFile.OpenConfigFile().open(file, mode='r', pwd='1qaz@WSX3EDc95511'.encode('utf-8')) as f1:
             for line in f1:
@@ -59,7 +60,7 @@ def dealABC(fwFile, ipPlans):
                             str(int(ipPlans[8]['mark']))] + '\n', string)
                     if re.search('route-static', string):
                         routes = re.findall('route-static[\S\s]*?\n', string)
-                        descriptions = [' description Wife  \n', ' description Live&Training\n', ' description Pc \n',
+                        descriptions = [' description Wifi  \n', ' description Live&Training\n', ' description Pc \n',
                                         ' description Secure \n', ' description Other  \n',
                                         ' description SW&AP-Manage \n']
                         for i in range(len(routes)):
@@ -74,7 +75,9 @@ def dealABC(fwFile, ipPlans):
                 string = re.sub('//[\s\S]*?\n', '\n', string)
             f.write(re.sub('\r', '', string))
 
-def dealDE(fwFile, ipPlans, fwportConnect, dns1, dns2, option):
+def dealDE(fwFile, ipPlans, fwportConnect, dns1, dns2, option, excelPath):
+    # print(fwFile)
+    # print(fwportConnect)
     ips = []
     Flag78 = False
     vlan78Info = ''
@@ -88,21 +91,62 @@ def dealDE(fwFile, ipPlans, fwportConnect, dns1, dns2, option):
                 int(ipPlan['ipStart'].split('-')[0].split('.')[-1].strip()) + 1))
         if str(ipPlan['vlan']).strip() == '7' or str(ipPlan['vlan']).strip() == '8':
             Flag78 = True
+
+    firewallTemp78 = ''
+
+    for ipPlan in ipPlans:
+        ipPlan['vlan'] = str(ipPlan['vlan'])
+        if str(ipPlan['vlan']).strip() == '7' :
+            firewallTemp78 += ' add interface vlanif7\n'
+        elif str(ipPlan['vlan']).strip() == '8':
+            firewallTemp78 += ' add interface vlanif8\n'
+
+    temp7788 = ''
+    if Flag78:
+        temp7788 += 'vlan batch '
+        for ipPlan in ipPlans:
+            ipPlan['vlan'] = str(ipPlan['vlan'])
+            if str(ipPlan['vlan']).strip() == '7' :
+                temp7788 += '7 '
+            elif str(ipPlan['vlan']).strip() == '8':
+                temp7788 += ' 8 '
+        temp7788 += '\n#\n'
+
+        for ipPlan in ipPlans:
+            ipPlan['vlan'] = str(ipPlan['vlan'])
+            if str(ipPlan['vlan']).strip() == '7' :
+                temp7788 += '''vlan 7
+ description LifeTraining-WiFi\n'''
+            elif str(ipPlan['vlan']).strip() == '8':
+                temp7788 += '''vlan 8
+ description FreeWiFi-WiFi\n'''
+        temp7788 += '#\n'
+
     # for ipPlan in ipPlans:
     #     print(ipPlan)
+    DNS = dns1 + ' ' + dns2
+    other = 'port trunk allow-pass vlan 2 to 6 4094'
+    if Flag78:
+        vlan78Info, other = vlan78(ipPlans, DNS)
+
     fwPortInfos = ''
     firewall = 'firewall zone trust   \n'
     firewall += ' add interface vlanif2\n' + ' add interface vlanif3\n' + ' add interface vlanif4\n'
     firewall += ' add interface vlanif5\n' + ' add interface vlanif6\n' + ' add interface vlanif4094\n'
+    if Flag78:
+        firewall += firewallTemp78
+
     for fwPort in fwportConnect:
         if fwPort['0'] != '' and fwPort['1']!='' and fwPort['2']!='':
             firewall += ' add interface  ' + fwPort['2'] + '\n'
             fwPortInfos += 'interface ' + fwPort['2'] + '\n'
             fwPortInfos += ' description To-LAN-AccessSwitch-Eth_Trunk' + fwPort['2'].strip().split('k')[-1] + '\n'
-            fwPortInfos += ''' portswitch
- service-manage ping permit
- service-manage ssh permit
- service-manage snmp permit\n'''
+            if 'USG' in fwFile['deviceClass']:
+                fwPortInfos += ' undo shutdown\n'  + ' portswitch\n'
+            fwPortInfos += ' port link-type trunk\n'
+            if 'USG' not in fwFile['deviceClass']:
+                fwPortInfos += ' port trunk allow-pass vlan 1\n'
+            fwPortInfos += ' ' + other + '\n'
             if fwPort['mad'] != '':
                 fwPortInfos += ' mad relay\n'
             fwPortInfos += '#\n'
@@ -119,10 +163,12 @@ def dealDE(fwFile, ipPlans, fwportConnect, dns1, dns2, option):
             firewall += ' add interface  ' + fwPort['0'] + '\n'
             fwPortInfos += 'interface ' + fwPort['0'] + '\n'
             fwPortInfos += ' description To-AccessSwitch-' + '-'.join(fwPort['3']['sysname'].split('-')[-3:]) + '-Gi' + fwPort['3']['0'].split('t')[-1] + '__From-CoreSwitch-01-Gi' + fwPort['0'].split('t')[-1] + '\n'
-            fwPortInfos += ''' portswitch
- service-manage ping permit
- service-manage ssh permit
- service-manage snmp permit\n'''
+            if 'USG' in fwFile['deviceClass']:
+                fwPortInfos += ' undo shutdown\n'  + ' portswitch\n'
+            fwPortInfos += ' port link-type trunk\n'
+            if 'USG' not in fwFile['deviceClass']:
+                fwPortInfos += ' port trunk allow-pass vlan 1\n'
+            fwPortInfos += ' ' + other + '\n'
             if fwPort['mad'] != '':
                 fwPortInfos += ' mad relay\n'
             fwPortInfos += '#\n'
@@ -133,23 +179,23 @@ def dealDE(fwFile, ipPlans, fwportConnect, dns1, dns2, option):
                 fwPortInfos += ' description To-AccessSwitch-' + '-'.join(fwPort['3']['sysname'].split('-')[-3:]) + '-Gi' + fwPort['3']['0'].split('t')[-1] + '__From-CoreSwitch-01-Gi' + fwPort['1'].split('t')[-1] + '\n'
             else:
                 fwPortInfos += ' description To-AccessSwitch-' + '-'.join(fwPort['3']['sysname'].split('-')[-3:]) + '-Gi' + fwPort['3']['1'].split('t')[-1] + '__From-CoreSwitch-01-Gi' + fwPort['1'].split('t')[-1] + '\n'
-            fwPortInfos += ''' portswitch
- service-manage ping permit
- service-manage ssh permit
- service-manage snmp permit\n'''
+            if 'USG' in fwFile['deviceClass']:
+                fwPortInfos += ' undo shutdown\n'  + ' portswitch\n'
+            fwPortInfos += ' port link-type trunk\n'
+            if 'USG' not in fwFile['deviceClass']:
+                fwPortInfos += ' port trunk allow-pass vlan 1\n'
+            fwPortInfos += ' ' + other + '\n'
             if fwPort['mad'] != '':
                 fwPortInfos += ' mad relay\n'
             fwPortInfos += '#\n'
     firewall += '#\n'
     # print(fwPortInfos)
     # print(firewall)
-    DNS = dns1 + ' ' + dns2
-    if Flag78:
-        vlan78Info, other = vlan78(ipPlans, DNS)
+
     sysname = fwFile['sysname']
     file = fwFile['fwFile']
     # print(file)
-    with open(sysname + '.txt', 'w') as f:
+    with open(os.path.dirname(excelPath) + '/' + sysname + '.txt', 'w') as f:
         string = ''
         with openConfigFile.OpenConfigFile().open(file, mode='r', pwd='1qaz@WSX3EDc95511'.encode('utf-8')) as f1:
             for line in f1:
@@ -164,8 +210,8 @@ def dealDE(fwFile, ipPlans, fwportConnect, dns1, dns2, option):
                         ntps = re.findall('unicast-server[\s\S]*?\n', string)
                         for i in range(len(ntps)):
                             string = re.sub(ntps[i], 'unicast-server ' + '.'.join(
-                            ipPlans[8+i]['ipStart'].split('-')[0].split('.')[:-1]) + '.' + str(
-                            int(ipPlans[8+i]['ipStart'].split('-')[0].split('.')[-1].strip()) + 1) + '\n', string)
+                            ipPlans[6+i]['ipStart'].split('-')[0].split('.')[:-1]) + '.' + str(
+                            int(ipPlans[6+i]['ipStart'].split('-')[0].split('.')[-1].strip()) + 1) + '\n', string)
                     if re.search('network', string):
                         networks = re.findall('network[\s\S]*?\n', string)
                         for i in range(len(networks)):
@@ -281,6 +327,7 @@ def dealDE(fwFile, ipPlans, fwportConnect, dns1, dns2, option):
                         string += '接口区域划分：\n\n'
                         string += firewall
                     if re.search('接口配置', string):
+                        string = temp7788 + string
                         string += fwPortInfos
                     if re.search('//[\s\S]*?\n', string) and not re.search('默认账号和密码查询网站', string)and not re.search('用户配置', string):
                         string = re.sub('//[\s\S]*?\n', '\n', string)

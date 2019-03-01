@@ -17,19 +17,22 @@ def fileSelect(bussniessClass, fwYN, devices, swModel, ipPlans):
 
     # 防火墙文件选择
     temp = ''
+    temp11 = ''
     # print(fwYN)
     for device in devices:
         if '防火墙' in device['deviceRole']:
             temp = device['deviceName']
+            temp11 = device['deviceClass']
+
     if (bussniessClass[0]== 'D' or bussniessClass[0] == 'E') and fwYN == '有FW':
         fwFile = [file for file in files if bussniessClass[0] in file and '类' in file ]
         if bussniessClass[0]== 'D' :
             fwFile = [file for file in fwFile if '核心' in file]
         fwFile = fwFile[0]
-        fwFile = {'sysname': temp, 'fwFile': fwFile.encode('gbk').decode('cp437')}
+        fwFile = {'sysname': temp, 'fwFile': fwFile.encode('gbk').decode('cp437'), 'deviceClass':temp11}
     elif (bussniessClass[0]== 'A' or bussniessClass[0] == 'B' or bussniessClass[0] == 'C') and fwYN == '有FW':
         fwFile = [file for file in files if bussniessClass[0] in file and '类' in file][0]
-        fwFile = {'sysname': temp, 'fwFile': fwFile.encode('gbk').decode('cp437')}
+        fwFile = {'sysname': temp, 'fwFile': fwFile.encode('gbk').decode('cp437'), 'deviceClass':temp11}
     else:
         fwFile = ''
     # print(fwFile)
